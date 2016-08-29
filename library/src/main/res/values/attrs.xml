@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RadioRealButton">
+        <attr name="rrb_image" format="integer"/>
+        <attr name="rrb_imageTint" format="color"/>
+        <attr name="rrb_imageWidth" format="dimension"/>
+        <attr name="rrb_imageHeight" format="dimension"/>
+        <attr name="rrb_buttonPadding" format="dimension"/>
+        <attr name="rrb_buttonPaddingLeft" format="dimension"/>
+        <attr name="rrb_buttonPaddingRight" format="dimension"/>
+        <attr name="rrb_buttonPaddingTop" format="dimension"/>
+        <attr name="rrb_buttonPaddingBottom" format="dimension"/>
+
+        <attr name="rrb_ripple" format="boolean"/>
+        <attr name="rrb_rippleColor" format="color"/>
+
+        <attr name="rrb_backgroundColor" format="color"/>
+
+        <attr name="rrb_text" format="string"/>
+        <attr name="rrb_textColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="RadioRealButtonGroup">
+        <attr name="rrbg_buttonsPadding" format="dimension"/>
+        <attr name="rrbg_buttonsPaddingLeft" format="dimension"/>
+        <attr name="rrbg_buttonsPaddingRight" format="dimension"/>
+        <attr name="rrbg_buttonsPaddingTop" format="dimension"/>
+        <attr name="rrbg_buttonsPaddingBottom" format="dimension"/>
+
+        <attr name="rrbg_dividerSize" format="dimension"/>
+        <attr name="rrbg_dividerPadding" format="dimension"/>
+        <attr name="rrbg_dividerColor" format="color"/>
+        <attr name="rrbg_dividerRadius" format="dimension"/>
+
+        <attr name="rrbg_shadow" format="boolean"/>
+        <attr name="rrbg_shadowElevation" format="dimension"/>
+        <attr name="rrbg_shadowMargin" format="dimension"/>
+        <attr name="rrbg_shadowMarginTop" format="dimension"/>
+        <attr name="rrbg_shadowMarginBottom" format="dimension"/>
+        <attr name="rrbg_shadowMarginLeft" format="dimension"/>
+        <attr name="rrbg_shadowMarginRight" format="dimension"/>
+
+        <attr name="rrbg_bottomLineColor" format="color"/>
+        <attr name="rrbg_bottomLineSize" format="dimension"/>
+        <attr name="rrbg_bottomLineBringToFront" format="boolean"/>
+        <attr name="rrbg_bottomLineRadius" format="dimension"/>
+
+        <attr name="rrbg_backgroundColor" format="color"/>
+
+        <attr name="rrbg_selectorColor" format="color"/>
+        <attr name="rrbg_selectorSize" format="dimension"/>
+        <attr name="rrbg_selectorBringToFront" format="boolean"/>
+        <attr name="rrbg_selectorAboveOfBottomLine" format="boolean"/>
+        <attr name="rrbg_selectorRadius" format="dimension"/>
+
+
+        <attr name="rrbg_position" format="integer"/>
+
+
+
+
+
+
+        <attr name="rrbg_animateSelectorDuration" format="integer"/>
+        <attr name="rrbg_animateSelector" format="integer">
+            <flag name="bounce" value="1"/>
+            <flag name="linear" value="2"/>
+            <flag name="fastOutSlowIn" value="3"/>
+            <flag name="decelerate" value="4"/>
+            <flag name="path" value="5"/>
+            <flag name="cycle" value="6"/>
+            <flag name="anticipate" value="7"/>
+            <flag name="accelerateDecelerate" value="8"/>
+            <flag name="accelerate" value="9"/>
+            <flag name="anticipateOvershoot" value="10"/>
+            <flag name="fastOutLinearIn" value="11"/>
+            <flag name="linearOutSlowIn" value="12"/>
+            <flag name="overshoot" value="13"/>
+        </attr>
+
+        <attr name="rrbg_radius" format="dimension"/>
+
+        <attr name="rrbg_animateImagesScale" format="float"/>
+        <attr name="rrbg_animateImages_enterDuration" format="integer"/>
+        <attr name="rrbg_animateImages_enter" format="integer">
+            <flag name="bounce" value="1"/>
+            <flag name="linear" value="2"/>
+            <flag name="fastOutSlowIn" value="3"/>
+            <flag name="decelerate" value="4"/>
+            <flag name="path" value="5"/>
+            <flag name="cycle" value="6"/>
+            <flag name="anticipate" value="7"/>
+            <flag name="accelerateDecelerate" value="8"/>
+            <flag name="accelerate" value="9"/>
+            <flag name="anticipateOvershoot" value="10"/>
+            <flag name="fastOutLinearIn" value="11"/>
+            <flag name="linearOutSlowIn" value="12"/>
+            <flag name="overshoot" value="13"/>
+        </attr>
+        <attr name="rrbg_animateImages_exitDuration" format="integer"/>
+        <attr name="rrbg_animateImages_exit" format="integer">
+            <flag name="bounce" value="1"/>
+            <flag name="linear" value="2"/>
+            <flag name="fastOutSlowIn" value="3"/>
+            <flag name="decelerate" value="4"/>
+            <flag name="path" value="5"/>
+            <flag name="cycle" value="6"/>
+            <flag name="anticipate" value="7"/>
+            <flag name="accelerateDecelerate" value="8"/>
+            <flag name="accelerate" value="9"/>
+            <flag name="anticipateOvershoot" value="10"/>
+            <flag name="fastOutLinearIn" value="11"/>
+            <flag name="linearOutSlowIn" value="12"/>
+            <flag name="overshoot" value="13"/>
+        </attr>
+
+        <attr name="rrbg_animateTextsScale" format="float"/>
+        <attr name="rrbg_animateTexts_enterDuration" format="integer"/>
+        <attr name="rrbg_animateTexts_enter" format="integer">
+            <flag name="bounce" value="1"/>
+            <flag name="linear" value="2"/>
+            <flag name="fastOutSlowIn" value="3"/>
+            <flag name="decelerate" value="4"/>
+            <flag name="path" value="5"/>
+            <flag name="cycle" value="6"/>
+            <flag name="anticipate" value="7"/>
+            <flag name="accelerateDecelerate" value="8"/>
+            <flag name="accelerate" value="9"/>
+            <flag name="anticipateOvershoot" value="10"/>
+            <flag name="fastOutLinearIn" value="11"/>
+            <flag name="linearOutSlowIn" value="12"/>
+            <flag name="overshoot" value="13"/>
+        </attr>
+        <attr name="rrbg_animateTexts_exitDuration" format="integer"/>
+        <attr name="rrbg_animateTexts_exit" format="integer">
+            <flag name="bounce" value="1"/>
+            <flag name="linear" value="2"/>
+            <flag name="fastOutSlowIn" value="3"/>
+            <flag name="decelerate" value="4"/>
+            <flag name="path" value="5"/>
+            <flag name="cycle" value="6"/>
+            <flag name="anticipate" value="7"/>
+            <flag name="accelerateDecelerate" value="8"/>
+            <flag name="accelerate" value="9"/>
+            <flag name="anticipateOvershoot" value="10"/>
+            <flag name="fastOutLinearIn" value="11"/>
+            <flag name="linearOutSlowIn" value="12"/>
+            <flag name="overshoot" value="13"/>
+        </attr>
+    </declare-styleable>
+
+</resources>
