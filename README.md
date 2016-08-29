@@ -98,3 +98,7 @@ dependencies {
   </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 ```
 
+## License
+
+This project is licensed under the Apache License Version 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+
