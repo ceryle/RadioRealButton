@@ -84,24 +84,32 @@ dependencies {
             app:rrbg_dividerSize="1dp"
             app:rrbg_selectorColor="@color/red_700"
             app:rrbg_selectorSize="6dp"
-            app:rrbg_radius="24dp"
+            app:rrbg_radius="10dp"
             app:rrbg_shadow="true"
             app:rrbg_shadowElevation="2dp"
             app:rrbg_shadowMargin="3dp"
-            ...
-            ...
+            app:rrbg_animateTexts_enter="bounce"
+            app:rrbg_animateImages_exit="decelerate">
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:rrb_image="@drawable/b4"
+                app:rrb_image="@mipmap/ic_launcher"
                 app:rrb_imageHeight="36dp"
                 app:rrb_imageWidth="36dp"
                 app:rrb_ripple="true"
                 app:rrb_rippleColor="@color/black"
-                app:rrb_text="Bruce"
+                app:rrb_text="Button 1"
                 app:rrb_textColor="@color/black"/>
-            ...
-            ...
+            <co.ceryle.radiorealbutton.library.RadioRealButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rrb_image="@mipmap/ic_launcher"
+                app:rrb_imageHeight="36dp"
+                app:rrb_imageWidth="36dp"
+                app:rrb_ripple="true"
+                app:rrb_rippleColor="@color/black"
+                app:rrb_text="Button 2"
+                app:rrb_textColor="@color/black"/>
   </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 ```
 
