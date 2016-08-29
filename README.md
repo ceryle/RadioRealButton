@@ -88,8 +88,8 @@ dependencies {
             app:rrbg_shadow="true"
             app:rrbg_shadowElevation="2dp"
             app:rrbg_shadowMargin="3dp"
-            app:rrbg_animateTexts_enter="bounce"
-            app:rrbg_animateImages_exit="decelerate">
+            app:rrbg_animateTexts_enter="overshoot"
+            app:rrbg_animateImages_enter="overshoot">
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
