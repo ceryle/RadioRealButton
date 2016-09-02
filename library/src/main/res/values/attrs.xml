@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RadioRealButton">
-        <attr name="rrb_image" format="integer"/>
+        <attr name="rrb_image" format="reference"/>
         <attr name="rrb_imageTint" format="color"/>
         <attr name="rrb_imageWidth" format="dimension"/>
         <attr name="rrb_imageHeight" format="dimension"/>

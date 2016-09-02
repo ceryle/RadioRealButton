@@ -153,7 +153,6 @@ public class RadioRealButtonGroup extends RelativeLayout {
             add(LinearInterpolator.class);
             add(FastOutSlowInInterpolator.class);
             add(DecelerateInterpolator.class);
-            add(PathInterpolator.class);
             add(CycleInterpolator.class);
             add(AnticipateInterpolator.class);
             add(AccelerateDecelerateInterpolator.class);

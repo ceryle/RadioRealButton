@@ -71,11 +71,16 @@
         android:layout_margin="10dp"
 
         app:rrbg_animateImagesScale="0.2"
-        app:rrbg_animateImages_enter="overshoot"
 
+        app:rrbg_animateImages_enter="overshoot"
         app:rrbg_animateImages_enterDuration="500"
+
         app:rrbg_animateTexts_enter="overshoot"
         app:rrbg_animateTexts_enterDuration="500"
+
+
+        app:rrbg_animateImages_exit="overshoot"
+        app:rrbg_animateImages_exitDuration="500"
 
         app:rrbg_bottomLineBringToFront="true"
         app:rrbg_bottomLineColor="@color/blue_300"
@@ -319,7 +324,7 @@
 
         app:rrbg_animateImages_exit="overshoot"
 
-        app:rrbg_animateImages_exitDuration="500"
+        app:rrbg_animateImages_exitDuration="1500"
         app:rrbg_animateSelector="bounce"
         app:rrbg_bottomLineColor="@color/white"
         app:rrbg_buttonsPadding="8dp"
