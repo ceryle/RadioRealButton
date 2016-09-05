@@ -96,6 +96,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
         setSelectorAttrs();
         initInterpolations();
         setContainerAttrs();
+        setGroupBackgroundColor();
     }
 
     private void setCardViewAttrs() {
@@ -180,13 +181,16 @@ public class RadioRealButtonGroup extends RelativeLayout {
         }
     }
 
-    private int dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts, animateImagesDuration, animateTextsDuration, animateSelector, animateSelectorDuration, animateImagesExit, animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, position, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom;
+    private int dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts, animateImagesDuration, animateTextsDuration
+            , animateSelector, animateSelectorDuration, animateImagesExit, animateImagesExitDuration, animateTextsExit
+            , animateTextsExitDuration, position, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop
+            , buttonPaddingBottom, groupBackgroundColor;
 
     private float bottomLineSize, dividerSize, dividerRadius, dividerPadding, shadowElevation, selectorSize,
             shadowMargin, shadowMarginTop, shadowMarginBottom, shadowMarginLeft, shadowMarginRight, radius, bottomLineRadius, selectorRadius, animateImagesScale, animateTextsScale;
 
     private boolean shadow, bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine,
-            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom;
+            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasGroupBackgroundColor;
 
     @SuppressWarnings("ResourceType")
     private void getAttributes(AttributeSet attrs) {
@@ -248,9 +252,16 @@ public class RadioRealButtonGroup extends RelativeLayout {
         hasPaddingTop = typedArray.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingTop);
         hasPaddingBottom = typedArray.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingBottom);
 
+        groupBackgroundColor = typedArray.getColor(R.styleable.RadioRealButtonGroup_rrbg_backgroundColor, Color.WHITE);
+        hasGroupBackgroundColor = typedArray.hasValue(R.styleable.RadioRealButtonGroup_rrbg_backgroundColor);
+
         typedArray.recycle();
     }
 
+    public void setGroupBackgroundColor(){
+        if(hasGroupBackgroundColor)
+            container.setBackgroundColor(groupBackgroundColor);
+    }
 
     private void setButtonsPadding(int position) {
         if (hasPadding)
