@@ -18,8 +18,6 @@ package co.ceryle.radiorealbutton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
-import co.ceryle.radiorealbutton.library.RadioRealButton;
 import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +34,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Clicked position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
-
-        RadioRealButton radioRealButton;
     }
 }

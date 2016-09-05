@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton.library;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -23,7 +23,6 @@ import android.os.Build;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -38,7 +37,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.view.animation.PathInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -78,7 +76,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
     private ArrayList<RadioRealButton> radioRealButtons;
 
     private View movingView, viewBottomLine;
-    private CardView cardView;
+    private RoundedCornerLayout cardView;
 
     private LinearLayout container;
 
@@ -91,7 +89,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
         container = (LinearLayout) view.findViewById(R.id.ceryle_radioRealButtonGroup_container);
         movingView = view.findViewById(R.id.ceryle_radioRealButtonGroup_movingView);
         viewBottomLine = view.findViewById(R.id.ceryle_radioRealButtonGroup_bottomLine);
-        cardView = (CardView) view.findViewById(R.id.ceryle_radioRealButtonGroup_cardView);
+        cardView = (RoundedCornerLayout) view.findViewById(R.id.ceryle_radioRealButtonGroup_frameLayout);
 
         setCardViewAttrs();
         setBottomLineAttrs();
@@ -102,11 +100,10 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
     private void setCardViewAttrs() {
         if (shadow) {
-            cardView.setCardElevation(shadowElevation);
-        } else {
-            cardView.setCardElevation(0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                cardView.setElevation(shadowElevation);
+            }
         }
-
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) cardView.getLayoutParams();
         if (shadowMargin != -1) {
             layoutParams.setMargins((int) shadowMargin, (int) shadowMargin, (int) shadowMargin, (int) shadowMargin);
@@ -316,7 +313,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (changed) {
-            if (radioRealButtons.size() > 0){
+            if (radioRealButtons.size() > 0) {
                 buttonWidth = radioRealButtons.get(0).getWidth();
                 if (movingView != null) {
                     movingView.getLayoutParams().width = buttonWidth;
@@ -333,6 +330,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
     private int lastPosition = 0;
+
     private void toggleSegmentedButton(int i) {
         toPositionMovingView(i, movingView);
         if (null != onClickedButtonPosition)

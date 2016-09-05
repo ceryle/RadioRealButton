@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/white"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="co.ceryle.radiorealbutton.MainActivity">
 
@@ -151,9 +151,9 @@
         android:orientation="horizontal">
 
         <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
+            android:layout_margin="10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             app:rrbg_bottomLineSize="0dp"
             app:rrbg_dividerColor="@color/black"

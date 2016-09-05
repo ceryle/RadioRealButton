@@ -11,8 +11,7 @@
         android:id="@+id/ceryle_radioRealButton_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/ceryle_radioRealButton_textView"
