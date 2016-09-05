@@ -146,10 +146,9 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
     private void initInterpolations() {
         ArrayList<Class> interpolatorList = new ArrayList<Class>() {{
-            add(FastOutSlowInInterpolator.class); // default
+            add(FastOutSlowInInterpolator.class);
             add(BounceInterpolator.class);
             add(LinearInterpolator.class);
-            add(FastOutSlowInInterpolator.class);
             add(DecelerateInterpolator.class);
             add(CycleInterpolator.class);
             add(AnticipateInterpolator.class);

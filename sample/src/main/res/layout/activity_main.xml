@@ -12,14 +12,14 @@
     <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
 
 
-        app:rrbg_backgroundColor="@color/white"
-
         android:id="@+id/radioRealButtonGroup_1"
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
+
+        app:rrbg_backgroundColor="@color/white"
 
         app:rrbg_bottomLineColor="@color/grey_600"
         app:rrbg_bottomLineSize="2dp"
@@ -69,22 +69,22 @@
 
 
     <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
-        app:rrbg_backgroundColor="#FFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-
         app:rrbg_animateImagesScale="0.2"
 
         app:rrbg_animateImages_enter="overshoot"
+
         app:rrbg_animateImages_enterDuration="500"
-
         app:rrbg_animateImages_exit="overshoot"
+
         app:rrbg_animateImages_exitDuration="500"
-
-
         app:rrbg_animateTexts_enter="overshoot"
+
+
         app:rrbg_animateTexts_enterDuration="500"
+        app:rrbg_backgroundColor="#FFF"
 
         app:rrbg_bottomLineBringToFront="true"
         app:rrbg_bottomLineColor="@color/blue_300"
@@ -246,27 +246,30 @@
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
 
+            app:rrbg_backgroundColor="@color/white"
             app:rrbg_bottomLineBringToFront="true"
+
             app:rrbg_bottomLineColor="@color/red_400"
-
             app:rrbg_bottomLineRadius="2dp"
+
             app:rrbg_bottomLineSize="2dp"
-
             app:rrbg_buttonsPaddingBottom="8dp"
-            app:rrbg_buttonsPaddingTop="6dp"
 
+            app:rrbg_buttonsPaddingTop="6dp"
             app:rrbg_dividerColor="@color/red_400"
             app:rrbg_dividerPadding="10dp"
             app:rrbg_dividerRadius="0dp"
+
             app:rrbg_dividerSize="1dp"
-
             app:rrbg_radius="2dp"
-            app:rrbg_selectorAboveOfBottomLine="true"
 
+            app:rrbg_selectorAboveOfBottomLine="true"
             app:rrbg_selectorBringToFront="true"
             app:rrbg_selectorColor="@color/green_400"
             app:rrbg_selectorRadius="0dp"
             app:rrbg_selectorSize="6dp"
+
+
             app:rrbg_shadow="true"
 
             app:rrbg_shadowElevation="4dp"
