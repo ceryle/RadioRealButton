@@ -114,6 +114,22 @@ dependencies {
   </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 ```
 
+##### Listener Example
+```java
+final RadioRealButton button1 = (RadioRealButton) findViewById(R.id.button1);
+final RadioRealButton button2 = (RadioRealButton) findViewById(R.id.button2);
+
+RadioRealButtonGroup group = (RadioRealButtonGroup) findViewById(R.id.group);
+group.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
+      @Override
+      public void onClickedButtonPosition(int position) {
+            Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
+            button1.getImageView().setImageResource(R.drawable.b1);
+            button2.getImageView().setImageResource(R.drawable.b2);
+      }
+});
+```
+
 ## License
 
 This project is licensed under the Apache License Version 2.0 - see the [LICENSE.md](LICENSE.md) file for details
