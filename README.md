@@ -3,6 +3,7 @@
 
 ![poster](https://cloud.githubusercontent.com/assets/20969019/18050549/f8399734-6df7-11e6-9a2c-511a22956193.png)
 
+Radio Real Button is a substitute of the Radio Button. Its purpose is to give more elegant view for Android users.
 
 ##Preview
 ![1](https://cloud.githubusercontent.com/assets/20969019/18049713/8c16bcee-6df2-11e6-90c1-e39571abb9fb.gif)
@@ -74,7 +75,9 @@ dependencies {
 | custom:rrbg_dividerSize			| `dimension`	         | Set divider size for the line between buttons |
 | custom:rrbg_dividerRadius			| `dimension`	         | Set divider radius to make it rounder |
 
-#### Example
+#### Examples
+
+##### In Xml Layout
 
 ```xml
   <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
