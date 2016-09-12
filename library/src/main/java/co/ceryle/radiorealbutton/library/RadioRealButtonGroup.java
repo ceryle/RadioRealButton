@@ -18,12 +18,14 @@ package co.ceryle.radiorealbutton.library;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,10 +182,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
         }
     }
 
-    private int dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts, animateImagesDuration, animateTextsDuration
-            , animateSelector, animateSelectorDuration, animateImagesExit, animateImagesExitDuration, animateTextsExit
-            , animateTextsExitDuration, position, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop
-            , buttonPaddingBottom, groupBackgroundColor;
+    private int dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts, animateImagesDuration, animateTextsDuration, animateSelector, animateSelectorDuration, animateImagesExit, animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, position, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor;
 
     private float bottomLineSize, dividerSize, dividerRadius, dividerPadding, shadowElevation, selectorSize,
             shadowMargin, shadowMarginTop, shadowMarginBottom, shadowMarginLeft, shadowMarginRight, radius, bottomLineRadius, selectorRadius, animateImagesScale, animateTextsScale;
@@ -257,8 +256,8 @@ public class RadioRealButtonGroup extends RelativeLayout {
         typedArray.recycle();
     }
 
-    public void setGroupBackgroundColor(){
-        if(hasGroupBackgroundColor)
+    public void setGroupBackgroundColor() {
+        if (hasGroupBackgroundColor)
             container.setBackgroundColor(groupBackgroundColor);
     }
 
@@ -274,19 +273,16 @@ public class RadioRealButtonGroup extends RelativeLayout {
     private void setAnimationAttrs() {
         if (radioRealButtons.size() > 0 && !isAnimationAlreadySet) {
             isAnimationAlreadySet = true;
-            radioRealButtons.get(position).post(new Runnable() {
-                @Override
-                public void run() {
-                    if (animateImages != 0)
-                        radioRealButtons.get(position).bounceImage(animateImagesScale, 0, interpolatorImage);
-                    if (animateTexts != 0)
-                        radioRealButtons.get(position).bounceText(animateTextsScale, 0, interpolatorText);
 
-                    movingView.animate()
-                            .translationX(buttonWidth * position + dividerSize * position)
-                            .setDuration(0);
-                }
-            });
+            if (animateImages != 0)
+                radioRealButtons.get(position).bounceImage(animateImagesScale, 0, interpolatorImage);
+            if (animateTexts != 0)
+                radioRealButtons.get(position).bounceText(animateTextsScale, 0, interpolatorText);
+
+            movingView.animate()
+                    .translationX(buttonWidth * position + dividerSize * position)
+                    .setDuration(0);
+
         }
     }
 
@@ -308,9 +304,6 @@ public class RadioRealButtonGroup extends RelativeLayout {
             });
             radioRealButtons.add(radioRealButton);
 
-            if (position == radioRealButtons.size() - 1) {
-                setAnimationAttrs();
-            }
             setButtonsPadding(c);
 
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
@@ -325,12 +318,21 @@ public class RadioRealButtonGroup extends RelativeLayout {
         if (changed) {
             if (radioRealButtons.size() > 0) {
                 buttonWidth = radioRealButtons.get(0).getWidth();
-                if (movingView != null) {
-                    movingView.getLayoutParams().width = buttonWidth;
-                }
+                movingView.getLayoutParams().width = buttonWidth;
+
+                setAnimationAttrs();
             }
         }
     }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if (movingView != null) {
+            movingView.requestLayout();
+        }
+    }
+
 
     private void toPositionMovingView(int atWhichButton, View view) {
         view.animate()
