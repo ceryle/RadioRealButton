@@ -18,6 +18,7 @@
 
         <attr name="rrb_text" format="string"/>
         <attr name="rrb_textColor" format="color"/>
+        <attr name="rrb_marginBetweenImgAndText" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="RadioRealButtonGroup">

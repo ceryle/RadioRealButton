@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -92,23 +93,24 @@ public class RadioRealButton extends LinearLayout {
         void onClickedButton(View view);
     }
 
-    private int buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor, buttonRippleColor, buttonImageWidth
-            , buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom;
+    private int buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor, buttonRippleColor, buttonImageWidth, buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, marginBetweenImgAndText;
 
     private String buttonText;
-    private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint;
+    private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint, hasImage, hasText;
 
     private void getAttributes(AttributeSet attrs) {
         /** GET ATTRIBUTES FROM XML **/
         // Custom attributes
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButton);
 
+        hasImage = typedArray.hasValue(R.styleable.RadioRealButton_rrb_image);
         buttonImage = typedArray.getResourceId(R.styleable.RadioRealButton_rrb_image, -1);
         buttonImageTint = typedArray.getColor(R.styleable.RadioRealButton_rrb_imageTint, 0);
         hasButtonImageTint = typedArray.hasValue(R.styleable.RadioRealButton_rrb_imageTint);
         buttonImageWidth = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_imageWidth, -1);
         buttonImageHeight = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_imageHeight, -1);
 
+        hasText = typedArray.hasValue(R.styleable.RadioRealButton_rrb_text);
         buttonText = typedArray.getString(R.styleable.RadioRealButton_rrb_text);
         buttonTextColor = typedArray.getColor(R.styleable.RadioRealButton_rrb_textColor, Color.BLACK);
 
@@ -128,6 +130,8 @@ public class RadioRealButton extends LinearLayout {
         hasPaddingRight = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingRight);
         hasPaddingTop = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingTop);
         hasPaddingBottom = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingBottom);
+
+        marginBetweenImgAndText = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_marginBetweenImgAndText, 4);
 
         typedArray.recycle();
     }
@@ -157,6 +161,7 @@ public class RadioRealButton extends LinearLayout {
             setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
         else
             setButtonPadding(30);
+
 
         int backgroundColor = Color.WHITE;
         int rippleColor = Color.GRAY;
@@ -197,11 +202,33 @@ public class RadioRealButton extends LinearLayout {
 
 
     public void setButtonPadding(int buttonPaddingLeft, int buttonPaddingTop, int buttonPaddingRight, int buttonPaddingBottom) {
-        container.setPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+        if (hasImage) {
+            if(!hasText)
+                marginBetweenImgAndText = buttonPaddingRight;
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
+            p.setMargins(buttonPaddingLeft, buttonPaddingTop, marginBetweenImgAndText, buttonPaddingBottom);
+        }
+        if (hasText) {
+            if(!hasImage)
+                marginBetweenImgAndText = buttonPaddingLeft;
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) textView.getLayoutParams();
+            p.setMargins(marginBetweenImgAndText, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+        }
     }
 
     public void setButtonPadding(int buttonPadding) {
-        container.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+        if (hasImage) {
+            if(!hasText)
+                marginBetweenImgAndText = buttonPadding;
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
+            p.setMargins(buttonPadding, buttonPadding, marginBetweenImgAndText, buttonPadding);
+        }
+        if (hasText) {
+            if(!hasImage)
+                marginBetweenImgAndText = buttonPadding;
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) textView.getLayoutParams();
+            p.setMargins(marginBetweenImgAndText, buttonPadding, buttonPadding, buttonPadding);
+        }
     }
 
     protected void bounceImage(float scale, int duration, Interpolator interpolator) {

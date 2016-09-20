@@ -279,10 +279,8 @@ public class RadioRealButtonGroup extends RelativeLayout {
             if (animateTexts != 0)
                 radioRealButtons.get(position).bounceText(animateTextsScale, 0, interpolatorText);
 
-            movingView.animate()
-                    .translationX(buttonWidth * position + dividerSize * position)
-                    .setDuration(0);
-
+            movingView.setX(buttonWidth * position + dividerSize * position);
+            lastPosition = position;
         }
     }
 

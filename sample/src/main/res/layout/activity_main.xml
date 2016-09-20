@@ -11,7 +11,6 @@
 
     <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
 
-
         android:id="@+id/radioRealButtonGroup_1"
 
         android:layout_width="match_parent"
@@ -93,7 +92,7 @@
         app:rrbg_bottomLineSize="0dp"
 
         app:rrbg_buttonsPaddingBottom="8dp"
-        app:rrbg_buttonsPaddingTop="6dp"
+        app:rrbg_buttonsPaddingTop="8dp"
 
         app:rrbg_dividerColor="@color/black"
         app:rrbg_dividerPadding="10dp"
@@ -115,6 +114,8 @@
         <co.ceryle.radiorealbutton.library.RadioRealButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            app:rrb_buttonPadding="50dp"
 
             app:rrb_image="@drawable/b4"
             app:rrb_imageHeight="36dp"
@@ -269,7 +270,6 @@
             app:rrbg_selectorRadius="0dp"
             app:rrbg_selectorSize="6dp"
 
-
             app:rrbg_shadow="true"
 
             app:rrbg_shadowElevation="4dp"
@@ -278,7 +278,6 @@
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 app:rrb_image="@drawable/b9"
                 app:rrb_imageHeight="36dp"
                 app:rrb_imageWidth="36dp"
@@ -287,7 +286,6 @@
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 app:rrb_image="@drawable/b8"
                 app:rrb_imageHeight="36dp"
                 app:rrb_imageWidth="36dp"
@@ -296,7 +294,6 @@
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 app:rrb_image="@drawable/b11"
                 app:rrb_imageHeight="36dp"
                 app:rrb_imageWidth="36dp"
@@ -305,7 +302,6 @@
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 app:rrb_image="@drawable/b13"
                 app:rrb_imageHeight="36dp"
                 app:rrb_imageWidth="36dp"
