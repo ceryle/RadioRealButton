@@ -256,4 +256,184 @@ public class RadioRealButton extends LinearLayout {
     public void setBackgroundColor(int backgroundColor) {
         container.setBackgroundColor(backgroundColor);
     }
+
+    public int getButtonImage() {
+        return buttonImage;
+    }
+
+    public void setButtonImage(int buttonImage) {
+        this.buttonImage = buttonImage;
+    }
+
+    public int getButtonImageTint() {
+        return buttonImageTint;
+    }
+
+    public void setButtonImageTint(int buttonImageTint) {
+        this.buttonImageTint = buttonImageTint;
+    }
+
+    public int getButtonTextColor() {
+        return buttonTextColor;
+    }
+
+    public void setButtonTextColor(int buttonTextColor) {
+        this.buttonTextColor = buttonTextColor;
+    }
+
+    public int getButtonBackgroundColor() {
+        return buttonBackgroundColor;
+    }
+
+    public void setButtonBackgroundColor(int buttonBackgroundColor) {
+        this.buttonBackgroundColor = buttonBackgroundColor;
+    }
+
+    public int getButtonRippleColor() {
+        return buttonRippleColor;
+    }
+
+    public void setButtonRippleColor(int buttonRippleColor) {
+        this.buttonRippleColor = buttonRippleColor;
+    }
+
+    public int getButtonImageWidth() {
+        return buttonImageWidth;
+    }
+
+    public void setButtonImageWidth(int buttonImageWidth) {
+        this.buttonImageWidth = buttonImageWidth;
+    }
+
+    public int getButtonImageHeight() {
+        return buttonImageHeight;
+    }
+
+    public void setButtonImageHeight(int buttonImageHeight) {
+        this.buttonImageHeight = buttonImageHeight;
+    }
+
+    public int getButtonPadding() {
+        return buttonPadding;
+    }
+
+    public int getButtonPaddingLeft() {
+        return buttonPaddingLeft;
+    }
+
+    public void setButtonPaddingLeft(int buttonPaddingLeft) {
+        this.buttonPaddingLeft = buttonPaddingLeft;
+    }
+
+    public int getButtonPaddingRight() {
+        return buttonPaddingRight;
+    }
+
+    public void setButtonPaddingRight(int buttonPaddingRight) {
+        this.buttonPaddingRight = buttonPaddingRight;
+    }
+
+    public int getButtonPaddingTop() {
+        return buttonPaddingTop;
+    }
+
+    public void setButtonPaddingTop(int buttonPaddingTop) {
+        this.buttonPaddingTop = buttonPaddingTop;
+    }
+
+    public int getButtonPaddingBottom() {
+        return buttonPaddingBottom;
+    }
+
+    public void setButtonPaddingBottom(int buttonPaddingBottom) {
+        this.buttonPaddingBottom = buttonPaddingBottom;
+    }
+
+    public int getMarginBetweenImgAndText() {
+        return marginBetweenImgAndText;
+    }
+
+    public void setMarginBetweenImgAndText(int marginBetweenImgAndText) {
+        this.marginBetweenImgAndText = marginBetweenImgAndText;
+    }
+
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    public void setButtonText(String buttonText) {
+        this.buttonText = buttonText;
+    }
+
+    public boolean isButtonRipple() {
+        return buttonRipple;
+    }
+
+    public void setButtonRipple(boolean buttonRipple) {
+        this.buttonRipple = buttonRipple;
+    }
+
+    public boolean isHasPadding() {
+        return hasPadding;
+    }
+
+    public void setHasPadding(boolean hasPadding) {
+        this.hasPadding = hasPadding;
+    }
+
+    public boolean isHasPaddingLeft() {
+        return hasPaddingLeft;
+    }
+
+    public void setHasPaddingLeft(boolean hasPaddingLeft) {
+        this.hasPaddingLeft = hasPaddingLeft;
+    }
+
+    public boolean isHasPaddingRight() {
+        return hasPaddingRight;
+    }
+
+    public void setHasPaddingRight(boolean hasPaddingRight) {
+        this.hasPaddingRight = hasPaddingRight;
+    }
+
+    public boolean isHasPaddingTop() {
+        return hasPaddingTop;
+    }
+
+    public void setHasPaddingTop(boolean hasPaddingTop) {
+        this.hasPaddingTop = hasPaddingTop;
+    }
+
+    public boolean isHasPaddingBottom() {
+        return hasPaddingBottom;
+    }
+
+    public void setHasPaddingBottom(boolean hasPaddingBottom) {
+        this.hasPaddingBottom = hasPaddingBottom;
+    }
+
+    public boolean isHasButtonImageTint() {
+        return hasButtonImageTint;
+    }
+
+    public void setHasButtonImageTint(boolean hasButtonImageTint) {
+        this.hasButtonImageTint = hasButtonImageTint;
+    }
+
+    public boolean isHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
+    }
+
+    public boolean isHasText() {
+        return hasText;
+    }
+
+    public void setHasText(boolean hasText) {
+        this.hasText = hasText;
+    }
 }

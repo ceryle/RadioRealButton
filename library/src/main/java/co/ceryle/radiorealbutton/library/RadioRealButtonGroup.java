@@ -279,8 +279,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
             if (animateTexts != 0)
                 radioRealButtons.get(position).bounceText(animateTextsScale, 0, interpolatorText);
 
-            movingView.setX(buttonWidth * position + dividerSize * position);
-            lastPosition = position;
+            setPosition(position);
         }
     }
 
@@ -537,5 +536,205 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
     public void setPosition(int position) {
         this.position = position;
+
+        movingView.setX(buttonWidth * position + dividerSize * position);
+        lastPosition = position;
+    }
+
+    public void setPositionWithAnimation(int position){
+        toggleSegmentedButton(position);
+    }
+
+    public int getPosition(){
+        return lastPosition;
+    }
+
+    public int getNumberOfButton(){
+        return radioRealButtons.size();
+    }
+
+
+    public int getButtonWidth() {
+        return buttonWidth;
+    }
+
+    public ArrayList<RadioRealButton> getRadioRealButtons() {
+        return radioRealButtons;
+    }
+
+    public Interpolator getInterpolatorImage() {
+        return interpolatorImage;
+    }
+
+    public Interpolator getInterpolatorText() {
+        return interpolatorText;
+    }
+
+    public Interpolator getInterpolatorSelector() {
+        return interpolatorSelector;
+    }
+
+    public Interpolator getInterpolatorImageExit() {
+        return interpolatorImageExit;
+    }
+
+    public Interpolator getInterpolatorTextExit() {
+        return interpolatorTextExit;
+    }
+
+    public int getDividerColor() {
+        return dividerColor;
+    }
+
+    public int getBottomLineColor() {
+        return bottomLineColor;
+    }
+
+    public int getSelectorColor() {
+        return selectorColor;
+    }
+
+    public int getAnimateImages() {
+        return animateImages;
+    }
+
+    public int getAnimateTexts() {
+        return animateTexts;
+    }
+
+    public int getAnimateImagesDuration() {
+        return animateImagesDuration;
+    }
+
+    public int getAnimateTextsDuration() {
+        return animateTextsDuration;
+    }
+
+    public int getAnimateSelector() {
+        return animateSelector;
+    }
+
+    public int getAnimateSelectorDuration() {
+        return animateSelectorDuration;
+    }
+
+    public int getAnimateImagesExit() {
+        return animateImagesExit;
+    }
+
+    public int getAnimateImagesExitDuration() {
+        return animateImagesExitDuration;
+    }
+
+    public int getAnimateTextsExit() {
+        return animateTextsExit;
+    }
+
+    public int getAnimateTextsExitDuration() {
+        return animateTextsExitDuration;
+    }
+
+    public int getButtonPadding() {
+        return buttonPadding;
+    }
+
+    public int getButtonPaddingLeft() {
+        return buttonPaddingLeft;
+    }
+
+    public int getButtonPaddingRight() {
+        return buttonPaddingRight;
+    }
+
+    public int getButtonPaddingTop() {
+        return buttonPaddingTop;
+    }
+
+    public int getButtonPaddingBottom() {
+        return buttonPaddingBottom;
+    }
+
+    public int getGroupBackgroundColor() {
+        return groupBackgroundColor;
+    }
+
+    public float getBottomLineSize() {
+        return bottomLineSize;
+    }
+
+    public float getDividerSize() {
+        return dividerSize;
+    }
+
+    public float getDividerRadius() {
+        return dividerRadius;
+    }
+
+    public float getDividerPadding() {
+        return dividerPadding;
+    }
+
+    public float getShadowElevation() {
+        return shadowElevation;
+    }
+
+    public float getSelectorSize() {
+        return selectorSize;
+    }
+
+    public float getShadowMargin() {
+        return shadowMargin;
+    }
+
+    public float getShadowMarginTop() {
+        return shadowMarginTop;
+    }
+
+    public float getShadowMarginBottom() {
+        return shadowMarginBottom;
+    }
+
+    public float getShadowMarginLeft() {
+        return shadowMarginLeft;
+    }
+
+    public float getShadowMarginRight() {
+        return shadowMarginRight;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public float getBottomLineRadius() {
+        return bottomLineRadius;
+    }
+
+    public float getSelectorRadius() {
+        return selectorRadius;
+    }
+
+    public float getAnimateImagesScale() {
+        return animateImagesScale;
+    }
+
+    public float getAnimateTextsScale() {
+        return animateTextsScale;
+    }
+
+    public boolean isShadow() {
+        return shadow;
+    }
+
+    public boolean isBottomLineBringToFront() {
+        return bottomLineBringToFront;
+    }
+
+    public boolean isSelectorBringToFront() {
+        return selectorBringToFront;
+    }
+
+    public boolean isSelectorAboveOfBottomLine() {
+        return selectorAboveOfBottomLine;
     }
 }

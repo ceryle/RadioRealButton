@@ -17,21 +17,39 @@ package co.ceryle.radiorealbutton;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 
 public class MainActivity extends AppCompatActivity {
+
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RadioRealButtonGroup rrbg1 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
+        final RadioRealButtonGroup rrbg1 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
         rrbg1.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {
                 Toast.makeText(MainActivity.this, "Clicked position: " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final Button b = (Button) findViewById(R.id.aaaaaaaa);
+        b.setTransformationMethod(null);
+        position = rrbg1.getPosition();
+        b.setText("Position: " +  position);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                position = ++position % rrbg1.getNumberOfButton();
+                rrbg1.setPositionWithAnimation(position);
+
+                b.setText("Position: " + rrbg1.getPosition());
             }
         });
     }
