@@ -34,7 +34,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v1.3'
+    compile 'com.github.ceryle:RadioRealButton:v1.4'
 }
 ```
 
