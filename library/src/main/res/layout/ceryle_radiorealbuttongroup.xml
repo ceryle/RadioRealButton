@@ -26,15 +26,13 @@
                 android:id="@+id/ceryle_radioRealButtonGroup_bottomLine"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_gravity="bottom"
-                android:background="@color/indigo_500"/>
+                android:layout_gravity="bottom"/>
 
             <View
                 android:id="@+id/ceryle_radioRealButtonGroup_movingView"
                 android:layout_width="0dp"
                 android:layout_height="4dp"
-                android:layout_gravity="bottom"
-                android:background="@color/indigo_500"/>
+                android:layout_gravity="bottom"/>
 
         </co.ceryle.radiorealbutton.library.RoundedCornerLayout>
 </LinearLayout>
