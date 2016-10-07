@@ -16,6 +16,8 @@ Radio Real Button is a substitute of the Radio Button. Its purpose is to give mo
 ![4](https://cloud.githubusercontent.com/assets/20969019/18049727/9f94a222-6df2-11e6-9271-83a4ad714703.gif)
 <br />
 ![5](https://cloud.githubusercontent.com/assets/20969019/18049726/9f8d4c8e-6df2-11e6-8819-94d82c305667.gif)
+<br />
+![6](https://cloud.githubusercontent.com/assets/20969019/19188191/c70cc8ec-8c98-11e6-9bae-9571e43f645e.gif)
 
 
 ## Installation
@@ -52,6 +54,10 @@ dependencies {
 | custom:rrb_backgroundColor        | `color`               | Background color, and it can be used with ripple  |
 | custom:rrb_text    		| `string`           | Set button's text  |
 | custom:rrb_textColor			| `color`	         | Change button's text color |
+| custom:rrb_imageRight			| `boolean`	         | Align image to right |
+| custom:rrb_imageTop			| `boolean`	         | Align image to top |
+| custom:rrb_imageBottom			| `boolean`	         | Align image to bottom |
+
 
 #### Radio Real Button Group
 | Option Name      				| Format                 | Description                              |
@@ -68,6 +74,7 @@ dependencies {
 | custom:rrbg_selectorSize			| `dimension`	         | Set height of selecter |
 | custom:rrbg_selectorRadius			| `dimension`	         | Set selector radius to make it rounder |
 | custom:rrbg_selectorAboveOfBottomLine			| `boolean`	         | Set true if selector is desired above of bottom line |
+| custom:rrbg_selectorTop			| `boolean`	         | Align selector to top |
 | custom:rrbg_shadow			| `boolean`	         | Set true for shadow |
 | custom:rrbg_shadowElevation			| `dimension`	         | Elevation value must be set for shadow |
 | custom:rrbg_shadowMargin			| `dimension`	         | Set margin to create space for shadow |
