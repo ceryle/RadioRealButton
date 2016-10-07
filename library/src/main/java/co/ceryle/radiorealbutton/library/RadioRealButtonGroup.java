@@ -129,15 +129,28 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
     private void setSelectorAttrs() {
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) movingView.getLayoutParams();
+        FrameLayout.LayoutParams selectorParams = (FrameLayout.LayoutParams) movingView.getLayoutParams();
+        FrameLayout.LayoutParams bottomLineParams = (FrameLayout.LayoutParams) viewBottomLine.getLayoutParams();
 
         if (selectorBringToFront)
             movingView.bringToFront();
 
-        layoutParams.height = (int) selectorSize;
+        selectorParams.height = (int) selectorSize;
+
+        int topMargin = 0, bottomMargin = 0;
+
+        if (selectorTop) {
+            selectorParams.gravity = Gravity.TOP;
+            bottomLineParams.gravity = Gravity.TOP;
+            topMargin = (int) bottomLineSize;
+        } else {
+            selectorParams.gravity = Gravity.BOTTOM;
+            bottomLineParams.gravity = Gravity.BOTTOM;
+            bottomMargin = (int) bottomLineSize;
+        }
 
         if (selectorAboveOfBottomLine) {
-            layoutParams.setMargins(0, 0, 0, (int) bottomLineSize);
+            selectorParams.setMargins(0, topMargin, 0, bottomMargin);
         }
 
         RoundHelper.makeRound(movingView, selectorColor, (int) selectorRadius, (int) selectorRadius);
@@ -253,8 +266,13 @@ public class RadioRealButtonGroup extends RelativeLayout {
         groupBackgroundColor = typedArray.getColor(R.styleable.RadioRealButtonGroup_rrbg_backgroundColor, Color.WHITE);
         hasGroupBackgroundColor = typedArray.hasValue(R.styleable.RadioRealButtonGroup_rrbg_backgroundColor);
 
+        selectorTop = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorTop, false);
+        selectorBottom = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorBottom, true);
+
         typedArray.recycle();
     }
+
+    private boolean selectorTop, selectorBottom;
 
     public void setGroupBackgroundColor() {
         if (hasGroupBackgroundColor)
@@ -541,15 +559,15 @@ public class RadioRealButtonGroup extends RelativeLayout {
         lastPosition = position;
     }
 
-    public void setPositionWithAnimation(int position){
+    public void setPositionWithAnimation(int position) {
         toggleSegmentedButton(position);
     }
 
-    public int getPosition(){
+    public int getPosition() {
         return lastPosition;
     }
 
-    public int getNumberOfButton(){
+    public int getNumberOfButton() {
         return radioRealButtons.size();
     }
 

@@ -19,9 +19,17 @@
         <attr name="rrb_text" format="string"/>
         <attr name="rrb_textColor" format="color"/>
         <attr name="rrb_marginBetweenImgAndText" format="dimension"/>
+
+        <attr name="rrb_imageLeft" format="boolean"/>
+        <attr name="rrb_imageRight" format="boolean"/>
+        <attr name="rrb_imageTop" format="boolean"/>
+        <attr name="rrb_imageBottom" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="RadioRealButtonGroup">
+        <attr name="rrbg_selectorTop" format="boolean"/>
+        <attr name="rrbg_selectorBottom" format="boolean"/>
+
         <attr name="rrbg_buttonsPadding" format="dimension"/>
         <attr name="rrbg_buttonsPaddingLeft" format="dimension"/>
         <attr name="rrbg_buttonsPaddingRight" format="dimension"/>

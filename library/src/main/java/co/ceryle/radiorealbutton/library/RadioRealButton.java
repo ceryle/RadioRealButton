@@ -98,6 +98,8 @@ public class RadioRealButton extends LinearLayout {
     private String buttonText;
     private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint, hasImage, hasText;
 
+
+    private boolean imageLeft, imageRight, imageTop, imageBottom;
     private void getAttributes(AttributeSet attrs) {
         /** GET ATTRIBUTES FROM XML **/
         // Custom attributes
@@ -132,6 +134,11 @@ public class RadioRealButton extends LinearLayout {
         hasPaddingBottom = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingBottom);
 
         marginBetweenImgAndText = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_marginBetweenImgAndText, 4);
+
+        imageLeft = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageLeft, true);
+        imageRight = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageRight, false);
+        imageTop = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageTop, false);
+        imageBottom = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageBottom, false);
 
         typedArray.recycle();
     }
