@@ -281,7 +281,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
     private void setButtonsPadding(int position) {
         if (hasPadding)
-            radioRealButtons.get(position).setButtonPadding(buttonPadding);
+            radioRealButtons.get(position).setButtonPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
         else if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
             radioRealButtons.get(position).setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
     }

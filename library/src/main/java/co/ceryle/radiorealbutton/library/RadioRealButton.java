@@ -21,6 +21,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -100,6 +101,7 @@ public class RadioRealButton extends LinearLayout {
 
 
     private boolean imageLeft, imageRight, imageTop, imageBottom;
+
     private void getAttributes(AttributeSet attrs) {
         /** GET ATTRIBUTES FROM XML **/
         // Custom attributes
@@ -133,7 +135,7 @@ public class RadioRealButton extends LinearLayout {
         hasPaddingTop = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingTop);
         hasPaddingBottom = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingBottom);
 
-        marginBetweenImgAndText = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_marginBetweenImgAndText, 4);
+        marginBetweenImgAndText = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_marginBetweenImageAndText, 4);
 
         imageLeft = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageLeft, true);
         imageRight = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageRight, false);
@@ -154,6 +156,15 @@ public class RadioRealButton extends LinearLayout {
 
         if (buttonImageWidth != -1)
             setImageSizePixel(buttonImageWidth, buttonImageHeight);
+
+
+        if (imageRight || imageBottom) {
+            container.removeViewAt(0);
+            container.addView(imageView, 1);
+        }
+
+        if ((imageTop || imageBottom) && hasText && hasImage)
+            container.setOrientation(VERTICAL);
     }
 
     private void setTextAttrs() {
@@ -163,11 +174,11 @@ public class RadioRealButton extends LinearLayout {
 
     private void setOtherAttrs() {
         if (hasPadding)
-            setButtonPadding(buttonPadding);
+            setButtonPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
         else if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
             setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
         else
-            setButtonPadding(30);
+            setButtonPadding(30, 30, 30, 30);
 
 
         int backgroundColor = Color.WHITE;
@@ -207,34 +218,37 @@ public class RadioRealButton extends LinearLayout {
         textView.setText(text);
     }
 
-
     public void setButtonPadding(int buttonPaddingLeft, int buttonPaddingTop, int buttonPaddingRight, int buttonPaddingBottom) {
-        if (hasImage) {
-            if(!hasText)
-                marginBetweenImgAndText = buttonPaddingRight;
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
-            p.setMargins(buttonPaddingLeft, buttonPaddingTop, marginBetweenImgAndText, buttonPaddingBottom);
-        }
-        if (hasText) {
-            if(!hasImage)
-                marginBetweenImgAndText = buttonPaddingLeft;
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) textView.getLayoutParams();
-            p.setMargins(marginBetweenImgAndText, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
-        }
-    }
+        ViewGroup.MarginLayoutParams imageParams = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
+        ViewGroup.MarginLayoutParams textParams = (ViewGroup.MarginLayoutParams) textView.getLayoutParams();
 
-    public void setButtonPadding(int buttonPadding) {
         if (hasImage) {
-            if(!hasText)
-                marginBetweenImgAndText = buttonPadding;
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
-            p.setMargins(buttonPadding, buttonPadding, marginBetweenImgAndText, buttonPadding);
+            if (!hasText) {
+                imageParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+            } else {
+                if (imageRight)
+                    imageParams.setMargins(marginBetweenImgAndText, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+                else if (imageTop)
+                    imageParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, marginBetweenImgAndText);
+                else if (imageBottom)
+                    imageParams.setMargins(buttonPaddingLeft, marginBetweenImgAndText, buttonPaddingRight, buttonPaddingBottom);
+                else
+                    imageParams.setMargins(buttonPaddingLeft, buttonPaddingTop, marginBetweenImgAndText, buttonPaddingBottom);
+            }
         }
         if (hasText) {
-            if(!hasImage)
-                marginBetweenImgAndText = buttonPadding;
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) textView.getLayoutParams();
-            p.setMargins(marginBetweenImgAndText, buttonPadding, buttonPadding, buttonPadding);
+            if (!hasImage)
+                textParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+            else {
+                if (imageRight)
+                    textParams.setMargins(buttonPaddingLeft, buttonPaddingTop, marginBetweenImgAndText, buttonPaddingBottom);
+                else if (imageTop)
+                    textParams.setMargins(buttonPaddingLeft, marginBetweenImgAndText, buttonPaddingRight, buttonPaddingBottom);
+                else if (imageBottom)
+                    textParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, marginBetweenImgAndText);
+                else
+                    textParams.setMargins(marginBetweenImgAndText, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+            }
         }
     }
 
@@ -356,12 +370,12 @@ public class RadioRealButton extends LinearLayout {
         this.buttonPaddingBottom = buttonPaddingBottom;
     }
 
-    public int getMarginBetweenImgAndText() {
+    public int getMarginBetweenImageAndText() {
         return marginBetweenImgAndText;
     }
 
-    public void setMarginBetweenImgAndText(int marginBetweenImgAndText) {
-        this.marginBetweenImgAndText = marginBetweenImgAndText;
+    public void setMarginBetweenImageAndText(int marginBetweenImageAndText) {
+        this.marginBetweenImgAndText = marginBetweenImageAndText;
     }
 
     public String getButtonText() {
