@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import co.ceryle.radiorealbutton.library.RadioRealButton;
 import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,26 +32,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RadioRealButtonGroup rrbg1 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
-        rrbg1.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
+        final RadioRealButtonGroup rrbg = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
+        rrbg.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {
                 Toast.makeText(MainActivity.this, "Clicked position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
-        final Button b = (Button) findViewById(R.id.aaaaaaaa);
+        final Button b = (Button) findViewById(R.id.button);
         b.setTransformationMethod(null);
-        position = rrbg1.getPosition();
-        b.setText("Position: " +  position);
+        position = rrbg.getPosition();
+        b.setText("Position: " + position);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                position = ++position % rrbg1.getNumberOfButton();
-                rrbg1.setPositionWithAnimation(position);
+                position = ++position % rrbg.getNumberOfButton();
+                rrbg.setPositionWithAnimation(position);
 
-                b.setText("Position: " + rrbg1.getPosition());
-
+                b.setText("Position: " + rrbg.getPosition());
             }
         });
     }
