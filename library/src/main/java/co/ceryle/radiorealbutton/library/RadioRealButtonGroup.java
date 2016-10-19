@@ -286,21 +286,6 @@ public class RadioRealButtonGroup extends RelativeLayout {
             radioRealButtons.get(position).setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
     }
 
-    private boolean isAnimationAlreadySet = false;
-
-    private void setAnimationAttrs() {
-        if (radioRealButtons.size() > 0 && !isAnimationAlreadySet) {
-            isAnimationAlreadySet = true;
-
-            if (animateImages != 0)
-                radioRealButtons.get(position).bounceImage(animateImagesScale, 0, interpolatorImage);
-            if (animateTexts != 0)
-                radioRealButtons.get(position).bounceText(animateTextsScale, 0, interpolatorText);
-
-            setPosition(position);
-        }
-    }
-
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (container == null) {
@@ -335,7 +320,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
                 buttonWidth = radioRealButtons.get(0).getWidth();
                 movingView.getLayoutParams().width = buttonWidth;
 
-                setAnimationAttrs();
+                setPosition(position);
             }
         }
     }
@@ -350,10 +335,15 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
 
     private void toPositionMovingView(int atWhichButton, View view) {
-        view.animate()
-                .translationX((buttonWidth + 1) * atWhichButton + (dividerSize) * atWhichButton)
-                .setInterpolator(interpolatorSelector)
-                .setDuration(animateSelectorDuration);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+            view.animate()
+                    .translationX((buttonWidth + 1) * atWhichButton + (dividerSize) * atWhichButton)
+                    .setInterpolator(interpolatorSelector)
+                    .setDuration(animateSelectorDuration);
+        }
+        else{
+            movingView.setX((buttonWidth + 1) * atWhichButton + (dividerSize) * atWhichButton);
+        }
     }
 
     private int lastPosition = 0;
@@ -553,9 +543,15 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
     public void setPosition(int position) {
-        this.position = position;
 
         movingView.setX(buttonWidth * position + dividerSize * position);
+
+        if (animateImages != 0)
+            radioRealButtons.get(position).bounceImage(animateImagesScale, 0, interpolatorImage);
+        if (animateTexts != 0)
+            radioRealButtons.get(position).bounceText(animateTextsScale, 0, interpolatorText);
+
+        this.position = position;
         lastPosition = position;
     }
 
