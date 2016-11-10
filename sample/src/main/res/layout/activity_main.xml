@@ -395,6 +395,7 @@
         app:rrbg_selectorSize="6dp"
         app:rrbg_selectorTop="true"
         app:rrbg_shadow="true"
+        app:rrbg_position="1"
         app:rrbg_shadowElevation="2dp"
         app:rrbg_shadowMargin="3dp">
 
