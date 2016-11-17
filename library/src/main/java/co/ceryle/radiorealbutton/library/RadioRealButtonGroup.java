@@ -21,10 +21,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +74,24 @@ public class RadioRealButtonGroup extends RelativeLayout {
     public RadioRealButtonGroup(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("state", super.onSaveInstanceState());
+        bundle.putInt("position", lastPosition);
+        return bundle;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+            position = bundle.getInt("position");
+            state = bundle.getParcelable("state");
+        }
+        super.onRestoreInstanceState(state);
     }
 
     private int buttonWidth;
