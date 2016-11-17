@@ -5,6 +5,7 @@
         <attr name="rrb_imageTint" format="color"/>
         <attr name="rrb_imageWidth" format="dimension"/>
         <attr name="rrb_imageHeight" format="dimension"/>
+
         <attr name="rrb_buttonPadding" format="dimension"/>
         <attr name="rrb_buttonPaddingLeft" format="dimension"/>
         <attr name="rrb_buttonPaddingRight" format="dimension"/>
@@ -18,6 +19,14 @@
 
         <attr name="rrb_text" format="string"/>
         <attr name="rrb_textColor" format="color"/>
+        <attr name="rrb_textSize" format="dimension"/>
+        <attr name="rrb_textStyle" format="integer">
+            <flag name="bold" value="1"/>
+            <flag name="italic" value="2"/>
+            <flag name="normal" value="0"/>
+        </attr>
+        <attr name="rrb_textTypeface" format="string"/>
+
         <attr name="rrb_marginBetweenImageAndText" format="dimension"/>
 
         <attr name="rrb_imageLeft" format="boolean"/>
@@ -64,10 +73,6 @@
 
 
         <attr name="rrbg_position" format="integer"/>
-
-
-
-
 
 
         <attr name="rrbg_animateSelectorDuration" format="integer"/>

@@ -19,9 +19,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.Gravity;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -94,9 +95,9 @@ public class RadioRealButton extends LinearLayout {
         void onClickedButton(View view);
     }
 
-    private int buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor, buttonRippleColor, buttonImageWidth, buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, marginBetweenImgAndText;
+    private int buttonTextStyle, buttonTextSize, buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor, buttonRippleColor, buttonImageWidth, buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, marginBetweenImgAndText;
 
-    private String buttonText;
+    private String buttonText, buttonTextTypeface;
     private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint, hasImage, hasText;
 
 
@@ -142,6 +143,10 @@ public class RadioRealButton extends LinearLayout {
         imageTop = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageTop, false);
         imageBottom = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageBottom, false);
 
+        buttonTextSize = typedArray.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_textSize, -1);
+        buttonTextStyle = typedArray.getInt(R.styleable.RadioRealButton_rrb_textStyle, -1);
+        buttonTextTypeface = typedArray.getString(R.styleable.RadioRealButton_rrb_textTypeface);
+
         typedArray.recycle();
     }
 
@@ -170,6 +175,12 @@ public class RadioRealButton extends LinearLayout {
     private void setTextAttrs() {
         textView.setText(buttonText);
         textView.setTextColor(buttonTextColor);
+
+        setTextSize(buttonTextSize);
+        setTextStyle(buttonTextStyle);
+        setTextTypeface(buttonTextTypeface);
+
+
     }
 
     private void setOtherAttrs() {
@@ -255,7 +266,7 @@ public class RadioRealButton extends LinearLayout {
     protected void bounceImage(float scale, int duration, Interpolator interpolator) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
             imageView.animate().setDuration(duration).setInterpolator(interpolator).scaleXBy(scale).scaleYBy(scale);
-        }else{
+        } else {
             imageView.setScaleX(scale);
             textView.setScaleY(scale);
         }
@@ -264,9 +275,32 @@ public class RadioRealButton extends LinearLayout {
     protected void bounceText(float scale, int duration, Interpolator interpolator) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
             textView.animate().setDuration(duration).setInterpolator(interpolator).scaleXBy(scale).scaleYBy(scale);
-        }else{
+        } else {
             textView.setScaleX(scale);
             textView.setScaleY(scale);
+        }
+    }
+
+    public void setTextSize(float size) {
+        if (size > -1)
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+    }
+
+    public void setTextStyle(int typeface) {
+        if (typeface > -1 && typeface < 4) {
+            int[] typefaces = {Typeface.NORMAL, Typeface.BOLD, Typeface.ITALIC, Typeface.BOLD_ITALIC};
+            textView.setTypeface(textView.getTypeface(), typefaces[typeface]);
+        }
+    }
+
+    public void setTextTypeface(Typeface typeface) {
+        textView.setTypeface(typeface);
+    }
+
+    public void setTextTypeface(String location) {
+        if (null != location && !location.equals("")) {
+            Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), location);
+            textView.setTypeface(typeface);
         }
     }
 

@@ -19,39 +19,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int position;
+    private Button button;
+    private RadioRealButtonGroup rrbg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RadioRealButtonGroup rrbg = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
+        button = (Button) findViewById(R.id.button);
+        rrbg = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
+
+        button.setTransformationMethod(null);
+        setPosition(rrbg.getPosition());
+
+
         rrbg.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {
-                Toast.makeText(MainActivity.this, "Clicked position: " + position, Toast.LENGTH_SHORT).show();
+                setPosition(position);
             }
         });
 
-        final Button b = (Button) findViewById(R.id.button);
-        b.setTransformationMethod(null);
-        position = rrbg.getPosition();
-        b.setText("Position: " + position);
-        b.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int position = rrbg.getPosition();
                 position = ++position % rrbg.getNumberOfButton();
                 rrbg.setPositionWithAnimation(position);
 
-                b.setText("Position: " + rrbg.getPosition());
+                setPosition(position);
             }
         });
+    }
+
+    private void setPosition(int position) {
+        button.setText("Position: " + position);
     }
 }
