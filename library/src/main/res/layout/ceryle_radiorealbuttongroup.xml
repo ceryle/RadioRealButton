@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <co.ceryle.radiorealbutton.library.RoundedCornerLayout
-            android:id="@+id/ceryle_radioRealButtonGroup_frameLayout"
+    <View
+        android:id="@+id/ceryle_radioRealButtonGroup_border"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <co.ceryle.radiorealbutton.library.RoundedCornerLayout
+        android:id="@+id/ceryle_radioRealButtonGroup_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ceryle_radioRealButtonGroup_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
+            android:dividerPadding="10dp"
             android:focusable="false"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:showDividers="middle"/>
 
-            <LinearLayout
-                android:id="@+id/ceryle_radioRealButtonGroup_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:showDividers="middle"
-                android:dividerPadding="10dp"
-                android:focusable="false"
-                android:orientation="horizontal"/>
+        <View
+            android:id="@+id/ceryle_radioRealButtonGroup_bottomLine"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="bottom"/>
 
-            <View
-                android:id="@+id/ceryle_radioRealButtonGroup_bottomLine"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="bottom"/>
+        <View
+            android:id="@+id/ceryle_radioRealButtonGroup_movingView"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_gravity="bottom"/>
 
-            <View
-                android:id="@+id/ceryle_radioRealButtonGroup_movingView"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_gravity="bottom"/>
-
-        </co.ceryle.radiorealbutton.library.RoundedCornerLayout>
-</LinearLayout>
+    </co.ceryle.radiorealbutton.library.RoundedCornerLayout>
+</RelativeLayout>

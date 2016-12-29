@@ -265,16 +265,16 @@ public class RadioRealButton extends LinearLayout {
 
     protected void bounceImage(float scale, int duration, Interpolator interpolator) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            imageView.animate().setDuration(duration).setInterpolator(interpolator).scaleXBy(scale).scaleYBy(scale);
+            imageView.animate().setDuration(duration).setInterpolator(interpolator).scaleX(scale).scaleY(scale);
         } else {
             imageView.setScaleX(scale);
-            textView.setScaleY(scale);
+            imageView.setScaleY(scale);
         }
     }
 
     protected void bounceText(float scale, int duration, Interpolator interpolator) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            textView.animate().setDuration(duration).setInterpolator(interpolator).scaleXBy(scale).scaleYBy(scale);
+            textView.animate().setDuration(duration).setInterpolator(interpolator).scaleX(scale).scaleY(scale);
         } else {
             textView.setScaleX(scale);
             textView.setScaleY(scale);

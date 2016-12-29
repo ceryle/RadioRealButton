@@ -36,6 +36,10 @@
     </declare-styleable>
 
     <declare-styleable name="RadioRealButtonGroup">
+
+        <attr name="rrbg_borderSize" format="dimension"/>
+        <attr name="rrbg_borderColor" format="color"/>
+
         <attr name="rrbg_selectorTop" format="boolean"/>
         <attr name="rrbg_selectorBottom" format="boolean"/>
 

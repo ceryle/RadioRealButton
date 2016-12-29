@@ -32,6 +32,14 @@ import android.view.View;
  */
 public class RippleHelper {
 
+    public static void setBackground(View view, Drawable drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.setBackground(drawable);
+        } else {
+            view.setBackgroundDrawable(drawable);
+        }
+    }
+
     public static void setRipple(View view, int normalColor, int pressedColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             view.setBackground(getPressedColorRippleDrawable(normalColor, pressedColor));
