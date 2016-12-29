@@ -36,7 +36,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v1.4.5'
+    compile 'com.github.ceryle:RadioRealButton:v1.4.6'
 }
 ```
 
@@ -81,6 +81,8 @@ dependencies {
 | custom:rrbg_position			| `integer`	         | Set position to select button, starts from 0 |
 | custom:rrbg_dividerSize			| `dimension`	         | Set divider size for the line between buttons |
 | custom:rrbg_dividerRadius			| `dimension`	         | Set divider radius to make it rounder |
+| custom:rrbg_borderSize			| `dimension`	         | Adds border to group with the given size |
+| custom:rrbg_borderColor			| `dimension`	         | Changes border color |
 
 #### Examples
 
