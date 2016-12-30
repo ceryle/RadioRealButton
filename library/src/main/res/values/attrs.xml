@@ -42,6 +42,7 @@
 
         <attr name="rrbg_selectorTop" format="boolean"/>
         <attr name="rrbg_selectorBottom" format="boolean"/>
+        <attr name="rrbg_animate" format="boolean"/>
 
         <attr name="rrbg_buttonsPadding" format="dimension"/>
         <attr name="rrbg_buttonsPaddingLeft" format="dimension"/>

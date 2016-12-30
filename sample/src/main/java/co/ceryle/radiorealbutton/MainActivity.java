@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
         rrbg = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
 
         button.setTransformationMethod(null);
-        setPosition(rrbg.getPosition());
+        updateText(rrbg.getPosition());
 
 
         rrbg.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {
-                setPosition(position);
+                updateText(position);
             }
         });
 
@@ -51,14 +51,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int position = rrbg.getPosition();
                 position = ++position % rrbg.getNumberOfButton();
-                rrbg.setPositionWithAnimation(position);
+                rrbg.setPosition(position, true);
 
-                setPosition(position);
+                updateText(position);
             }
         });
     }
 
-    private void setPosition(int position) {
+    private void updateText(int position) {
         button.setText("Position: " + position);
     }
 }

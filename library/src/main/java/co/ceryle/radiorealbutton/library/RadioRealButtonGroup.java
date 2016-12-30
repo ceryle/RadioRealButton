@@ -28,7 +28,6 @@ import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +51,6 @@ import co.ceryle.radiorealbutton.R;
 import co.ceryle.radiorealbutton.library.util.RippleHelper;
 import co.ceryle.radiorealbutton.library.util.RoundHelper;
 
-/**
- * Created by EGE on 09/08/2016.
- */
 public class RadioRealButtonGroup extends RelativeLayout {
 
     public RadioRealButtonGroup(Context context) {
@@ -90,91 +86,73 @@ public class RadioRealButtonGroup extends RelativeLayout {
     public void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
-            position = bundle.getInt("position");
+            lastPosition = bundle.getInt("position");
             state = bundle.getParcelable("state");
         }
         super.onRestoreInstanceState(state);
     }
 
     private int buttonWidth;
-    private ArrayList<RadioRealButton> radioRealButtons;
+    private ArrayList<RadioRealButton> buttons;
 
-    private View movingView, viewBottomLine;
-    private RoundedCornerLayout cardView;
+    private View v_selector, v_bottomLine;
+    private RoundedCornerLayout groupContainer;
 
     private LinearLayout container;
 
     private void init(AttributeSet attrs) {
         getAttributes(attrs);
-        radioRealButtons = new ArrayList<>();
+        buttons = new ArrayList<>();
 
         View view = inflate(getContext(), R.layout.ceryle_radiorealbuttongroup, this);
 
         container = (LinearLayout) view.findViewById(R.id.ceryle_radioRealButtonGroup_container);
-        movingView = view.findViewById(R.id.ceryle_radioRealButtonGroup_movingView);
-        viewBottomLine = view.findViewById(R.id.ceryle_radioRealButtonGroup_bottomLine);
-        cardView = (RoundedCornerLayout) view.findViewById(R.id.ceryle_radioRealButtonGroup_frameLayout);
+        v_selector = view.findViewById(R.id.ceryle_radioRealButtonGroup_movingView);
+        v_bottomLine = view.findViewById(R.id.ceryle_radioRealButtonGroup_bottomLine);
+        groupContainer = (RoundedCornerLayout) view.findViewById(R.id.ceryle_radioRealButtonGroup_frameLayout);
 
-        setCardViewAttrs();
+        setGroupContainerAttrs();
         setBottomLineAttrs();
         setSelectorAttrs();
         initInterpolations();
         setContainerAttrs();
         setGroupBackgroundColor();
-
         setBorderAttrs();
     }
 
-    private RelativeLayout.LayoutParams borderParams;
-
-    private void setBorderAttrs() {
-        View borderView = findViewById(R.id.ceryle_radioRealButtonGroup_border);
-        borderParams = (RelativeLayout.LayoutParams) borderView.getLayoutParams();
-        int margin = (int) shadowMargin;
-        borderParams.setMargins(margin - borderSize, margin - borderSize, margin - borderSize, margin - borderSize);
-
-        if (borderSize > 0) {
-            GradientDrawable gd = new GradientDrawable();
-            gd.setColor(borderColor);
-            gd.setCornerRadius(radius + 3); // TODO
-
-            RippleHelper.setBackground(borderView, gd);
-        }
-    }
-
-    private void setCardViewAttrs() {
+    private void setGroupContainerAttrs() {
         if (shadow) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                cardView.setElevation(shadowElevation);
+                groupContainer.setElevation(shadowElevation);
             }
         }
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) groupContainer.getLayoutParams();
         if (shadowMargin != -1) {
             layoutParams.setMargins((int) shadowMargin, (int) shadowMargin, (int) shadowMargin, (int) shadowMargin);
         } else {
             layoutParams.setMargins((int) shadowMarginLeft, (int) shadowMarginTop, (int) shadowMarginRight, (int) shadowMarginBottom);
         }
 
-        cardView.setRadius(radius);
+        groupContainer.setRadius(radius);
     }
 
     private void setBottomLineAttrs() {
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) viewBottomLine.getLayoutParams();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) v_bottomLine.getLayoutParams();
 
         layoutParams.height = (int) bottomLineSize;
 
         if (bottomLineBringToFront)
-            viewBottomLine.bringToFront();
+            v_bottomLine.bringToFront();
 
-        RoundHelper.makeRound(viewBottomLine, bottomLineColor, (int) bottomLineRadius, (int) bottomLineRadius);
+        RoundHelper.makeRound(v_bottomLine, bottomLineColor, (int) bottomLineRadius, (int) bottomLineRadius);
     }
 
     private void setSelectorAttrs() {
-        FrameLayout.LayoutParams selectorParams = (FrameLayout.LayoutParams) movingView.getLayoutParams();
-        FrameLayout.LayoutParams bottomLineParams = (FrameLayout.LayoutParams) viewBottomLine.getLayoutParams();
+        FrameLayout.LayoutParams selectorParams = (FrameLayout.LayoutParams) v_selector.getLayoutParams();
+        FrameLayout.LayoutParams bottomLineParams = (FrameLayout.LayoutParams) v_bottomLine.getLayoutParams();
 
         if (selectorBringToFront)
-            movingView.bringToFront();
+            v_selector.bringToFront();
 
         selectorParams.height = (int) selectorSize;
 
@@ -184,7 +162,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
             selectorParams.gravity = Gravity.TOP;
             bottomLineParams.gravity = Gravity.TOP;
             topMargin = (int) bottomLineSize;
-        } else {
+        } else if (selectorBottom) {
             selectorParams.gravity = Gravity.BOTTOM;
             bottomLineParams.gravity = Gravity.BOTTOM;
             bottomMargin = (int) bottomLineSize;
@@ -194,8 +172,9 @@ public class RadioRealButtonGroup extends RelativeLayout {
             selectorParams.setMargins(0, topMargin, 0, bottomMargin);
         }
 
-        RoundHelper.makeRound(movingView, selectorColor, (int) selectorRadius, (int) selectorRadius);
+        RoundHelper.makeRound(v_selector, selectorColor, (int) selectorRadius, (int) selectorRadius);
     }
+
 
     private Interpolator interpolatorImage, interpolatorText, interpolatorSelector;
     private Interpolator interpolatorImageExit, interpolatorTextExit;
@@ -236,18 +215,41 @@ public class RadioRealButtonGroup extends RelativeLayout {
         }
     }
 
-    private int borderSize, borderColor, dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts, animateImagesDuration, animateTextsDuration, animateSelector, animateSelectorDuration, animateImagesExit, animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, position, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor;
+    public void setGroupBackgroundColor() {
+        if (hasGroupBackgroundColor)
+            container.setBackgroundColor(groupBackgroundColor);
+    }
+
+    private RelativeLayout.LayoutParams borderParams;
+
+    private void setBorderAttrs() {
+        View borderView = findViewById(R.id.ceryle_radioRealButtonGroup_border);
+        borderParams = (RelativeLayout.LayoutParams) borderView.getLayoutParams();
+        int margin = (int) shadowMargin;
+        borderParams.setMargins(margin - borderSize, margin - borderSize, margin - borderSize, margin - borderSize);
+
+        if (borderSize > 0) {
+            GradientDrawable gd = new GradientDrawable();
+            gd.setColor(borderColor);
+            gd.setCornerRadius(radius + 3); // TODO
+
+            RippleHelper.setBackground(borderView, gd);
+        }
+    }
+
+    private int borderSize, borderColor, dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts,
+            animateImagesDuration, animateTextsDuration, animateSelector, animateSelectorDuration, animateImagesExit,
+            animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
+            buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor;
 
     private float bottomLineSize, dividerSize, dividerRadius, dividerPadding, shadowElevation, selectorSize,
-            shadowMargin, shadowMarginTop, shadowMarginBottom, shadowMarginLeft, shadowMarginRight, radius, bottomLineRadius, selectorRadius, animateImagesScale, animateTextsScale;
+            shadowMargin, shadowMarginTop, shadowMarginBottom, shadowMarginLeft, shadowMarginRight, radius,
+            bottomLineRadius, selectorRadius, animateImagesScale, animateTextsScale;
 
-    private boolean shadow, bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine,
-            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasGroupBackgroundColor;
+    private boolean shadow, bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom,
+            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasGroupBackgroundColor, hasAnimation;
 
-    @SuppressWarnings("ResourceType")
     private void getAttributes(AttributeSet attrs) {
-        /** GET ATTRIBUTES FROM XML **/
-        // Custom attributes
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
 
         bottomLineColor = typedArray.getColor(R.styleable.RadioRealButtonGroup_rrbg_bottomLineColor, Color.GRAY);
@@ -289,8 +291,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
         animateTextsExitDuration = typedArray.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exitDuration, 100);
         animateTextsScale = typedArray.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateTextsScale, 0.2f);
 
-        position = typedArray.getInt(R.styleable.RadioRealButtonGroup_rrbg_position, 0);
-        lastPosition = position;
+        lastPosition = typedArray.getInt(R.styleable.RadioRealButtonGroup_rrbg_position, -1);
 
         buttonPadding = (int) typedArray.getDimension(R.styleable.RadioRealButtonGroup_rrbg_buttonsPadding, 0);
         buttonPaddingLeft = (int) typedArray.getDimension(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingLeft, 0);
@@ -313,22 +314,16 @@ public class RadioRealButtonGroup extends RelativeLayout {
         borderSize = typedArray.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_borderSize, 0);
         borderColor = typedArray.getColor(R.styleable.RadioRealButtonGroup_rrbg_borderColor, Color.BLACK);
 
+        hasAnimation = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_animate, true);
 
         typedArray.recycle();
     }
 
-    private boolean selectorTop, selectorBottom;
-
-    public void setGroupBackgroundColor() {
-        if (hasGroupBackgroundColor)
-            container.setBackgroundColor(groupBackgroundColor);
-    }
-
-    private void setButtonsPadding(int position) {
+    private void setButtonPadding(RadioRealButton button) {
         if (hasPadding)
-            radioRealButtons.get(position).setButtonPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            button.setButtonPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
         else if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
-            radioRealButtons.get(position).setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+            button.setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
     }
 
     @Override
@@ -336,24 +331,23 @@ public class RadioRealButtonGroup extends RelativeLayout {
         if (container == null) {
             super.addView(child, index, params);
         } else {
-            RadioRealButton radioRealButton = (RadioRealButton) child;
+            RadioRealButton button = (RadioRealButton) child;
 
-            container.addView(child, index, params);
-
-            final int c = radioRealButtons.size();
-            radioRealButton.setOnClickedButton(new RadioRealButton.OnClickedButton() {
+            final int buttonPosition = buttons.size();
+            button.setOnClickedButton(new RadioRealButton.OnClickedButton() {
                 @Override
                 public void onClickedButton(View view) {
-                    toggleSegmentedButton(c);
+                    setPosition(buttonPosition, hasAnimation);
                 }
             });
-            radioRealButtons.add(radioRealButton);
 
-            setButtonsPadding(c);
+            setButtonPadding(button);
 
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
             param.gravity = Gravity.CENTER;
-            radioRealButton.setLayoutParams(param);
+
+            container.addView(child, index, param);
+            buttons.add(button);
         }
     }
 
@@ -363,55 +357,70 @@ public class RadioRealButtonGroup extends RelativeLayout {
         if (!changed)
             return;
 
-        if (radioRealButtons.size() > 0) {
-            buttonWidth = radioRealButtons.get(0).getWidth();
-            movingView.getLayoutParams().width = buttonWidth;
+        if (buttons.size() > 0) {
+            buttonWidth = buttons.get(0).getWidth();
+            v_selector.getLayoutParams().width = buttonWidth;
 
-            setPosition(position);
+            setPosition(lastPosition, false);
         }
         borderParams.width = getWidth() + borderSize;
-        borderParams.height = radioRealButtons.get(0).getHeight() + borderSize * 2;
+        borderParams.height = buttons.get(0).getHeight() + borderSize * 2;
     }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (movingView != null) {
-            movingView.requestLayout();
+        if (v_selector != null) {
+            v_selector.requestLayout();
         }
     }
 
+    public void setPosition(int position, boolean hasAnimation) {
+        if (hasAnimation) {
+            moveSelector(position, v_selector);
+            if (null != onClickedButtonPosition)
+                onClickedButtonPosition.onClickedButtonPosition(position);
+        } else {
+            v_selector.setX(buttonWidth * position + dividerSize * position);
+        }
 
-    private void toPositionMovingView(int atWhichButton, View view) {
+        animateImageText(position, lastPosition);
+    }
+
+    private void moveSelector(int toPosition, View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
             view.animate()
-                    .translationX((buttonWidth + 1) * atWhichButton + (dividerSize) * atWhichButton)
+                    .translationX((buttonWidth + 1) * toPosition + (dividerSize) * toPosition)
                     .setInterpolator(interpolatorSelector)
                     .setDuration(animateSelectorDuration);
         } else {
-            movingView.setX((buttonWidth + 1) * atWhichButton + (dividerSize) * atWhichButton);
+            v_selector.setX((buttonWidth + 1) * toPosition + (dividerSize) * toPosition);
         }
     }
 
-    private int lastPosition = 0;
-
-    private void toggleSegmentedButton(int i) {
-        toPositionMovingView(i, movingView);
-        if (null != onClickedButtonPosition)
-            onClickedButtonPosition.onClickedButtonPosition(i);
-
-        if (i != lastPosition) {
-            if (animateTexts != 0) {
-                radioRealButtons.get(i).bounceText(1 + animateTextsScale, animateTextsDuration, interpolatorText);
-                radioRealButtons.get(lastPosition).bounceText(1, animateTextsExitDuration, interpolatorTextExit);
-            }
-            if (animateImages != 0) {
-                radioRealButtons.get(i).bounceImage(1 + animateImagesScale, animateImagesDuration, interpolatorImage);
-                radioRealButtons.get(lastPosition).bounceImage(1, animateImagesExitDuration, interpolatorImageExit);
-            }
-        }
-        lastPosition = i;
+    private void animateImageText(int position, int lastPosition) {
+        if (animateTexts != 0)
+            animateText(position, lastPosition);
+        if (animateImages != 0)
+            animateImage(position, lastPosition);
+        this.lastPosition = position;
     }
+
+
+    private void animateText(int position, int lastPosition) {
+        if (lastPosition != -1 && lastPosition != position)
+            buttons.get(lastPosition).bounceText(1, animateTextsExitDuration, interpolatorTextExit);
+        if (position != -1)
+            buttons.get(position).bounceText(1 + animateTextsScale, animateTextsDuration, interpolatorText);
+    }
+
+    private void animateImage(int position, int lastPosition) {
+        if (lastPosition != -1 && lastPosition != position)
+            buttons.get(lastPosition).bounceImage(1, animateImagesExitDuration, interpolatorImageExit);
+        if (position != -1)
+            buttons.get(position).bounceImage(1 + animateImagesScale, animateImagesDuration, interpolatorImage);
+    }
+
 
     private OnClickedButtonPosition onClickedButtonPosition;
 
@@ -423,8 +432,6 @@ public class RadioRealButtonGroup extends RelativeLayout {
         void onClickedButtonPosition(int position);
     }
 
-
-    // Setters...
     public void setAnimateImages(int animateImages) {
         this.animateImages = animateImages;
     }
@@ -534,7 +541,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
     public void setRadioRealButtons(ArrayList<RadioRealButton> radioRealButtons) {
-        this.radioRealButtons = radioRealButtons;
+        this.buttons = radioRealButtons;
     }
 
     public void setRadius(float radius) {
@@ -589,32 +596,12 @@ public class RadioRealButtonGroup extends RelativeLayout {
         this.shadowMarginTop = shadowMarginTop;
     }
 
-    public void setPosition(int position) {
-        movingView.setX(buttonWidth * position + dividerSize * position);
-
-        if (animateImages != 0){
-            radioRealButtons.get(lastPosition).bounceText(1, animateTextsExitDuration, interpolatorTextExit);
-            radioRealButtons.get(position).bounceImage(1 + animateImagesScale, 0, interpolatorImage);
-        }
-        if (animateTexts != 0){
-            radioRealButtons.get(lastPosition).bounceText(1, animateTextsExitDuration, interpolatorTextExit);
-            radioRealButtons.get(position).bounceText(1 + animateTextsScale, 0, interpolatorText);
-        }
-
-        this.position = position;
-        lastPosition = position;
-    }
-
-    public void setPositionWithAnimation(int position) {
-        toggleSegmentedButton(position);
-    }
-
     public int getPosition() {
         return lastPosition;
     }
 
     public int getNumberOfButton() {
-        return radioRealButtons.size();
+        return buttons.size();
     }
 
 
@@ -623,7 +610,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
     public ArrayList<RadioRealButton> getRadioRealButtons() {
-        return radioRealButtons;
+        return buttons;
     }
 
     public Interpolator getInterpolatorImage() {
@@ -800,5 +787,19 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
     public boolean isSelectorAboveOfBottomLine() {
         return selectorAboveOfBottomLine;
+    }
+
+    public void deselect() {
+        int size = buttons.size();
+
+        if (lastPosition > size / 2) {
+            animateImageText(size, lastPosition);
+            moveSelector(size, v_selector);
+        } else {
+            animateImageText(-1, lastPosition);
+            moveSelector(-1, v_selector);
+        }
+
+        lastPosition = -1;
     }
 }
