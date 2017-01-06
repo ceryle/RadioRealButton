@@ -15,6 +15,7 @@
  */
 package co.ceryle.radiorealbutton;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -56,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
                 updateText(position);
             }
         });
+
+
+        rrbg.setEnabled(false);
+
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                rrbg.setEnabled(true);
+            }
+        };
+        handler.postDelayed(runnable, 5000);
     }
 
     private void updateText(int position) {

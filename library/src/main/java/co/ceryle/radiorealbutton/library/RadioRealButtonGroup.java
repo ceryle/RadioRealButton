@@ -28,6 +28,7 @@ import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -247,7 +248,8 @@ public class RadioRealButtonGroup extends RelativeLayout {
             bottomLineRadius, selectorRadius, animateImagesScale, animateTextsScale;
 
     private boolean shadow, bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom,
-            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasGroupBackgroundColor, hasAnimation;
+            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasGroupBackgroundColor, hasAnimation,
+            clickable, enabled;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
@@ -316,6 +318,13 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
         hasAnimation = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_animate, true);
 
+        enabled = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_enabled, true);
+        try {
+            clickable = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_clickable, true);
+        } catch (Exception ex) {
+            Log.d("RadioRealButtonGroup", ex.toString());
+        }
+
         typedArray.recycle();
     }
 
@@ -337,7 +346,8 @@ public class RadioRealButtonGroup extends RelativeLayout {
             button.setOnClickedButton(new RadioRealButton.OnClickedButton() {
                 @Override
                 public void onClickedButton(View view) {
-                    setPosition(buttonPosition, hasAnimation);
+                    if (enabled && clickable)
+                        setPosition(buttonPosition, hasAnimation);
                 }
             });
 
@@ -802,4 +812,32 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
         lastPosition = -1;
     }
+
+    private void setRippleState(boolean state) {
+        for (RadioRealButton b : buttons) {
+            b.setRipple(state);
+        }
+    }
+
+    private void setEnabledAlpha(boolean enabled) {
+        float alpha = 1f;
+        if (!enabled)
+            alpha = 0.5f;
+
+        setAlpha(alpha);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        setEnabledAlpha(enabled);
+        setRippleState(enabled);
+    }
+
+    @Override
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
+        setRippleState(clickable);
+    }
+
 }

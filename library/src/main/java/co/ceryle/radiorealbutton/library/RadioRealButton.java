@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -95,11 +96,13 @@ public class RadioRealButton extends LinearLayout {
         void onClickedButton(View view);
     }
 
-    private int buttonTextStyle, buttonTextSize, buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor, buttonRippleColor, buttonImageWidth, buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, marginBetweenImgAndText;
+    private int buttonTextStyle, buttonTextSize, buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor,
+            buttonRippleColor, buttonImageWidth, buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight,
+            buttonPaddingTop, buttonPaddingBottom, marginBetweenImgAndText;
 
     private String buttonText, buttonTextTypeface;
-    private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint, hasImage, hasText;
-
+    private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint,
+            hasImage, hasText;
 
     private boolean imageLeft, imageRight, imageTop, imageBottom;
 
@@ -192,10 +195,8 @@ public class RadioRealButton extends LinearLayout {
             setButtonPadding(30, 30, 30, 30);
 
 
-        int backgroundColor = Color.WHITE;
-        int rippleColor = Color.GRAY;
-
-        boolean hasRipple = false;
+        backgroundColor = Color.WHITE;
+        rippleColor = Color.GRAY;
 
         if (buttonRippleColor != -1) {
             rippleColor = buttonRippleColor;
@@ -211,6 +212,23 @@ public class RadioRealButton extends LinearLayout {
             RippleHelper.setRipple(container, backgroundColor, rippleColor);
         else
             container.setBackgroundColor(backgroundColor);
+    }
+
+    private boolean hasRipple = false;
+    private int backgroundColor, rippleColor;
+
+    void setRipple(boolean state) {
+        if (state) {
+            if (hasRipple)
+                RippleHelper.setRipple(container, backgroundColor, rippleColor);
+            else
+                container.setBackgroundColor(backgroundColor);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                container.setBackground(null);
+            else
+                container.setBackgroundDrawable(null);
+        }
     }
 
     public void setImageSizePixel(int width, int height) {
