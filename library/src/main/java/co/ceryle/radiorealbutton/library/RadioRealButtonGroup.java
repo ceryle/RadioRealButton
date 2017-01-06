@@ -320,7 +320,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
         enabled = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_enabled, true);
         try {
-            clickable = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_clickable, true);
+            clickable = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_android_clickable, true);
         } catch (Exception ex) {
             Log.d("RadioRealButtonGroup", ex.toString());
         }

@@ -37,7 +37,7 @@
 
     <declare-styleable name="RadioRealButtonGroup">
         <attr name="rrbg_enabled" format="boolean"/>
-        <attr name="rrbg_clickable" format="boolean"/>
+        <attr name="android:clickable"/>
 
         <attr name="rrbg_borderSize" format="dimension"/>
         <attr name="rrbg_borderColor" format="color"/>
