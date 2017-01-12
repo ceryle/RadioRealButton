@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -35,9 +34,6 @@ import co.ceryle.radiorealbutton.R;
 import co.ceryle.radiorealbutton.library.util.ConversionUtil;
 import co.ceryle.radiorealbutton.library.util.RippleHelper;
 
-/**
- * Created by EGE on 09/08/2016.
- */
 public class RadioRealButton extends LinearLayout {
     public RadioRealButton(Context context) {
         super(context);
@@ -70,30 +66,12 @@ public class RadioRealButton extends LinearLayout {
         View view = inflate(getContext(), co.ceryle.radiorealbutton.R.layout.ceryle_radiorealbutton, this);
 
         container = (LinearLayout) view.findViewById(co.ceryle.radiorealbutton.R.id.ceryle_radioRealButton_container);
-        container.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != onClickedButton)
-                    onClickedButton.onClickedButton(view);
-            }
-        });
-
         imageView = (ImageView) view.findViewById(co.ceryle.radiorealbutton.R.id.ceryle_radioRealButton_imageView);
         textView = (TextView) view.findViewById(co.ceryle.radiorealbutton.R.id.ceryle_radioRealButton_textView);
 
         setImageAttrs();
         setTextAttrs();
         setOtherAttrs();
-    }
-
-    private OnClickedButton onClickedButton;
-
-    public void setOnClickedButton(OnClickedButton onClickedButton) {
-        this.onClickedButton = onClickedButton;
-    }
-
-    public interface OnClickedButton {
-        void onClickedButton(View view);
     }
 
     private int buttonTextStyle, buttonTextSize, buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor,

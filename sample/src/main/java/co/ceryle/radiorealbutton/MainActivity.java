@@ -18,9 +18,12 @@ package co.ceryle.radiorealbutton;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import co.ceryle.radiorealbutton.library.RadioRealButton;
 import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,10 +43,18 @@ public class MainActivity extends AppCompatActivity {
         updateText(rrbg.getPosition());
 
 
-        rrbg.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
+        rrbg.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
-            public void onClickedButtonPosition(int position) {
+            public void onClickedButton(RadioRealButton button, int position) {
                 updateText(position);
+            }
+        });
+
+        rrbg.setOnLongClickedButtonListener(new RadioRealButtonGroup.OnLongClickedButtonListener() {
+            @Override
+            public boolean onLongClickedButton(RadioRealButton button, int position) {
+                Toast.makeText(MainActivity.this, "Long Clicked! Position: " + position, Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 

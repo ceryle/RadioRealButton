@@ -29,7 +29,9 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -343,11 +345,11 @@ public class RadioRealButtonGroup extends RelativeLayout {
             RadioRealButton button = (RadioRealButton) child;
 
             final int buttonPosition = buttons.size();
-            button.setOnClickedButton(new RadioRealButton.OnClickedButton() {
+            button.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClickedButton(View view) {
+                public void onClick(View v) {
                     if (enabled && clickable)
-                        setPosition(buttonPosition, hasAnimation);
+                        setPosition(buttonPosition, hasAnimation, true);
                 }
             });
 
@@ -371,7 +373,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
             buttonWidth = buttons.get(0).getWidth();
             v_selector.getLayoutParams().width = buttonWidth;
 
-            setPosition(lastPosition, false);
+            setPosition(lastPosition, false, false);
         }
         borderParams.width = getWidth() + borderSize;
         borderParams.height = buttons.get(0).getHeight() + borderSize * 2;
@@ -385,16 +387,22 @@ public class RadioRealButtonGroup extends RelativeLayout {
         }
     }
 
-    public void setPosition(int position, boolean hasAnimation) {
-        if (hasAnimation) {
+    private void setPosition(int position, boolean hasAnimation, boolean isToggledByTouch) {
+        if (hasAnimation)
             moveSelector(position, v_selector);
-            if (null != onClickedButtonPosition)
-                onClickedButtonPosition.onClickedButtonPosition(position);
-        } else {
+        else
             v_selector.setX(buttonWidth * position + dividerSize * position);
-        }
+
+        if (null != onClickedButtonListener && isToggledByTouch)
+            onClickedButtonListener.onClickedButton(buttons.get(position), position);
+        if (null != onPositionChangedListener)
+            onPositionChangedListener.onPositionChanged(buttons.get(position), position);
 
         animateImageText(position, lastPosition);
+    }
+
+    public void setPosition(int position, boolean hasAnimation) {
+        setPosition(position, hasAnimation, false);
     }
 
     private void moveSelector(int toPosition, View view) {
@@ -432,14 +440,40 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
 
-    private OnClickedButtonPosition onClickedButtonPosition;
+    private OnClickedButtonListener onClickedButtonListener;
 
-    public void setOnClickedButtonPosition(OnClickedButtonPosition onClickedButtonPosition) {
-        this.onClickedButtonPosition = onClickedButtonPosition;
+    public void setOnClickedButtonListener(OnClickedButtonListener onClickedButtonListener) {
+        this.onClickedButtonListener = onClickedButtonListener;
     }
 
-    public interface OnClickedButtonPosition {
-        void onClickedButtonPosition(int position);
+    public interface OnClickedButtonListener {
+        void onClickedButton(RadioRealButton button, int position);
+    }
+
+    private OnPositionChangedListener onPositionChangedListener;
+
+    public void setOnPositionChangedListener(OnPositionChangedListener onPositionChangedListener) {
+        this.onPositionChangedListener = onPositionChangedListener;
+    }
+
+    public interface OnPositionChangedListener {
+        void onPositionChanged(RadioRealButton button, int position);
+    }
+
+    public void setOnLongClickedButtonListener(final OnLongClickedButtonListener onLongClickedButtonListener) {
+        for (int i = 0; i < buttons.size(); i++) {
+            final int buttonPosition = i;
+            buttons.get(i).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return onLongClickedButtonListener == null || onLongClickedButtonListener.onLongClickedButton((RadioRealButton) v, buttonPosition);
+                }
+            });
+        }
+    }
+
+    public interface OnLongClickedButtonListener {
+        boolean onLongClickedButton(RadioRealButton button, int position);
     }
 
     public void setAnimateImages(int animateImages) {
@@ -839,5 +873,6 @@ public class RadioRealButtonGroup extends RelativeLayout {
         this.clickable = clickable;
         setRippleState(clickable);
     }
+
 
 }
