@@ -132,13 +132,32 @@ final RadioRealButton button1 = (RadioRealButton) findViewById(R.id.button1);
 final RadioRealButton button2 = (RadioRealButton) findViewById(R.id.button2);
 
 RadioRealButtonGroup group = (RadioRealButtonGroup) findViewById(R.id.group);
-group.setOnClickedButtonPosition(new RadioRealButtonGroup.OnClickedButtonPosition() {
-      @Override
-      public void onClickedButtonPosition(int position) {
-            Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
-            button1.getImageView().setImageResource(R.drawable.b1);
-            button2.getImageView().setImageResource(R.drawable.b2);
-      }
+
+// onClickButton listener detects position changes only by touch
+group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
+    @Override
+    public void onClickedButton(RadioRealButton button, int position) {
+        Toast.makeText(MainActivity.this, "Clicked! Position: " + position, Toast.LENGTH_SHORT).show();
+    }
+});
+
+// onPositionChanged listener detects position change in every way by touch or calling setPosition method
+group.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
+    @Override
+    public void onPositionChanged(RadioRealButton button, int position) {
+        Toast.makeText(MainActivity.this, "Position Changed! Position: " + position, Toast.LENGTH_SHORT).show();
+    }
+});
+
+// onLongClickedButton listener has a boolean return
+// true: use it if you only want to detect long click, nothing else
+// false: use it if you want to detect long click and change position when you release
+group.setOnLongClickedButtonListener(new RadioRealButtonGroup.OnLongClickedButtonListener() {
+    @Override
+    public boolean onLongClickedButton(RadioRealButton button, int position) {
+        Toast.makeText(MainActivity.this, "Long Clicked! Position: " + position, Toast.LENGTH_SHORT).show();
+        return false;
+    }
 });
 ```
 
