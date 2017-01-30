@@ -324,7 +324,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
         try {
             clickable = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_android_clickable, true);
         } catch (Exception ex) {
-            Log.d("RadioRealButtonGroup", ex.toString());
+            Log.d("RadioRealButtonGroup: ", ex.toString());
         }
 
         typedArray.recycle();
@@ -380,6 +380,12 @@ public class RadioRealButtonGroup extends RelativeLayout {
     }
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        container.getLayoutParams().height = getLayoutParams().height;
+    }
+
+    @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (v_selector != null) {
@@ -393,10 +399,15 @@ public class RadioRealButtonGroup extends RelativeLayout {
         else
             v_selector.setX(buttonWidth * position + dividerSize * position);
 
+        RadioRealButton button = null;
+        if (position >= 0 && position < buttons.size())
+            button = buttons.get(position);
+
         if (null != onClickedButtonListener && isToggledByTouch)
-            onClickedButtonListener.onClickedButton(buttons.get(position), position);
-        if (null != onPositionChangedListener)
-            onPositionChangedListener.onPositionChanged(buttons.get(position), position);
+            onClickedButtonListener.onClickedButton(button, position);
+        if (null != onPositionChangedListener) {
+            onPositionChangedListener.onPositionChanged(button, position);
+        }
 
         animateImageText(position, lastPosition);
     }

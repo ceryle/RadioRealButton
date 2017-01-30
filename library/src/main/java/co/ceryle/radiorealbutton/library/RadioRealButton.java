@@ -340,6 +340,7 @@ public class RadioRealButton extends LinearLayout {
 
     public void setButtonTextColor(int buttonTextColor) {
         this.buttonTextColor = buttonTextColor;
+        textView.setTextColor(buttonTextColor);
     }
 
     public int getButtonBackgroundColor() {
