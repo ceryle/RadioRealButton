@@ -56,6 +56,7 @@
         <attr name="rrbg_dividerPadding" format="dimension"/>
         <attr name="rrbg_dividerColor" format="color"/>
         <attr name="rrbg_dividerRadius" format="dimension"/>
+        <attr name="rrbg_dividerBackgroundColor" format="color"/>
 
         <attr name="rrbg_shadow" format="boolean"/>
         <attr name="rrbg_shadowElevation" format="dimension"/>

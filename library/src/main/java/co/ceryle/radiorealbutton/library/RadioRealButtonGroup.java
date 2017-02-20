@@ -218,11 +218,6 @@ public class RadioRealButtonGroup extends RelativeLayout {
         }
     }
 
-    public void setGroupBackgroundColor() {
-        if (hasGroupBackgroundColor)
-            container.setBackgroundColor(groupBackgroundColor);
-    }
-
     private RelativeLayout.LayoutParams borderParams;
 
     private void setBorderAttrs() {
@@ -243,7 +238,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
     private int borderSize, borderColor, dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts,
             animateImagesDuration, animateTextsDuration, animateSelector, animateSelectorDuration, animateImagesExit,
             animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
-            buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor;
+            buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor, dividerBackgroundColor;
 
     private float bottomLineSize, dividerSize, dividerRadius, dividerPadding, shadowElevation, selectorSize,
             shadowMargin, shadowMarginTop, shadowMarginBottom, shadowMarginLeft, shadowMarginRight, radius,
@@ -251,7 +246,7 @@ public class RadioRealButtonGroup extends RelativeLayout {
 
     private boolean shadow, bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom,
             hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasGroupBackgroundColor, hasAnimation,
-            clickable, enabled;
+            clickable, enabled, hasDividerBackgroundColor;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
@@ -273,6 +268,8 @@ public class RadioRealButtonGroup extends RelativeLayout {
         dividerRadius = typedArray.getDimension(R.styleable.RadioRealButtonGroup_rrbg_dividerRadius, 0);
         dividerPadding = typedArray.getDimension(R.styleable.RadioRealButtonGroup_rrbg_dividerPadding, 30);
         dividerColor = typedArray.getColor(R.styleable.RadioRealButtonGroup_rrbg_dividerColor, Color.GRAY);
+        dividerBackgroundColor = typedArray.getColor(R.styleable.RadioRealButtonGroup_rrbg_dividerBackgroundColor, Color.WHITE);
+        hasDividerBackgroundColor = typedArray.hasValue(R.styleable.RadioRealButtonGroup_rrbg_dividerBackgroundColor);
 
         shadow = typedArray.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_shadow, false);
         shadowElevation = typedArray.getDimension(R.styleable.RadioRealButtonGroup_rrbg_shadowElevation, 0);
@@ -352,6 +349,10 @@ public class RadioRealButtonGroup extends RelativeLayout {
                         setPosition(buttonPosition, hasAnimation, true);
                 }
             });
+
+            if (hasGroupBackgroundColor) {
+                button.setButtonBackgroundColor(groupBackgroundColor);
+            }
 
             setButtonPadding(button);
 
@@ -856,6 +857,11 @@ public class RadioRealButtonGroup extends RelativeLayout {
         }
 
         lastPosition = -1;
+    }
+
+
+    public void setGroupBackgroundColor() {
+        container.setBackgroundColor(hasDividerBackgroundColor ? dividerBackgroundColor : groupBackgroundColor);
     }
 
     private void setRippleState(boolean state) {

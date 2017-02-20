@@ -192,6 +192,12 @@ public class RadioRealButton extends LinearLayout {
             container.setBackgroundColor(backgroundColor);
     }
 
+    public void setButtonBackgroundColor(int backgroundColor){
+        this.backgroundColor = backgroundColor;
+        if (hasRipple)
+            RippleHelper.setRipple(container, backgroundColor, rippleColor);
+    }
+
     private boolean hasRipple = false;
     private int backgroundColor, rippleColor;
 
@@ -345,10 +351,6 @@ public class RadioRealButton extends LinearLayout {
 
     public int getButtonBackgroundColor() {
         return buttonBackgroundColor;
-    }
-
-    public void setButtonBackgroundColor(int buttonBackgroundColor) {
-        this.buttonBackgroundColor = buttonBackgroundColor;
     }
 
     public int getButtonRippleColor() {
