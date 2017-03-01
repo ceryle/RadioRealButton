@@ -1,89 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="backgroundColor" format="color"/>
+
     <declare-styleable name="RadioRealButton">
-        <attr name="rrb_image" format="reference"/>
-        <attr name="rrb_imageTint" format="color"/>
-        <attr name="rrb_imageWidth" format="dimension"/>
-        <attr name="rrb_imageHeight" format="dimension"/>
 
-        <attr name="rrb_buttonPadding" format="dimension"/>
-        <attr name="rrb_buttonPaddingLeft" format="dimension"/>
-        <attr name="rrb_buttonPaddingRight" format="dimension"/>
-        <attr name="rrb_buttonPaddingTop" format="dimension"/>
-        <attr name="rrb_buttonPaddingBottom" format="dimension"/>
+        <attr name="android:enabled"/>
+        <attr name="android:clickable"/>
 
-        <attr name="rrb_ripple" format="boolean"/>
-        <attr name="rrb_rippleColor" format="color"/>
+        <attr name="android:padding"/>
+        <attr name="android:paddingLeft"/>
+        <attr name="android:paddingRight"/>
+        <attr name="android:paddingTop"/>
+        <attr name="android:paddingBottom"/>
 
-        <attr name="rrb_backgroundColor" format="color"/>
+        <attr name="android:background"/>
 
-        <attr name="rrb_text" format="string"/>
-        <attr name="rrb_textColor" format="color"/>
-        <attr name="rrb_textSize" format="dimension"/>
-        <attr name="rrb_textStyle" format="integer">
+        <attr name="backgroundColor"/>
+
+        <attr name="ripple" format="boolean"/>
+        <attr name="rippleColor" format="color"/>
+
+        <attr name="text" format="string"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textStyle" format="integer">
+            <flag name="normal" value="0"/>
             <flag name="bold" value="1"/>
             <flag name="italic" value="2"/>
-            <flag name="normal" value="0"/>
         </attr>
-        <attr name="rrb_textTypeface" format="string"/>
+        <attr name="textTypeface" format="string"/>
 
-        <attr name="rrb_marginBetweenImageAndText" format="dimension"/>
+        <attr name="drawable" format="reference"/>
+        <attr name="drawablePadding" format="dimension"/>
+        <attr name="drawableTint" format="color"/>
+        <attr name="drawableWidth" format="dimension"/>
+        <attr name="drawableHeight" format="dimension"/>
+        <attr name="drawableGravity" format="integer">
+            <flag name="left" value="0"/>
+            <flag name="top" value="1"/>
+            <flag name="right" value="2"/>
+            <flag name="bottom" value="3"/>
+        </attr>
+        <attr name="textGravity" format="integer">
+            <flag name="left" value="0"/>
+            <flag name="center" value="1"/>
+            <flag name="right" value="2"/>
+        </attr>
 
-        <attr name="rrb_imageLeft" format="boolean"/>
-        <attr name="rrb_imageRight" format="boolean"/>
-        <attr name="rrb_imageTop" format="boolean"/>
-        <attr name="rrb_imageBottom" format="boolean"/>
+        <attr name="checked" format="boolean"/>
+        <attr name="textFillSpace" format="boolean"/>
+
     </declare-styleable>
 
     <declare-styleable name="RadioRealButtonGroup">
-        <attr name="rrbg_enabled" format="boolean"/>
+
+        <attr name="android:enabled"/>
         <attr name="android:clickable"/>
 
-        <attr name="rrbg_borderSize" format="dimension"/>
-        <attr name="rrbg_borderColor" format="color"/>
+        <attr name="android:padding"/>
+        <attr name="android:paddingLeft"/>
+        <attr name="android:paddingTop"/>
+        <attr name="android:paddingRight"/>
+        <attr name="android:paddingBottom"/>
 
-        <attr name="rrbg_selectorTop" format="boolean"/>
-        <attr name="rrbg_selectorBottom" format="boolean"/>
-        <attr name="rrbg_animate" format="boolean"/>
+        <attr name="android:layout_margin"/>
+        <attr name="android:layout_marginLeft"/>
+        <attr name="android:layout_marginTop"/>
+        <attr name="android:layout_marginRight"/>
+        <attr name="android:layout_marginBottom"/>
 
-        <attr name="rrbg_buttonsPadding" format="dimension"/>
-        <attr name="rrbg_buttonsPaddingLeft" format="dimension"/>
-        <attr name="rrbg_buttonsPaddingRight" format="dimension"/>
-        <attr name="rrbg_buttonsPaddingTop" format="dimension"/>
-        <attr name="rrbg_buttonsPaddingBottom" format="dimension"/>
+        <attr name="buttonsPadding" format="dimension"/>
+        <attr name="buttonsPaddingLeft" format="dimension"/>
+        <attr name="buttonsPaddingRight" format="dimension"/>
+        <attr name="buttonsPaddingTop" format="dimension"/>
+        <attr name="buttonsPaddingBottom" format="dimension"/>
 
-        <attr name="rrbg_dividerSize" format="dimension"/>
-        <attr name="rrbg_dividerPadding" format="dimension"/>
-        <attr name="rrbg_dividerColor" format="color"/>
-        <attr name="rrbg_dividerRadius" format="dimension"/>
+        <attr name="backgroundColor"/>
 
-        <attr name="rrbg_shadow" format="boolean"/>
-        <attr name="rrbg_shadowElevation" format="dimension"/>
-        <attr name="rrbg_shadowMargin" format="dimension"/>
-        <attr name="rrbg_shadowMarginTop" format="dimension"/>
-        <attr name="rrbg_shadowMarginBottom" format="dimension"/>
-        <attr name="rrbg_shadowMarginLeft" format="dimension"/>
-        <attr name="rrbg_shadowMarginRight" format="dimension"/>
+        <attr name="enableDeselection" format="boolean"/>
 
-        <attr name="rrbg_bottomLineColor" format="color"/>
-        <attr name="rrbg_bottomLineSize" format="dimension"/>
-        <attr name="rrbg_bottomLineBringToFront" format="boolean"/>
-        <attr name="rrbg_bottomLineRadius" format="dimension"/>
+        <attr name="borderSize" format="dimension"/>
+        <attr name="borderColor" format="color"/>
 
-        <attr name="rrbg_backgroundColor" format="color"/>
+        <attr name="dividerSize" format="dimension"/>
+        <attr name="dividerPadding" format="dimension"/>
+        <attr name="dividerColor" format="color"/>
+        <attr name="dividerRadius" format="dimension"/>
+        <attr name="dividerBackgroundColor" format="color"/>
 
-        <attr name="rrbg_selectorColor" format="color"/>
-        <attr name="rrbg_selectorSize" format="dimension"/>
-        <attr name="rrbg_selectorBringToFront" format="boolean"/>
-        <attr name="rrbg_selectorAboveOfBottomLine" format="boolean"/>
-        <attr name="rrbg_selectorRadius" format="dimension"/>
+        <attr name="selectorDividerSize" format="dimension"/>
+        <attr name="selectorDividerPadding" format="dimension"/>
+        <attr name="selectorDividerColor" format="color"/>
+        <attr name="selectorDividerRadius" format="dimension"/>
 
+        <attr name="bottomLineColor" format="color"/>
+        <attr name="bottomLineSize" format="dimension"/>
+        <attr name="bottomLineBringToFront" format="boolean"/>
+        <attr name="bottomLineRadius" format="dimension"/>
 
-        <attr name="rrbg_position" format="integer"/>
+        <attr name="selectorTop" format="boolean"/>
+        <attr name="selectorBottom" format="boolean"/>
 
+        <attr name="selectorColor" format="color"/>
+        <attr name="selectorSize" format="dimension"/>
+        <attr name="selectorBringToFront" format="boolean"/>
+        <attr name="selectorAboveOfBottomLine" format="boolean"/>
+        <attr name="selectorRadius" format="dimension"/>
 
-        <attr name="rrbg_animateSelectorDuration" format="integer"/>
-        <attr name="rrbg_animateSelector" format="integer">
+        <attr name="checkedPosition" format="integer"/>
+        <attr name="checkedButton" format="reference"/>
+
+        <attr name="selectorAnimationType">
+            <flag name="translate_x" value="0"/>
+            <flag name="translate_y" value="1"/>
+            <flag name="scale_x" value="2"/>
+            <flag name="scale_y" value="3"/>
+            <flag name="alpha" value="4"/>
+        </attr>
+
+        <attr name="animate" format="boolean"/>
+
+        <attr name="animateSelectorDelay" format="integer"/>
+        <attr name="animateSelectorDuration" format="integer"/>
+        <attr name="animateSelector" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>
@@ -98,11 +137,11 @@
             <flag name="overshoot" value="11"/>
         </attr>
 
-        <attr name="rrbg_radius" format="dimension"/>
+        <attr name="radius" format="dimension"/>
 
-        <attr name="rrbg_animateImagesScale" format="float"/>
-        <attr name="rrbg_animateImages_enterDuration" format="integer"/>
-        <attr name="rrbg_animateImages_enter" format="integer">
+        <attr name="animateImagesScale" format="float"/>
+        <attr name="animateImages_enterDuration" format="integer"/>
+        <attr name="animateImages_enter" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>
@@ -116,8 +155,8 @@
             <flag name="linearOutSlowIn" value="10"/>
             <flag name="overshoot" value="11"/>
         </attr>
-        <attr name="rrbg_animateImages_exitDuration" format="integer"/>
-        <attr name="rrbg_animateImages_exit" format="integer">
+        <attr name="animateImages_exitDuration" format="integer"/>
+        <attr name="animateImages_exit" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>
@@ -132,9 +171,9 @@
             <flag name="overshoot" value="11"/>
         </attr>
 
-        <attr name="rrbg_animateTextsScale" format="float"/>
-        <attr name="rrbg_animateTexts_enterDuration" format="integer"/>
-        <attr name="rrbg_animateTexts_enter" format="integer">
+        <attr name="animateTextsScale" format="float"/>
+        <attr name="animateTexts_enterDuration" format="integer"/>
+        <attr name="animateTexts_enter" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>
@@ -148,8 +187,8 @@
             <flag name="linearOutSlowIn" value="10"/>
             <flag name="overshoot" value="11"/>
         </attr>
-        <attr name="rrbg_animateTexts_exitDuration" format="integer"/>
-        <attr name="rrbg_animateTexts_exit" format="integer">
+        <attr name="animateTexts_exitDuration" format="integer"/>
+        <attr name="animateTexts_exit" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>

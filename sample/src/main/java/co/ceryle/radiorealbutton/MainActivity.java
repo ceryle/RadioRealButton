@@ -15,10 +15,8 @@
  */
 package co.ceryle.radiorealbutton;
 
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -42,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         button.setTransformationMethod(null);
         updateText(rrbg.getPosition());
 
-
         rrbg.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
@@ -62,24 +59,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int position = rrbg.getPosition();
-                position = ++position % rrbg.getNumberOfButton();
-                rrbg.setPosition(position, true);
+                position = ++position % rrbg.getNumberOfButtons();
+                rrbg.setPosition(position);
 
                 updateText(position);
             }
         });
-
-
-        rrbg.setEnabled(false);
-
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                rrbg.setEnabled(true);
-            }
-        };
-        handler.postDelayed(runnable, 5000);
     }
 
     private void updateText(int position) {

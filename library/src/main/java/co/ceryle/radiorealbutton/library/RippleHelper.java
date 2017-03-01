@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton.library.util;
+package co.ceryle.radiorealbutton.library;
 
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
@@ -27,24 +27,14 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.view.View;
 
-/**
- * Created by EGE on 18.8.2016.
- */
-public class RippleHelper {
+class RippleHelper {
 
-    public static void setBackground(View view, Drawable drawable) {
+    static void setRipple(View view, int normalColor, int pressedColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.setBackground(drawable);
+            view.setBackground(getRippleDrawable(normalColor, pressedColor));
         } else {
-            view.setBackgroundDrawable(drawable);
-        }
-    }
-
-    public static void setRipple(View view, int normalColor, int pressedColor) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            view.setBackground(getPressedColorRippleDrawable(normalColor, pressedColor));
-        else
             view.setBackgroundDrawable(getStateListDrawable(normalColor, pressedColor));
+        }
     }
 
     private static StateListDrawable getStateListDrawable(int normalColor, int pressedColor) {
@@ -57,7 +47,7 @@ public class RippleHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static Drawable getPressedColorRippleDrawable(int normalColor, int pressedColor) {
+    private static Drawable getRippleDrawable(int normalColor, int pressedColor) {
         return new RippleDrawable(getPressedColorSelector(pressedColor), new ColorDrawable(normalColor), getRippleMask(Color.WHITE));
     }
 

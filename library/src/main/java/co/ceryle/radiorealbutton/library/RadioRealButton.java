@@ -20,9 +20,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -31,8 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import co.ceryle.radiorealbutton.R;
-import co.ceryle.radiorealbutton.library.util.ConversionUtil;
-import co.ceryle.radiorealbutton.library.util.RippleHelper;
 
 public class RadioRealButton extends LinearLayout {
     public RadioRealButton(Context context) {
@@ -57,445 +57,614 @@ public class RadioRealButton extends LinearLayout {
         this.init(attrs);
     }
 
-    private ImageView imageView;
-    private TextView textView;
-    private LinearLayout container;
-
     private void init(AttributeSet attrs) {
         getAttributes(attrs);
-        View view = inflate(getContext(), co.ceryle.radiorealbutton.R.layout.ceryle_radiorealbutton, this);
 
-        container = (LinearLayout) view.findViewById(co.ceryle.radiorealbutton.R.id.ceryle_radioRealButton_container);
-        imageView = (ImageView) view.findViewById(co.ceryle.radiorealbutton.R.id.ceryle_radioRealButton_imageView);
-        textView = (TextView) view.findViewById(co.ceryle.radiorealbutton.R.id.ceryle_radioRealButton_textView);
+        initViews();
 
-        setImageAttrs();
+        setDrawableGravity();
+        setState();
+
+        super.setPadding(0, 0, 0, 0);
+        setPaddingAttrs();
+    }
+
+    private ImageView imageView;
+    private TextView textView;
+
+    private void initViews() {
+        setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
+        setOrientation(HORIZONTAL);
+        setGravity(Gravity.CENTER);
+
+        imageView = new ImageView(getContext());
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) {{
+            gravity = Gravity.CENTER;
+        }});
+        setDrawableAttrs();
+        addView(imageView);
+
+        textView = new TextView(getContext());
+        textView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) {{
+            gravity = Gravity.CENTER;
+        }});
         setTextAttrs();
-        setOtherAttrs();
+        addView(textView);
     }
 
-    private int buttonTextStyle, buttonTextSize, buttonImage, buttonImageTint, buttonTextColor, buttonBackgroundColor,
-            buttonRippleColor, buttonImageWidth, buttonImageHeight, buttonPadding, buttonPaddingLeft, buttonPaddingRight,
-            buttonPaddingTop, buttonPaddingBottom, marginBetweenImgAndText;
+    private Typeface defaultTypeface;
 
-    private String buttonText, buttonTextTypeface;
-    private boolean buttonRipple, hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasButtonImageTint,
-            hasImage, hasText;
+    private String text, textTypeface;
 
-    private boolean imageLeft, imageRight, imageTop, imageBottom;
+    private int textStyle, textSize, drawable, drawableTint, textColor, rippleColor, drawableWidth, drawableHeight,
+            padding, paddingLeft, paddingRight, paddingTop, paddingBottom, drawablePadding, backgroundColor, textGravity;
 
+    private boolean hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDrawableTint, hasRipple, hasTextTypeface,
+            hasDrawable, hasText, hasDrawableWidth, hasDrawableHeight, checked, enabled, hasEnabled, clickable, hasClickable,
+            hasTextStyle, hasTextSize, hasTextColor, textFillSpace;
+
+    /***
+     * GET ATTRIBUTES FROM XML
+     */
     private void getAttributes(AttributeSet attrs) {
-        /** GET ATTRIBUTES FROM XML **/
-        // Custom attributes
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButton);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButton);
 
-        hasImage = typedArray.hasValue(R.styleable.RadioRealButton_rrb_image);
-        buttonImage = typedArray.getResourceId(R.styleable.RadioRealButton_rrb_image, -1);
-        buttonImageTint = typedArray.getColor(R.styleable.RadioRealButton_rrb_imageTint, 0);
-        hasButtonImageTint = typedArray.hasValue(R.styleable.RadioRealButton_rrb_imageTint);
-        buttonImageWidth = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_imageWidth, -1);
-        buttonImageHeight = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_imageHeight, -1);
+        drawable = ta.getResourceId(R.styleable.RadioRealButton_drawable, -1);
+        drawableTint = ta.getColor(R.styleable.RadioRealButton_drawableTint, 0);
+        drawableWidth = ta.getDimensionPixelSize(R.styleable.RadioRealButton_drawableWidth, -1);
+        drawableHeight = ta.getDimensionPixelSize(R.styleable.RadioRealButton_drawableHeight, -1);
 
-        hasText = typedArray.hasValue(R.styleable.RadioRealButton_rrb_text);
-        buttonText = typedArray.getString(R.styleable.RadioRealButton_rrb_text);
-        buttonTextColor = typedArray.getColor(R.styleable.RadioRealButton_rrb_textColor, Color.BLACK);
+        hasDrawable = ta.hasValue(R.styleable.RadioRealButton_drawable);
+        hasDrawableTint = ta.hasValue(R.styleable.RadioRealButton_drawableTint);
+        hasDrawableWidth = ta.hasValue(R.styleable.RadioRealButton_drawableWidth);
+        hasDrawableHeight = ta.hasValue(R.styleable.RadioRealButton_drawableHeight);
 
-        buttonRipple = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_ripple, false);
-        buttonRippleColor = typedArray.getColor(R.styleable.RadioRealButton_rrb_rippleColor, -1);
+        text = ta.getString(R.styleable.RadioRealButton_text);
+        hasText = ta.hasValue(R.styleable.RadioRealButton_text);
+        textColor = ta.getColor(R.styleable.RadioRealButton_textColor, Color.BLACK);
+        hasTextColor = ta.hasValue(R.styleable.RadioRealButton_textColor);
+        textSize = ta.getDimensionPixelSize(R.styleable.RadioRealButton_textSize, -1);
+        hasTextSize = ta.hasValue(R.styleable.RadioRealButton_textSize);
+        textStyle = ta.getInt(R.styleable.RadioRealButton_textStyle, -1);
+        hasTextStyle = ta.hasValue(R.styleable.RadioRealButton_textStyle);
+        textTypeface = ta.getString(R.styleable.RadioRealButton_textTypeface);
+        hasTextTypeface = ta.hasValue(R.styleable.RadioRealButton_textTypeface);
 
-        buttonBackgroundColor = typedArray.getColor(R.styleable.RadioRealButton_rrb_backgroundColor, -1);
+        hasRipple = ta.getBoolean(R.styleable.RadioRealButton_ripple, true);
+        rippleColor = ta.getColor(R.styleable.RadioRealButton_rippleColor, Color.GRAY);
 
-        buttonPadding = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_buttonPadding, 0);
-        buttonPaddingLeft = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_buttonPaddingLeft, 0);
-        buttonPaddingRight = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_buttonPaddingRight, 0);
-        buttonPaddingTop = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_buttonPaddingTop, 0);
-        buttonPaddingBottom = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_buttonPaddingBottom, 0);
+        backgroundColor = ta.getColor(R.styleable.RadioRealButton_backgroundColor, Color.TRANSPARENT);
 
-        hasPadding = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPadding);
-        hasPaddingLeft = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingLeft);
-        hasPaddingRight = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingRight);
-        hasPaddingTop = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingTop);
-        hasPaddingBottom = typedArray.hasValue(R.styleable.RadioRealButton_rrb_buttonPaddingBottom);
+        int defaultPadding = ConversionHelper.dpToPx(getContext(), 10);
+        padding = ta.getDimensionPixelSize(R.styleable.RadioRealButton_android_padding, defaultPadding);
+        paddingLeft = ta.getDimensionPixelSize(R.styleable.RadioRealButton_android_paddingLeft, 0);
+        paddingRight = ta.getDimensionPixelSize(R.styleable.RadioRealButton_android_paddingRight, 0);
+        paddingTop = ta.getDimensionPixelSize(R.styleable.RadioRealButton_android_paddingTop, 0);
+        paddingBottom = ta.getDimensionPixelSize(R.styleable.RadioRealButton_android_paddingBottom, 0);
 
-        marginBetweenImgAndText = (int) typedArray.getDimension(R.styleable.RadioRealButton_rrb_marginBetweenImageAndText, 4);
+        hasPaddingLeft = ta.hasValue(R.styleable.RadioRealButton_android_paddingLeft);
+        hasPaddingRight = ta.hasValue(R.styleable.RadioRealButton_android_paddingRight);
+        hasPaddingTop = ta.hasValue(R.styleable.RadioRealButton_android_paddingTop);
+        hasPaddingBottom = ta.hasValue(R.styleable.RadioRealButton_android_paddingBottom);
 
-        imageLeft = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageLeft, true);
-        imageRight = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageRight, false);
-        imageTop = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageTop, false);
-        imageBottom = typedArray.getBoolean(R.styleable.RadioRealButton_rrb_imageBottom, false);
+        drawablePadding = ta.getDimensionPixelSize(R.styleable.RadioRealButton_drawablePadding, 4);
 
-        buttonTextSize = typedArray.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_textSize, -1);
-        buttonTextStyle = typedArray.getInt(R.styleable.RadioRealButton_rrb_textStyle, -1);
-        buttonTextTypeface = typedArray.getString(R.styleable.RadioRealButton_rrb_textTypeface);
+        drawableGravity = DrawableGravity.getById(ta.getInteger(R.styleable.RadioRealButton_drawableGravity, 0));
 
-        typedArray.recycle();
+        checked = ta.getBoolean(R.styleable.RadioRealButton_checked, false);
+
+        enabled = ta.getBoolean(R.styleable.RadioRealButton_android_enabled, true);
+        hasEnabled = ta.hasValue(R.styleable.RadioRealButton_android_enabled);
+        clickable = ta.getBoolean(R.styleable.RadioRealButton_android_clickable, true);
+        hasClickable = ta.hasValue(R.styleable.RadioRealButton_android_clickable);
+
+        textGravity = ta.getInt(R.styleable.RadioRealButton_textGravity, Gravity.NO_GRAVITY);
+
+        textFillSpace = ta.getBoolean(R.styleable.RadioRealButton_textFillSpace, false);
+
+        ta.recycle();
     }
 
-    private void setImageAttrs() {
-        if (buttonImage != -1) {
-            imageView.setImageResource(buttonImage);
-            if (hasButtonImageTint)
-                imageView.setColorFilter(buttonImageTint);
+    public boolean hasEnabled() {
+        return hasEnabled;
+    }
+
+    public boolean hasClickable() {
+        return hasClickable;
+    }
+
+    private void setDrawableAttrs() {
+        if (hasDrawable) {
+            imageView.setImageResource(drawable);
+            if (hasDrawableTint)
+                imageView.setColorFilter(drawableTint);
+
+            if (hasDrawableWidth)
+                setDrawableWidth(drawableWidth);
+            if (hasDrawableHeight)
+                setDrawableHeight(drawableHeight);
         } else {
             imageView.setVisibility(GONE);
         }
+    }
 
-        if (buttonImageWidth != -1)
-            setImageSizePixel(buttonImageWidth, buttonImageHeight);
+    private void setDrawableGravity() {
+        if (!hasDrawable)
+            return;
 
+        if (drawableGravity == DrawableGravity.LEFT || drawableGravity == DrawableGravity.TOP) {
+            if (getChildAt(0) instanceof TextView) {
+                removeViewAt(0);
+                addView(textView, 1);
 
-        if (imageRight || imageBottom) {
-            container.removeViewAt(0);
-            container.addView(imageView, 1);
+                if (textFillSpace) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView.getLayoutParams();
+                    params.weight = 0;
+                    params.width = LayoutParams.WRAP_CONTENT;
+                }
+            }
+        } else {
+            if (getChildAt(0) instanceof ImageView) {
+                removeViewAt(0);
+                addView(imageView, 1);
+
+                if (textFillSpace) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView.getLayoutParams();
+                    params.weight = 1;
+                    params.width = 0;
+                }
+            }
         }
 
-        if ((imageTop || imageBottom) && hasText && hasImage)
-            container.setOrientation(VERTICAL);
+        if (hasText && hasDrawable)
+            if (drawableGravity == DrawableGravity.TOP || drawableGravity == DrawableGravity.BOTTOM)
+                setOrientation(VERTICAL);
+            else
+                setOrientation(HORIZONTAL);
     }
 
     private void setTextAttrs() {
-        textView.setText(buttonText);
-        textView.setTextColor(buttonTextColor);
+        defaultTypeface = textView.getTypeface();
 
-        setTextSize(buttonTextSize);
-        setTextStyle(buttonTextStyle);
-        setTextTypeface(buttonTextTypeface);
+        textView.setText(text);
 
+        int gravity;
 
-    }
-
-    private void setOtherAttrs() {
-        if (hasPadding)
-            setButtonPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
-        else if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
-            setButtonPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
-        else
-            setButtonPadding(30, 30, 30, 30);
-
-
-        backgroundColor = Color.WHITE;
-        rippleColor = Color.GRAY;
-
-        if (buttonRippleColor != -1) {
-            rippleColor = buttonRippleColor;
-            hasRipple = true;
-        } else if (buttonRipple)
-            hasRipple = true;
-
-        if (buttonBackgroundColor != -1) {
-            backgroundColor = buttonBackgroundColor;
-        }
-
-        if (hasRipple)
-            RippleHelper.setRipple(container, backgroundColor, rippleColor);
-        else
-            container.setBackgroundColor(backgroundColor);
-    }
-
-    private boolean hasRipple = false;
-    private int backgroundColor, rippleColor;
-
-    void setRipple(boolean state) {
-        if (state) {
-            if (hasRipple)
-                RippleHelper.setRipple(container, backgroundColor, rippleColor);
-            else
-                container.setBackgroundColor(backgroundColor);
+        if (textGravity == 2) {
+            gravity = Gravity.END;
+        } else if (textGravity == 1) {
+            gravity = Gravity.CENTER;
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                container.setBackground(null);
-            else
-                container.setBackgroundDrawable(null);
+            gravity = Gravity.START;
+        }
+
+        textView.setGravity(gravity);
+
+        if (hasTextColor)
+            textView.setTextColor(textColor);
+        if (hasTextSize)
+            setTextSizePX(textSize);
+        if (hasTextStyle)
+            setTextStyle(textStyle);
+        if (hasTextTypeface)
+            setTypeface(textTypeface);
+    }
+
+    private void setPaddingAttrs() {
+        if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
+            setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        else
+            setPadding(padding, padding, padding, padding);
+    }
+
+    protected void bounceDrawable(float scale, int duration, Interpolator interpolator, boolean hasAnimation) {
+        if (hasAnimation)
+            bounce(imageView, scale, duration, interpolator);
+        else
+            bounceDrawable(scale);
+    }
+
+    protected void bounceText(float scale, int duration, Interpolator interpolator, boolean hasAnimation) {
+        if (hasAnimation)
+            bounce(textView, scale, duration, interpolator);
+        else
+            bounceText(scale);
+    }
+
+    private void bounce(View view, float scale, int duration, Interpolator interpolator) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+            view.animate().setDuration(duration).setInterpolator(interpolator).scaleX(scale).scaleY(scale);
+        } else {
+            bounce(view, scale);
+        }
+    }
+    /*private void bounce(View view, float scale, int duration, Interpolator interpolator) {
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", scale);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", scale);
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(scaleX, scaleY);
+        set.setDuration(duration);
+        set.setInterpolator(interpolator);
+        set.start();
+    }*/
+
+    protected void bounceDrawable(float scale) {
+        bounce(imageView, scale);
+    }
+
+    protected void bounceText(float scale) {
+        bounce(textView, scale);
+    }
+
+    private void bounce(final View view, final float scale) {
+        view.setScaleX(scale);
+        view.setScaleY(scale);
+    }
+
+    /**
+     * GRAVITY
+     */
+
+    private DrawableGravity drawableGravity;
+
+    public enum DrawableGravity {
+        LEFT(0),
+        TOP(1),
+        RIGHT(2),
+        BOTTOM(3);
+
+        private int intValue;
+
+        DrawableGravity(int intValue) {
+            this.intValue = intValue;
+        }
+
+        private int getIntValue() {
+            return intValue;
+        }
+
+        public static DrawableGravity getById(int id) {
+            for (DrawableGravity e : values()) {
+                if (e.intValue == id) return e;
+            }
+            return null;
+        }
+
+        public boolean isHorizontal() {
+            return intValue == 0 || intValue == 2;
         }
     }
 
-    public void setImageSizePixel(int width, int height) {
-        if (width != -1)
-            imageView.getLayoutParams().width = width;
-        if (height != -1)
-            imageView.getLayoutParams().height = height;
+    /**
+     * TEXT VIEW
+     */
+    public TextView getTextView() {
+        return textView;
     }
 
-    public void setImageSizeDp(int width, int height) {
-        imageView.getLayoutParams().width = (int) ConversionUtil.convertDpToPixel(width, getContext());
-        imageView.getLayoutParams().height = (int) ConversionUtil.convertDpToPixel(height, getContext());
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+
+        textView.setTextColor(textColor);
+    }
+
+    public String getText() {
+        return text;
     }
 
     public void setText(String text) {
+        this.text = text;
+
         textView.setText(text);
     }
 
-    public void setButtonPadding(int buttonPaddingLeft, int buttonPaddingTop, int buttonPaddingRight, int buttonPaddingBottom) {
-        ViewGroup.MarginLayoutParams imageParams = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
-        ViewGroup.MarginLayoutParams textParams = (ViewGroup.MarginLayoutParams) textView.getLayoutParams();
-
-        if (hasImage) {
-            if (!hasText) {
-                imageParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
-            } else {
-                if (imageRight)
-                    imageParams.setMargins(marginBetweenImgAndText, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
-                else if (imageTop)
-                    imageParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, marginBetweenImgAndText);
-                else if (imageBottom)
-                    imageParams.setMargins(buttonPaddingLeft, marginBetweenImgAndText, buttonPaddingRight, buttonPaddingBottom);
-                else
-                    imageParams.setMargins(buttonPaddingLeft, buttonPaddingTop, marginBetweenImgAndText, buttonPaddingBottom);
-            }
-        }
-        if (hasText) {
-            if (!hasImage)
-                textParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
-            else {
-                if (imageRight)
-                    textParams.setMargins(buttonPaddingLeft, buttonPaddingTop, marginBetweenImgAndText, buttonPaddingBottom);
-                else if (imageTop)
-                    textParams.setMargins(buttonPaddingLeft, marginBetweenImgAndText, buttonPaddingRight, buttonPaddingBottom);
-                else if (imageBottom)
-                    textParams.setMargins(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, marginBetweenImgAndText);
-                else
-                    textParams.setMargins(marginBetweenImgAndText, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
-            }
-        }
+    public void setTextSizePX(int size) {
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
-    protected void bounceImage(float scale, int duration, Interpolator interpolator) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            imageView.animate().setDuration(duration).setInterpolator(interpolator).scaleX(scale).scaleY(scale);
-        } else {
-            imageView.setScaleX(scale);
-            imageView.setScaleY(scale);
-        }
+    public void setTextSizeSP(float size) {
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 
-    protected void bounceText(float scale, int duration, Interpolator interpolator) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            textView.animate().setDuration(duration).setInterpolator(interpolator).scaleX(scale).scaleY(scale);
-        } else {
-            textView.setScaleX(scale);
-            textView.setScaleY(scale);
-        }
+    public int getTextSize() {
+        return textSize;
     }
 
-    public void setTextSize(float size) {
-        if (size > -1)
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+    public int getTextStyle() {
+        return textStyle;
     }
 
     public void setTextStyle(int typeface) {
-        if (typeface > -1 && typeface < 4) {
-            int[] typefaces = {Typeface.NORMAL, Typeface.BOLD, Typeface.ITALIC, Typeface.BOLD_ITALIC};
-            textView.setTypeface(textView.getTypeface(), typefaces[typeface]);
-        }
+        textView.setTypeface(textView.getTypeface(), typeface);
     }
 
-    public void setTextTypeface(Typeface typeface) {
+    public void restoreTypeface() {
+        textView.setTypeface(defaultTypeface);
+    }
+
+    public String getTypeface() {
+        return textTypeface;
+    }
+
+    /**
+     * Typeface.NORMAL: 0
+     * Typeface.BOLD: 1
+     * Typeface.ITALIC: 2
+     * Typeface.BOLD_ITALIC: 3
+     *
+     * @param typeface you can use above variations using the bitwise OR operator
+     */
+    public void setTypeface(Typeface typeface) {
         textView.setTypeface(typeface);
     }
 
-    public void setTextTypeface(String location) {
+    public void setTypeface(String location) {
         if (null != location && !location.equals("")) {
             Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), location);
             textView.setTypeface(typeface);
         }
     }
 
-    // Direct access to imageView if it is needed
+    public Typeface getDefaultTypeface() {
+        return defaultTypeface;
+    }
+
+
+    /**
+     * PADDING
+     */
+    public int getPadding() {
+        return padding;
+    }
+
+    @Override
+    public void setPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
+        this.paddingLeft = paddingLeft;
+        this.paddingTop = paddingTop;
+        this.paddingRight = paddingRight;
+        this.paddingBottom = paddingBottom;
+
+        updatePaddings();
+    }
+
+    private void updatePaddings() {
+        if (hasText)
+            updatePadding(textView, hasDrawable);
+
+        if (hasDrawable)
+            updatePadding(imageView, hasText);
+    }
+
+    private void updatePadding(View view, boolean hasOtherView) {
+        int[] paddings = {paddingLeft, paddingTop, paddingRight, paddingBottom};
+
+        if (hasOtherView) {
+            int g = drawableGravity.getIntValue();
+            if (view instanceof ImageView) {
+                g = g > 1 ? g - 2 : g + 2;
+            }
+            paddings[g] = drawablePadding / 2;
+        }
+
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        params.setMargins(paddings[0], paddings[1], paddings[2], paddings[3]);
+    }
+
+    @Override
+    public int getPaddingLeft() {
+        return paddingLeft;
+    }
+
+    @Override
+    public int getPaddingRight() {
+        return paddingRight;
+    }
+
+    @Override
+    public int getPaddingTop() {
+        return paddingTop;
+    }
+
+    @Override
+    public int getPaddingBottom() {
+        return paddingBottom;
+    }
+
+    public boolean hasPaddingLeft() {
+        return hasPaddingLeft;
+    }
+
+    public boolean hasPaddingRight() {
+        return hasPaddingRight;
+    }
+
+    public boolean hasPaddingTop() {
+        return hasPaddingTop;
+    }
+
+    public boolean hasPaddingBottom() {
+        return hasPaddingBottom;
+    }
+
+    /**
+     * DRAWABLE
+     */
     public ImageView getImageView() {
         return imageView;
     }
 
-    // Direct access to textView if it is needed
-    public TextView getTextView() {
-        return textView;
+    public int getDrawable() {
+        return drawable;
     }
 
-    public void setRipple(int backgroundColor, int rippleColor) {
-        RippleHelper.setRipple(container, backgroundColor, rippleColor);
+    public void setDrawable(Drawable drawable) {
+        imageView.setImageDrawable(drawable);
     }
 
-    public void setBackgroundColor(int backgroundColor) {
-        container.setBackgroundColor(backgroundColor);
+    public void setDrawable(int drawable) {
+        this.drawable = drawable;
+
+        imageView.setImageResource(drawable);
     }
 
-    public int getButtonImage() {
-        return buttonImage;
+    public int getDrawableTint() {
+        return drawableTint;
     }
 
-    public void setButtonImage(int buttonImage) {
-        this.buttonImage = buttonImage;
+    public void setDrawableTint(int color) {
+        this.drawableTint = color;
+
+        imageView.setColorFilter(color);
     }
 
-    public int getButtonImageTint() {
-        return buttonImageTint;
+    public boolean hasDrawableTint() {
+        return hasDrawableTint;
     }
 
-    public void setButtonImageTint(int buttonImageTint) {
-        this.buttonImageTint = buttonImageTint;
+    public void setDrawableTint(boolean hasColor) {
+        this.hasDrawableTint = hasColor;
+
+        if (hasColor)
+            imageView.setColorFilter(drawableTint);
+        else
+            imageView.clearColorFilter();
     }
 
-    public int getButtonTextColor() {
-        return buttonTextColor;
+    public int getDrawableWidth() {
+        return drawableWidth;
     }
 
-    public void setButtonTextColor(int buttonTextColor) {
-        this.buttonTextColor = buttonTextColor;
-        textView.setTextColor(buttonTextColor);
+    public void setDrawableWidth(int drawableWidth) {
+        this.drawableWidth = drawableWidth;
+
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        if (null != params) {
+            params.width = drawableWidth;
+        }
     }
 
-    public int getButtonBackgroundColor() {
-        return buttonBackgroundColor;
+    public int getDrawableHeight() {
+        return drawableHeight;
     }
 
-    public void setButtonBackgroundColor(int buttonBackgroundColor) {
-        this.buttonBackgroundColor = buttonBackgroundColor;
+    public void setDrawableHeight(int drawableHeight) {
+        this.drawableHeight = drawableHeight;
+
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        if (null != params) {
+            params.height = drawableHeight;
+        }
     }
 
-    public int getButtonRippleColor() {
-        return buttonRippleColor;
+    public void setDrawableSizeByPx(int width, int height) {
+        this.drawableWidth = width;
+        this.drawableHeight = height;
+
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        if (null != params) {
+            params.width = width;
+            params.height = height;
+        }
     }
 
-    public void setButtonRippleColor(int buttonRippleColor) {
-        this.buttonRippleColor = buttonRippleColor;
+    public void setDrawableSizeByDp(int width, int height) {
+        width = ConversionHelper.dpToPx(getContext(), width);
+        height = ConversionHelper.dpToPx(getContext(), height);
+        setDrawableSizeByPx(width, height);
     }
 
-    public int getButtonImageWidth() {
-        return buttonImageWidth;
+    public DrawableGravity getDrawableGravity() {
+        return drawableGravity;
     }
 
-    public void setButtonImageWidth(int buttonImageWidth) {
-        this.buttonImageWidth = buttonImageWidth;
+    public void setDrawableGravity(DrawableGravity gravity) {
+        this.drawableGravity = gravity;
+
+        setDrawableGravity();
+        setPaddingAttrs();
     }
 
-    public int getButtonImageHeight() {
-        return buttonImageHeight;
+    public int getDrawablePadding() {
+        return drawablePadding;
     }
 
-    public void setButtonImageHeight(int buttonImageHeight) {
-        this.buttonImageHeight = buttonImageHeight;
+    public void setDrawablePadding(int drawablePadding) {
+        this.drawablePadding = drawablePadding;
+        updatePaddings();
     }
 
-    public int getButtonPadding() {
-        return buttonPadding;
+    /**
+     * RIPPLE
+     */
+    public int getRippleColor() {
+        return rippleColor;
     }
 
-    public int getButtonPaddingLeft() {
-        return buttonPaddingLeft;
+    public void setRippleColor(int rippleColor) {
+        this.rippleColor = rippleColor;
+
+        RippleHelper.setRipple(this, backgroundColor, rippleColor);
     }
 
-    public void setButtonPaddingLeft(int buttonPaddingLeft) {
-        this.buttonPaddingLeft = buttonPaddingLeft;
+    public void setRipple(boolean state) {
+        if (state && hasRipple)
+            RippleHelper.setRipple(this, backgroundColor, rippleColor);
+        else
+            setBackgroundColor(backgroundColor);
     }
 
-    public int getButtonPaddingRight() {
-        return buttonPaddingRight;
+    /**
+     * GROUP
+     */
+    private void setEnabledAlpha(boolean enabled) {
+        float alpha = 1f;
+        if (!enabled)
+            alpha = 0.5f;
+        setAlpha(alpha);
     }
 
-    public void setButtonPaddingRight(int buttonPaddingRight) {
-        this.buttonPaddingRight = buttonPaddingRight;
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setClickable(enabled);
+        this.enabled = enabled;
+        setEnabledAlpha(enabled);
+        setRipple(enabled);
     }
 
-    public int getButtonPaddingTop() {
-        return buttonPaddingTop;
+    @Override
+    public void setClickable(boolean clickable) {
+        super.setClickable(clickable);
+        this.clickable = clickable;
+        setRipple(clickable);
     }
 
-    public void setButtonPaddingTop(int buttonPaddingTop) {
-        this.buttonPaddingTop = buttonPaddingTop;
+    private void setState() {
+        if (hasEnabled)
+            setEnabled(enabled);
+        else
+            setClickable(clickable);
     }
 
-    public int getButtonPaddingBottom() {
-        return buttonPaddingBottom;
+    @Override
+    public boolean isClickable() {
+        return clickable;
     }
 
-    public void setButtonPaddingBottom(int buttonPaddingBottom) {
-        this.buttonPaddingBottom = buttonPaddingBottom;
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public int getMarginBetweenImageAndText() {
-        return marginBetweenImgAndText;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
-    public void setMarginBetweenImageAndText(int marginBetweenImageAndText) {
-        this.marginBetweenImgAndText = marginBetweenImageAndText;
-    }
-
-    public String getButtonText() {
-        return buttonText;
-    }
-
-    public void setButtonText(String buttonText) {
-        this.buttonText = buttonText;
-    }
-
-    public boolean isButtonRipple() {
-        return buttonRipple;
-    }
-
-    public void setButtonRipple(boolean buttonRipple) {
-        this.buttonRipple = buttonRipple;
-    }
-
-    public boolean isHasPadding() {
-        return hasPadding;
-    }
-
-    public void setHasPadding(boolean hasPadding) {
-        this.hasPadding = hasPadding;
-    }
-
-    public boolean isHasPaddingLeft() {
-        return hasPaddingLeft;
-    }
-
-    public void setHasPaddingLeft(boolean hasPaddingLeft) {
-        this.hasPaddingLeft = hasPaddingLeft;
-    }
-
-    public boolean isHasPaddingRight() {
-        return hasPaddingRight;
-    }
-
-    public void setHasPaddingRight(boolean hasPaddingRight) {
-        this.hasPaddingRight = hasPaddingRight;
-    }
-
-    public boolean isHasPaddingTop() {
-        return hasPaddingTop;
-    }
-
-    public void setHasPaddingTop(boolean hasPaddingTop) {
-        this.hasPaddingTop = hasPaddingTop;
-    }
-
-    public boolean isHasPaddingBottom() {
-        return hasPaddingBottom;
-    }
-
-    public void setHasPaddingBottom(boolean hasPaddingBottom) {
-        this.hasPaddingBottom = hasPaddingBottom;
-    }
-
-    public boolean isHasButtonImageTint() {
-        return hasButtonImageTint;
-    }
-
-    public void setHasButtonImageTint(boolean hasButtonImageTint) {
-        this.hasButtonImageTint = hasButtonImageTint;
-    }
-
-    public boolean isHasImage() {
-        return hasImage;
-    }
-
-    public void setHasImage(boolean hasImage) {
-        this.hasImage = hasImage;
-    }
-
-    public boolean isHasText() {
-        return hasText;
-    }
-
-    public void setHasText(boolean hasText) {
-        this.hasText = hasText;
+    public boolean isChecked() {
+        return checked;
     }
 }

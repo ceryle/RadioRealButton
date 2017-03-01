@@ -13,17 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton.library.util;
+package co.ceryle.radiorealbutton.library;
 
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.view.View;
 import android.widget.LinearLayout;
 
-/**
- * Created by EGE on 22/08/2016.
- */
-public class RoundHelper {
+class RoundHelper {
+
+    static void makeRound(View view, int dividerColor, int dividerRadius, int dividerSize) {
+        GradientDrawable gradient = getGradientDrawable(dividerColor, dividerRadius, dividerSize);
+        BackgroundHelper.setBackground(view, gradient);
+    }
+
+    static void makeDividerRound(LinearLayout layout, int dividerColor, int dividerRadius, int dividerSize) {
+        GradientDrawable gradient = getGradientDrawable(dividerColor, dividerRadius, dividerSize);
+        layout.setDividerDrawable(gradient);
+    }
 
     private static GradientDrawable getGradientDrawable(int dividerColor, int dividerRadius, int dividerSize) {
         GradientDrawable gradient =
@@ -32,20 +38,5 @@ public class RoundHelper {
         gradient.setCornerRadius(dividerRadius);
         gradient.setSize(dividerSize, 0);
         return gradient;
-    }
-
-    public static void makeRound(View view, int dividerColor, int dividerRadius, int dividerSize) {
-        GradientDrawable gradient = getGradientDrawable(dividerColor, dividerRadius, dividerSize);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            view.setBackground(gradient);
-        else
-            view.setBackgroundDrawable(gradient);
-    }
-
-
-    public static void makeDividerRound(LinearLayout layout, int dividerColor, int dividerRadius, int dividerSize){
-        GradientDrawable gradient = getGradientDrawable(dividerColor, dividerRadius, dividerSize);
-        layout.setDividerDrawable(gradient);
     }
 }
