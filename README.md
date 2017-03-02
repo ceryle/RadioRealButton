@@ -42,88 +42,138 @@ dependencies {
 
 ## Customization
 
+### What has changed with version 2?
+- Border is now part of the round container layout.
+- android:padding and rest padding attributes were working not as expected. Now, they are fixed.
+- textTypeface attribute now works like button's typeface. You can give your typeface using textTypefacePath attribute.
+
+##### What added?
+- New animations added. There was only a sliding view, but now 4 more added. You can use them with app:selectorAnimationType attribute.
+- enableDeselection attribute is added. With this attribute, you can deselect buttons if you re-click on them.
+- Each button has their own selector (sliding selector has still one) and you can give divider between them.
+- textGravity attribute is added which is actually android:gravity. You can give 3 values which are left, center, right.
+
+##### What removed?
+- Prefixes are removed ( rrbg_ and rrb_ ) from all attributes.
+- 'image' word is replaced with "drawable" word from all attributes which have them. Reason is everyone is used to 'drawable' word and
+how I have used ImageView in RadioRealButton is no different than regular drawable which is used in buttons expect animations.
+- rrbg_shadow, rrbg_shadowElevation and its margin attributes are removed. You can use android:elevation attribute.
+- rrbg_enabled is removed. You can use android:enabled attribute.
+
+
 ### Some Attributes
 
 #### Radio Real Button
-| Option Name      				| Format                 | Description                              |
-| ---------------- 				| ---------------------- | -----------------------------            |
-| custom:rrb_image         | `integer`               |  Button's image icon    |
-| custom:rrb_imageTint       | `color`               | Tint for button's image icon |
-| custom:rrb_ripple 		| `boolean`		         | Set it true for default ripple  |
-| custom:rrb_rippleColor     | `color`               | Ripple color       |
-| custom:rrb_backgroundColor        | `color`               | Background color, and it can be used with ripple  |
-| custom:rrb_text    		| `string`           | Set button's text  |
-| custom:rrb_textColor			| `color`	         | Change button's text color |
-| custom:rrb_imageRight			| `boolean`	         | Align image to right |
-| custom:rrb_imageTop			| `boolean`	         | Align image to top |
-| custom:rrb_imageBottom			| `boolean`	         | Align image to bottom |
-
+| Option Name      	| Format      | Description                                               |
+| ----------------- | ----------- | --------------------------------------------------------- |
+| drawable          | `integer`   | set drawable to button                                    |
+| drawablePadding   | `dimension` | set padding between text and drawable                     |
+| drawableTint      | `color`     | set drawable tint by giving a color code or reference     |
+| drawableWidth     | `dimension` | change drawable's width                                   |
+| drawableHeight    | `dimension` | change drawable's height                                  |
+| drawableGravity   | `integer`   | set drawable position relative to text                    |
+| text    		    | `string`    | set button's text                                         |
+| textColor			| `color`	  | change button's text color                                |
+| textSize		    | `dimension` | change button's text size                                 |
+| textTypeface		| `integer`	  | default typefaces offered by android itself               |
+| textTypefacePath	| `string`	  | give your typeface by giving its path                     |
+| textFillSpace		| `boolean`	  | when enabled, it pushes drawable to edges of the button   |
+| textStyle			| `integer`	  | default styles offered by android itself                  |
+| textGravity		| `integer`	  | give text gravity(not layout_gravity)                     |
+| ripple 		    | `boolean`   | set it true for default ripple                            |
+| rippleColor       | `color`     | give any color to achieve colorful ripples                |
+| backgroundColor   | `color`     | give background color by giving a color code or reference |
+| checked		    | `boolean`	  | its usage is the same as radio button                     |
 
 #### Radio Real Button Group
-| Option Name      				| Format                 | Description                              |
-| ---------------- 				| ---------------------- | -----------------------------            |
-| custom:rrbg_radius         | `integer`               |  Set radius to make radio real button group rounder    |
-| custom:rrbg_animateSelector         | `integer`               |  Set animation on bottom moving view    |
-| custom:rrbg_animateImages_enter       | `integer`               | Animate image when button clicked |
-| custom:rrbg_animateImages_exit 		| `integer`		         | Animate image when other than selected button clicked  |
-| custom:rrbg_animateTexts_enter     | `integer`               | Acts same as image animation       |
-| custom:rrbg_animateTexts_exit        | `integer`               | Acts same as image animation  |
-| custom:rrbg_bottomLineColor    		| `color`           | Set bottom line color  |
-| custom:rrbg_bottomLineSize			| `dimension`	         | Set bottom line height |
-| custom:rrbg_selectorColor			| `color`	         | Set color of moving view |
-| custom:rrbg_selectorSize			| `dimension`	         | Set height of selecter |
-| custom:rrbg_selectorRadius			| `dimension`	         | Set selector radius to make it rounder |
-| custom:rrbg_selectorAboveOfBottomLine			| `boolean`	         | Set true if selector is desired above of bottom line |
-| custom:rrbg_selectorTop			| `boolean`	         | Align selector to top |
-| custom:rrbg_shadow			| `boolean`	         | Set true for shadow |
-| custom:rrbg_shadowElevation			| `dimension`	         | Elevation value must be set for shadow |
-| custom:rrbg_shadowMargin			| `dimension`	         | Set margin to create space for shadow |
-| custom:rrbg_position			| `integer`	         | Set position to select button, starts from 0 |
-| custom:rrbg_dividerSize			| `dimension`	         | Set divider size for the line between buttons |
-| custom:rrbg_dividerRadius			| `dimension`	         | Set divider radius to make it rounder |
-| custom:rrbg_borderSize			| `dimension`	         | Adds border to group with the given size |
-| custom:rrbg_borderColor			| `dimension`	         | Changes border color |
+| Option Name      	        | Format                 | Description                              |
+| ------------------------- | ----------- | -----------------------------            |
+| radius                    | `integer`   | set radius to make radio real button group rounder    |
+| borderSize			    | `dimension` | adds border to group with the given size |
+| borderColor			    | `dimension` | changes border color |
+| backgroundColor           | `color`     | give background color by giving a color code or reference |
+| enableDeselection         | `color`     |   |
+| dividerSize			    | `dimension` | set divider size for the line between buttons |
+| dividerPadding		    | `dimension` |   |
+| dividerColor			    | `dimension` |   |
+| dividerRadius			    | `dimension` |   |
+| dividerBackgroundColor    | `dimension` |   |
+| selectorDividerSize	    | `dimension` |   |
+| selectorDividerPadding    | `dimension` |   |
+| selectorDividerColor	    | `dimension` |   |
+| selectorDividerRadius	    | `dimension` |   |
+| bottomLineColor    	    | `color`     | set bottom line color  |
+| bottomLineSize		    | `dimension` | set bottom line height |
+| bottomLineBringToFront    | `dimension` |   |
+| bottomLineRadius		    | `dimension` |   |
+| selectorTop			    | `boolean`	  | align selector to top |
+| selectorBottom		    | `boolean`	  | align selector to bottom |
+| selectorColor			    | `color`	  | set color of selector |
+| selectorSize			    | `dimension` | set height of selector |
+| selectorRadius		    | `dimension` | set selector radius to make it rounder |
+| selectorBringToFront	    | `dimension` |   |
+| selectorAboveOfBottomLine | `boolean`	  | set true if selector is desired above of bottom line |
+| selectorRadius		    | `boolean`	  |   |
+| checkedPosition		    | `integer`	  | check a button by a position number |
+| checkedButton			    | `integer`	  | check a button by button's unique id |
+| animate                   | `integer`   | set animation on bottom moving view    |
+| animateSelector           | `integer`   |   |
+| animateSelector_delay     | `integer`   |   |
+| animateSelector_duration  | `integer`   |   |
+| animateDrawables_scale         | `integer`   |  |
+| animateDrawables_enter         | `integer`   | enter animation on drawable when button is checked |
+| animateDrawables_enterDuration | `integer`   | enter animation duration of drawable in ms |
+| animateDrawables_exit 	     | `integer`   | exit animation on drawable when other button is checked  |
+| animateDrawables_exitDuration  | `integer`   | exit animation duration of drawable in ms  |
+| animateTexts_scale             | `integer`   |  |
+| animateTexts_enter             | `integer`   | enter animation on text when button is checked |
+| animateTexts_enterDuration     | `integer`   | enter animation duration of text in ms |
+| animateTexts_exit 	         | `integer`   | exit animation on text when other button is checked  |
+| animateTexts_exitDuration 	 | `integer`   | exit animation duration of text in ms  |
+
 
 #### Examples
 
 ##### In Xml Layout
 
 ```xml
-  <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-            app:rrbg_bottomLineSize="0dp"
-            app:rrbg_dividerColor="@color/black"
-            app:rrbg_dividerSize="1dp"
-            app:rrbg_selectorColor="@color/red_700"
-            app:rrbg_selectorSize="6dp"
-            app:rrbg_radius="10dp"
-            app:rrbg_shadow="true"
-            app:rrbg_shadowElevation="2dp"
-            app:rrbg_shadowMargin="3dp"
-            app:rrbg_animateTexts_enter="overshoot"
-            app:rrbg_animateImages_enter="overshoot">
-            <co.ceryle.radiorealbutton.library.RadioRealButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rrb_image="@mipmap/ic_launcher"
-                app:rrb_imageHeight="36dp"
-                app:rrb_imageWidth="36dp"
-                app:rrb_ripple="true"
-                app:rrb_rippleColor="@color/black"
-                app:rrb_text="Button 1"
-                app:rrb_textColor="@color/black"/>
-            <co.ceryle.radiorealbutton.library.RadioRealButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rrb_image="@mipmap/ic_launcher"
-                app:rrb_imageHeight="36dp"
-                app:rrb_imageWidth="36dp"
-                app:rrb_ripple="true"
-                app:rrb_rippleColor="@color/black"
-                app:rrb_text="Button 2"
-                app:rrb_textColor="@color/black"/>
-  </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
+<co.ceryle.radiorealbutton.library.RadioRealButtonGroup
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:animateDrawables_enter="overshoot"
+    app:animateTexts_enter="overshoot"
+    app:bottomLineSize="0dp"
+    app:dividerColor="@color/black"
+    app:dividerSize="1dp"
+    app:radius="10dp"
+    app:selectorColor="@color/red_700"
+    app:selectorSize="6dp">
+
+    <co.ceryle.radiorealbutton.library.RadioRealButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:drawable="@mipmap/ic_launcher"
+        app:drawableHeight="36dp"
+        app:drawablePadding="8dp"
+        app:drawableWidth="36dp"
+        app:ripple="true"
+        app:rippleColor="@color/black"
+        app:text="Button 1"
+        app:textColor="@color/black"/>
+
+    <co.ceryle.radiorealbutton.library.RadioRealButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:drawable="@mipmap/ic_launcher"
+        app:drawableGravity="right"
+        app:drawableHeight="36dp"
+        app:drawablePadding="8dp"
+        app:drawableWidth="36dp"
+        app:ripple="true"
+        app:rippleColor="@color/black"
+        app:text="Button 2"
+        app:textColor="@color/black"/>
+</co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 ```
 
 ##### Listener Example

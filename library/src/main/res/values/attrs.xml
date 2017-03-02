@@ -6,29 +6,13 @@
 
         <attr name="android:enabled"/>
         <attr name="android:clickable"/>
+        <attr name="android:background"/>
 
         <attr name="android:padding"/>
         <attr name="android:paddingLeft"/>
         <attr name="android:paddingRight"/>
         <attr name="android:paddingTop"/>
         <attr name="android:paddingBottom"/>
-
-        <attr name="android:background"/>
-
-        <attr name="backgroundColor"/>
-
-        <attr name="ripple" format="boolean"/>
-        <attr name="rippleColor" format="color"/>
-
-        <attr name="text" format="string"/>
-        <attr name="textColor" format="color"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="textStyle" format="integer">
-            <flag name="normal" value="0"/>
-            <flag name="bold" value="1"/>
-            <flag name="italic" value="2"/>
-        </attr>
-        <attr name="textTypeface" format="string"/>
 
         <attr name="drawable" format="reference"/>
         <attr name="drawablePadding" format="dimension"/>
@@ -41,6 +25,23 @@
             <flag name="right" value="2"/>
             <flag name="bottom" value="3"/>
         </attr>
+
+        <attr name="text" format="string"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textTypeface" format="integer">
+            <flag name="monospace" value="0"/>
+            <flag name="normal" value="1"/>
+            <flag name="sans" value="2"/>
+            <flag name="serif" value="3"/>
+        </attr>
+        <attr name="textTypefacePath" format="string"/>
+        <attr name="textFillSpace" format="boolean"/>
+        <attr name="textStyle" format="integer">
+            <flag name="normal" value="0"/>
+            <flag name="bold" value="1"/>
+            <flag name="italic" value="2"/>
+        </attr>
         <attr name="textGravity" format="integer">
             <flag name="left" value="0"/>
             <flag name="center" value="1"/>
@@ -48,7 +49,9 @@
         </attr>
 
         <attr name="checked" format="boolean"/>
-        <attr name="textFillSpace" format="boolean"/>
+        <attr name="backgroundColor"/>
+        <attr name="ripple" format="boolean"/>
+        <attr name="rippleColor" format="color"/>
 
     </declare-styleable>
 
@@ -75,8 +78,9 @@
         <attr name="buttonsPaddingTop" format="dimension"/>
         <attr name="buttonsPaddingBottom" format="dimension"/>
 
-        <attr name="backgroundColor"/>
 
+        <attr name="radius" format="dimension"/>
+        <attr name="backgroundColor"/>
         <attr name="enableDeselection" format="boolean"/>
 
         <attr name="borderSize" format="dimension"/>
@@ -100,7 +104,6 @@
 
         <attr name="selectorTop" format="boolean"/>
         <attr name="selectorBottom" format="boolean"/>
-
         <attr name="selectorColor" format="color"/>
         <attr name="selectorSize" format="dimension"/>
         <attr name="selectorBringToFront" format="boolean"/>
@@ -120,8 +123,8 @@
 
         <attr name="animate" format="boolean"/>
 
-        <attr name="animateSelectorDelay" format="integer"/>
-        <attr name="animateSelectorDuration" format="integer"/>
+        <attr name="animateSelector_delay" format="integer"/>
+        <attr name="animateSelector_duration" format="integer"/>
         <attr name="animateSelector" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
@@ -137,11 +140,9 @@
             <flag name="overshoot" value="11"/>
         </attr>
 
-        <attr name="radius" format="dimension"/>
-
-        <attr name="animateImagesScale" format="float"/>
-        <attr name="animateImages_enterDuration" format="integer"/>
-        <attr name="animateImages_enter" format="integer">
+        <attr name="animateDrawables_scale" format="float"/>
+        <attr name="animateDrawables_enterDuration" format="integer"/>
+        <attr name="animateDrawables_enter" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>
@@ -155,8 +156,8 @@
             <flag name="linearOutSlowIn" value="10"/>
             <flag name="overshoot" value="11"/>
         </attr>
-        <attr name="animateImages_exitDuration" format="integer"/>
-        <attr name="animateImages_exit" format="integer">
+        <attr name="animateDrawables_exitDuration" format="integer"/>
+        <attr name="animateDrawables_exit" format="integer">
             <flag name="fastOutSlowIn" value="0"/>
             <flag name="bounce" value="1"/>
             <flag name="linear" value="2"/>
@@ -171,7 +172,7 @@
             <flag name="overshoot" value="11"/>
         </attr>
 
-        <attr name="animateTextsScale" format="float"/>
+        <attr name="animateTexts_scale" format="float"/>
         <attr name="animateTexts_enterDuration" format="integer"/>
         <attr name="animateTexts_enter" format="integer">
             <flag name="fastOutSlowIn" value="0"/>

@@ -15,11 +15,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:elevation="2dp"
-            app:animateImagesScale="0.2"
-            app:animateImages_enter="overshoot"
-            app:animateImages_enterDuration="500"
-            app:animateImages_exit="overshoot"
-            app:animateImages_exitDuration="500"
+            app:animateDrawables_enter="overshoot"
+            app:animateDrawables_enterDuration="500"
+            app:animateDrawables_exit="overshoot"
+            app:animateDrawables_exitDuration="500"
+            app:animateDrawables_scale="0.2"
             app:animateTexts_enter="overshoot"
             app:animateTexts_enterDuration="500"
             app:backgroundColor="@color/red_900"
@@ -57,7 +57,7 @@
                 app:textColor="@color/white"
                 app:textGravity="left"
                 app:textSize="12sp"
-                app:textTypeface="fonts/shaka_pow.ttf"/>
+                app:textTypefacePath="fonts/shaka_pow.ttf"/>
 
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                 app:textColor="@color/white"
                 app:textGravity="center"
                 app:textSize="12sp"
-                app:textTypeface="fonts/shaka_pow.ttf"/>
+                app:textTypefacePath="fonts/shaka_pow.ttf"/>
 
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:id="@+id/rrb_3"
@@ -87,11 +87,11 @@
                 app:drawableWidth="36dp"
                 app:rippleColor="@color/yellow_600"
                 app:text="Diana wonders why"
-                app:textSize="12sp"
                 app:textColor="@color/white"
                 app:textFillSpace="true"
                 app:textGravity="right"
-                app:textTypeface="fonts/shaka_pow.ttf"/>
+                app:textSize="12sp"
+                app:textTypefacePath="fonts/shaka_pow.ttf"/>
         </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 
 
@@ -137,7 +137,8 @@
                     app:drawableHeight="48dp"
                     app:drawableWidth="48dp"
                     app:text="Button 1"
-                    app:textStyle="italic|bold"/>
+                    app:textStyle="italic"
+                    app:textTypeface="serif"/>
 
                 <co.ceryle.radiorealbutton.library.RadioRealButton
                     android:layout_width="wrap_content"
@@ -145,7 +146,8 @@
                     app:drawableHeight="36dp"
                     app:drawableWidth="36dp"
                     app:text="Button 2"
-                    app:textStyle="italic|bold"/>
+                    app:textStyle="italic"
+                    app:textTypeface="serif"/>
 
                 <co.ceryle.radiorealbutton.library.RadioRealButton
                     android:layout_width="wrap_content"
@@ -153,7 +155,8 @@
                     app:drawableHeight="24dp"
                     app:drawableWidth="24dp"
                     app:text="Button 3"
-                    app:textStyle="italic|bold"/>
+                    app:textStyle="italic"
+                    app:textTypeface="serif"/>
             </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
         </LinearLayout>
 
@@ -163,11 +166,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:elevation="2dp"
-            app:animateImagesScale="0.2"
-            app:animateImages_enter="overshoot"
-            app:animateImages_enterDuration="500"
-            app:animateImages_exit="overshoot"
-            app:animateImages_exitDuration="500"
+            app:animateDrawables_enter="overshoot"
+            app:animateDrawables_enterDuration="500"
+            app:animateDrawables_exit="overshoot"
+            app:animateDrawables_exitDuration="500"
+            app:animateDrawables_scale="0.2"
             app:animateTexts_enter="overshoot"
             app:animateTexts_enterDuration="500"
             app:backgroundColor="#FFF"
@@ -200,7 +203,7 @@
                 app:rippleColor="@color/black"
                 app:text="Bruce"
                 app:textColor="@color/black"
-                app:textTypeface="fonts/shaka_pow.ttf"/>
+                app:textTypefacePath="fonts/shaka_pow.ttf"/>
 
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
@@ -213,7 +216,7 @@
                 app:rippleColor="@color/blue_500"
                 app:text="Clark"
                 app:textColor="@color/black"
-                app:textTypeface="fonts/shaka_pow.ttf"/>
+                app:textTypefacePath="fonts/shaka_pow.ttf"/>
 
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
@@ -225,7 +228,7 @@
                 app:rippleColor="@color/yellow_600"
                 app:text="Diana"
                 app:textColor="@color/black"
-                app:textTypeface="fonts/shaka_pow.ttf"/>
+                app:textTypefacePath="fonts/shaka_pow.ttf"/>
         </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 
 
@@ -310,9 +313,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:elevation="1dp"
-            app:animateImagesScale="0.2"
-            app:animateImages_enter="overshoot"
-            app:animateImages_enterDuration="500"
+            app:animateDrawables_enter="overshoot"
+            app:animateDrawables_enterDuration="500"
+            app:animateDrawables_scale="0.2"
             app:animateTexts_enter="overshoot"
             app:animateTexts_enterDuration="500"
             app:backgroundColor="@color/white"
@@ -375,11 +378,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:elevation="1dp"
-            app:animateImagesScale="0.3"
-            app:animateImages_enter="bounce"
-            app:animateImages_enterDuration="500"
-            app:animateImages_exit="overshoot"
-            app:animateImages_exitDuration="1500"
+            app:animateDrawables_enter="bounce"
+            app:animateDrawables_enterDuration="500"
+            app:animateDrawables_exit="overshoot"
+            app:animateDrawables_exitDuration="1500"
+            app:animateDrawables_scale="0.3"
             app:animateSelector="bounce"
             app:backgroundColor="@color/black"
             app:bottomLineColor="@color/white"
@@ -437,11 +440,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:elevation="1dp"
-            app:animateImagesScale="0.2"
-            app:animateImages_enter="overshoot"
-            app:animateImages_enterDuration="500"
-            app:animateImages_exit="overshoot"
-            app:animateImages_exitDuration="500"
+            app:animateDrawables_enter="overshoot"
+            app:animateDrawables_enterDuration="500"
+            app:animateDrawables_exit="overshoot"
+            app:animateDrawables_exitDuration="500"
+            app:animateDrawables_scale="0.2"
             app:animateTexts_enter="overshoot"
             app:animateTexts_enterDuration="500"
             app:backgroundColor="#FFF"
@@ -475,7 +478,7 @@
                 app:text="Legolas"
                 app:textColor="@color/black"
                 app:textSize="12sp"
-                app:textTypeface="fonts/aniron.ttf"/>
+                app:textTypefacePath="fonts/aniron.ttf"/>
 
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
@@ -488,7 +491,7 @@
                 app:text="Gimli"
                 app:textColor="@color/black"
                 app:textSize="12sp"
-                app:textTypeface="fonts/aniron.ttf"/>
+                app:textTypefacePath="fonts/aniron.ttf"/>
 
             <co.ceryle.radiorealbutton.library.RadioRealButton
                 android:layout_width="wrap_content"
@@ -501,7 +504,7 @@
                 app:text="Aragorn"
                 app:textColor="@color/black"
                 app:textSize="12sp"
-                app:textTypeface="fonts/aniron.ttf"/>
+                app:textTypefacePath="fonts/aniron.ttf"/>
         </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 
     </LinearLayout>

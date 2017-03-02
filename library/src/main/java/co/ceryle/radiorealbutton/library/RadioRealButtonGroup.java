@@ -256,8 +256,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         selectorRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_selectorRadius, 0);
 
         animateSelector = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelector, 0);
-        animateSelectorDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelectorDuration, 500);
-        animateSelectorDelay = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelectorDelay, 0);
+        animateSelectorDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelector_duration, 500);
+        animateSelectorDelay = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelector_delay, 0);
 
         dividerSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_dividerSize, 0);
         boolean hasDividerSize = ta.hasValue(R.styleable.RadioRealButtonGroup_dividerSize);
@@ -277,19 +277,19 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
         radius = ta.getDimension(R.styleable.RadioRealButtonGroup_radius, 0);
 
-        animateImages = ta.getInt(R.styleable.RadioRealButtonGroup_animateImages_enter, 0);
-        hasAnimateImages = ta.hasValue(R.styleable.RadioRealButtonGroup_animateImages_enter);
-        animateImagesExit = ta.getInt(R.styleable.RadioRealButtonGroup_animateImages_exit, 0);
-        animateImagesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateImages_enterDuration, 500);
-        animateImagesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateImages_exitDuration, 100);
-        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_animateImagesScale, 0.2f);
+        animateImages = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_enter, 0);
+        hasAnimateImages = ta.hasValue(R.styleable.RadioRealButtonGroup_animateDrawables_enter);
+        animateImagesExit = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_exit, 0);
+        animateImagesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_enterDuration, 500);
+        animateImagesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_exitDuration, 100);
+        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_animateDrawables_scale, 0.2f);
 
         animateTexts = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_enter, 0);
         hasAnimateTexts = ta.hasValue(R.styleable.RadioRealButtonGroup_animateTexts_enter);
         animateTextsExit = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_exit, 0);
         animateTextsDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_enterDuration, 500);
         animateTextsExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_exitDuration, 100);
-        animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_animateTextsScale, 0.2f);
+        animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_animateTexts_scale, 0.2f);
 
         lastPosition = ta.getInt(R.styleable.RadioRealButtonGroup_checkedPosition, -1);
         checkedButtonId = ta.getResourceId(R.styleable.RadioRealButtonGroup_checkedButton, NO_ID);

@@ -92,14 +92,14 @@ public class RadioRealButton extends LinearLayout {
         addView(textView);
     }
 
-    private Typeface defaultTypeface;
+    private Typeface defaultTypeface, textTypeface;
 
-    private String text, textTypeface;
+    private String text, textTypefacePath;
 
     private int textStyle, textSize, drawable, drawableTint, textColor, rippleColor, drawableWidth, drawableHeight,
             padding, paddingLeft, paddingRight, paddingTop, paddingBottom, drawablePadding, backgroundColor, textGravity;
 
-    private boolean hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDrawableTint, hasRipple, hasTextTypeface,
+    private boolean hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDrawableTint, hasRipple, hasTextTypefacePath,
             hasDrawable, hasText, hasDrawableWidth, hasDrawableHeight, checked, enabled, hasEnabled, clickable, hasClickable,
             hasTextStyle, hasTextSize, hasTextColor, textFillSpace;
 
@@ -127,8 +127,24 @@ public class RadioRealButton extends LinearLayout {
         hasTextSize = ta.hasValue(R.styleable.RadioRealButton_textSize);
         textStyle = ta.getInt(R.styleable.RadioRealButton_textStyle, -1);
         hasTextStyle = ta.hasValue(R.styleable.RadioRealButton_textStyle);
-        textTypeface = ta.getString(R.styleable.RadioRealButton_textTypeface);
-        hasTextTypeface = ta.hasValue(R.styleable.RadioRealButton_textTypeface);
+
+        int typeface = ta.getInt(R.styleable.RadioRealButton_textTypeface, -1);
+        switch (typeface) {
+            case 0:
+                textTypeface = Typeface.MONOSPACE;
+                break;
+            case 1:
+                textTypeface = Typeface.DEFAULT;
+                break;
+            case 2:
+                textTypeface = Typeface.SANS_SERIF;
+                break;
+            case 3:
+                textTypeface = Typeface.SERIF;
+                break;
+        }
+        textTypefacePath = ta.getString(R.styleable.RadioRealButton_textTypefacePath);
+        hasTextTypefacePath = ta.hasValue(R.styleable.RadioRealButton_textTypefacePath);
 
         hasRipple = ta.getBoolean(R.styleable.RadioRealButton_ripple, true);
         rippleColor = ta.getColor(R.styleable.RadioRealButton_rippleColor, Color.GRAY);
@@ -244,10 +260,13 @@ public class RadioRealButton extends LinearLayout {
             textView.setTextColor(textColor);
         if (hasTextSize)
             setTextSizePX(textSize);
+        if (hasTextTypefacePath)
+            setTypeface(textTypefacePath);
+        else if(null != textTypeface){
+            setTypeface(textTypeface);
+        }
         if (hasTextStyle)
             setTextStyle(textStyle);
-        if (hasTextTypeface)
-            setTypeface(textTypeface);
     }
 
     private void setPaddingAttrs() {
@@ -387,8 +406,8 @@ public class RadioRealButton extends LinearLayout {
         textView.setTypeface(defaultTypeface);
     }
 
-    public String getTypeface() {
-        return textTypeface;
+    public String getTypefacePath() {
+        return textTypefacePath;
     }
 
     /**
@@ -413,7 +432,6 @@ public class RadioRealButton extends LinearLayout {
     public Typeface getDefaultTypeface() {
         return defaultTypeface;
     }
-
 
     /**
      * PADDING
