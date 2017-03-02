@@ -109,26 +109,26 @@ public class RadioRealButton extends LinearLayout {
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButton);
 
-        drawable = ta.getResourceId(R.styleable.RadioRealButton_drawable, -1);
-        drawableTint = ta.getColor(R.styleable.RadioRealButton_drawableTint, 0);
-        drawableWidth = ta.getDimensionPixelSize(R.styleable.RadioRealButton_drawableWidth, -1);
-        drawableHeight = ta.getDimensionPixelSize(R.styleable.RadioRealButton_drawableHeight, -1);
+        drawable = ta.getResourceId(R.styleable.RadioRealButton_rrb_drawable, -1);
+        drawableTint = ta.getColor(R.styleable.RadioRealButton_rrb_drawableTint, 0);
+        drawableWidth = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_drawableWidth, -1);
+        drawableHeight = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_drawableHeight, -1);
 
-        hasDrawable = ta.hasValue(R.styleable.RadioRealButton_drawable);
-        hasDrawableTint = ta.hasValue(R.styleable.RadioRealButton_drawableTint);
-        hasDrawableWidth = ta.hasValue(R.styleable.RadioRealButton_drawableWidth);
-        hasDrawableHeight = ta.hasValue(R.styleable.RadioRealButton_drawableHeight);
+        hasDrawable = ta.hasValue(R.styleable.RadioRealButton_rrb_drawable);
+        hasDrawableTint = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableTint);
+        hasDrawableWidth = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableWidth);
+        hasDrawableHeight = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableHeight);
 
-        text = ta.getString(R.styleable.RadioRealButton_text);
-        hasText = ta.hasValue(R.styleable.RadioRealButton_text);
-        textColor = ta.getColor(R.styleable.RadioRealButton_textColor, Color.BLACK);
-        hasTextColor = ta.hasValue(R.styleable.RadioRealButton_textColor);
-        textSize = ta.getDimensionPixelSize(R.styleable.RadioRealButton_textSize, -1);
-        hasTextSize = ta.hasValue(R.styleable.RadioRealButton_textSize);
-        textStyle = ta.getInt(R.styleable.RadioRealButton_textStyle, -1);
-        hasTextStyle = ta.hasValue(R.styleable.RadioRealButton_textStyle);
+        text = ta.getString(R.styleable.RadioRealButton_rrb_text);
+        hasText = ta.hasValue(R.styleable.RadioRealButton_rrb_text);
+        textColor = ta.getColor(R.styleable.RadioRealButton_rrb_textColor, Color.BLACK);
+        hasTextColor = ta.hasValue(R.styleable.RadioRealButton_rrb_textColor);
+        textSize = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_textSize, -1);
+        hasTextSize = ta.hasValue(R.styleable.RadioRealButton_rrb_textSize);
+        textStyle = ta.getInt(R.styleable.RadioRealButton_rrb_textStyle, -1);
+        hasTextStyle = ta.hasValue(R.styleable.RadioRealButton_rrb_textStyle);
 
-        int typeface = ta.getInt(R.styleable.RadioRealButton_textTypeface, -1);
+        int typeface = ta.getInt(R.styleable.RadioRealButton_rrb_textTypeface, -1);
         switch (typeface) {
             case 0:
                 textTypeface = Typeface.MONOSPACE;
@@ -143,13 +143,13 @@ public class RadioRealButton extends LinearLayout {
                 textTypeface = Typeface.SERIF;
                 break;
         }
-        textTypefacePath = ta.getString(R.styleable.RadioRealButton_textTypefacePath);
-        hasTextTypefacePath = ta.hasValue(R.styleable.RadioRealButton_textTypefacePath);
+        textTypefacePath = ta.getString(R.styleable.RadioRealButton_rrb_textTypefacePath);
+        hasTextTypefacePath = ta.hasValue(R.styleable.RadioRealButton_rrb_textTypefacePath);
 
-        hasRipple = ta.getBoolean(R.styleable.RadioRealButton_ripple, true);
-        rippleColor = ta.getColor(R.styleable.RadioRealButton_rippleColor, Color.GRAY);
+        hasRipple = ta.getBoolean(R.styleable.RadioRealButton_rrb_ripple, true);
+        rippleColor = ta.getColor(R.styleable.RadioRealButton_rrb_rippleColor, Color.GRAY);
 
-        backgroundColor = ta.getColor(R.styleable.RadioRealButton_backgroundColor, Color.TRANSPARENT);
+        backgroundColor = ta.getColor(R.styleable.RadioRealButton_rrb_backgroundColor, Color.TRANSPARENT);
 
         int defaultPadding = ConversionHelper.dpToPx(getContext(), 10);
         padding = ta.getDimensionPixelSize(R.styleable.RadioRealButton_android_padding, defaultPadding);
@@ -163,20 +163,20 @@ public class RadioRealButton extends LinearLayout {
         hasPaddingTop = ta.hasValue(R.styleable.RadioRealButton_android_paddingTop);
         hasPaddingBottom = ta.hasValue(R.styleable.RadioRealButton_android_paddingBottom);
 
-        drawablePadding = ta.getDimensionPixelSize(R.styleable.RadioRealButton_drawablePadding, 4);
+        drawablePadding = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_drawablePadding, 4);
 
-        drawableGravity = DrawableGravity.getById(ta.getInteger(R.styleable.RadioRealButton_drawableGravity, 0));
+        drawableGravity = DrawableGravity.getById(ta.getInteger(R.styleable.RadioRealButton_rrb_drawableGravity, 0));
 
-        checked = ta.getBoolean(R.styleable.RadioRealButton_checked, false);
+        checked = ta.getBoolean(R.styleable.RadioRealButton_rrb_checked, false);
 
         enabled = ta.getBoolean(R.styleable.RadioRealButton_android_enabled, true);
         hasEnabled = ta.hasValue(R.styleable.RadioRealButton_android_enabled);
         clickable = ta.getBoolean(R.styleable.RadioRealButton_android_clickable, true);
         hasClickable = ta.hasValue(R.styleable.RadioRealButton_android_clickable);
 
-        textGravity = ta.getInt(R.styleable.RadioRealButton_textGravity, Gravity.NO_GRAVITY);
+        textGravity = ta.getInt(R.styleable.RadioRealButton_rrb_textGravity, Gravity.NO_GRAVITY);
 
-        textFillSpace = ta.getBoolean(R.styleable.RadioRealButton_textFillSpace, false);
+        textFillSpace = ta.getBoolean(R.styleable.RadioRealButton_rrb_textFillSpace, false);
 
         ta.recycle();
     }

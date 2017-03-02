@@ -36,11 +36,9 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v2.0.0'
+    compile 'com.github.ceryle:RadioRealButton:v2.0.1'
 }
 ```
-
-## Customization
 
 ### What has changed with version 2?
 - Border is now part of the round container layout.
@@ -54,12 +52,13 @@ dependencies {
 - textGravity attribute is added which is actually android:gravity. You can give 3 values which are left, center, right.
 
 ##### What removed?
-- Prefixes are removed ( rrbg_ and rrb_ ) from all attributes.
 - 'image' word is replaced with "drawable" word from all attributes which have them. Reason is everyone is used to 'drawable' word and
 how I have used ImageView in RadioRealButton is no different than regular drawable which is used in buttons expect animations.
 - rrbg_shadow, rrbg_shadowElevation and its margin attributes are removed. You can use android:elevation attribute.
 - rrbg_enabled is removed. You can use android:enabled attribute.
 
+
+## Customization
 
 ### Some Attributes
 
@@ -140,39 +139,39 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
 <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:animateDrawables_enter="overshoot"
-    app:animateTexts_enter="overshoot"
-    app:bottomLineSize="0dp"
-    app:dividerColor="@color/black"
-    app:dividerSize="1dp"
-    app:radius="10dp"
-    app:selectorColor="@color/red_700"
-    app:selectorSize="6dp">
+    app:rrbg_animateDrawables_enter="overshoot"
+    app:rrbg_animateTexts_enter="overshoot"
+    app:rrbg_bottomLineSize="0dp"
+    app:rrbg_dividerColor="@color/black"
+    app:rrbg_dividerSize="1dp"
+    app:rrbg_radius="10dp"
+    app:rrbg_selectorColor="@color/red_700"
+    app:rrbg_selectorSize="6dp">
 
     <co.ceryle.radiorealbutton.library.RadioRealButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:drawable="@mipmap/ic_launcher"
-        app:drawableHeight="36dp"
-        app:drawablePadding="8dp"
-        app:drawableWidth="36dp"
-        app:ripple="true"
-        app:rippleColor="@color/black"
-        app:text="Button 1"
-        app:textColor="@color/black"/>
+        app:rrb_drawable="@mipmap/ic_launcher"
+        app:rrb_drawableHeight="36dp"
+        app:rrb_drawablePadding="8dp"
+        app:rrb_drawableWidth="36dp"
+        app:rrb_ripple="true"
+        app:rrb_rippleColor="@color/black"
+        app:rrb_text="Button 1"
+        app:rrb_textColor="@color/black"/>
 
     <co.ceryle.radiorealbutton.library.RadioRealButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:drawable="@mipmap/ic_launcher"
-        app:drawableGravity="right"
-        app:drawableHeight="36dp"
-        app:drawablePadding="8dp"
-        app:drawableWidth="36dp"
-        app:ripple="true"
-        app:rippleColor="@color/black"
-        app:text="Button 2"
-        app:textColor="@color/black"/>
+        app:rrb_drawable="@mipmap/ic_launcher"
+        app:rrb_drawableGravity="right"
+        app:rrb_drawableHeight="36dp"
+        app:rrb_drawablePadding="8dp"
+        app:rrb_drawableWidth="36dp"
+        app:rrb_ripple="true"
+        app:rrb_rippleColor="@color/black"
+        app:rrb_text="Button 2"
+        app:rrb_textColor="@color/black"/>
 </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
 ```
 

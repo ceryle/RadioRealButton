@@ -244,79 +244,79 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
 
-        bottomLineColor = ta.getColor(R.styleable.RadioRealButtonGroup_bottomLineColor, Color.GRAY);
-        bottomLineSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_bottomLineSize, 6);
-        bottomLineBringToFront = ta.getBoolean(R.styleable.RadioRealButtonGroup_bottomLineBringToFront, false);
-        bottomLineRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_bottomLineRadius, 0);
+        bottomLineColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_bottomLineColor, Color.GRAY);
+        bottomLineSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineSize, 6);
+        bottomLineBringToFront = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_bottomLineBringToFront, false);
+        bottomLineRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineRadius, 0);
 
-        selectorColor = ta.getColor(R.styleable.RadioRealButtonGroup_selectorColor, Color.GRAY);
-        selectorBringToFront = ta.getBoolean(R.styleable.RadioRealButtonGroup_selectorBringToFront, false);
-        selectorAboveOfBottomLine = ta.getBoolean(R.styleable.RadioRealButtonGroup_selectorAboveOfBottomLine, false);
-        selectorSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_selectorSize, 12);
-        selectorRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_selectorRadius, 0);
+        selectorColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_selectorColor, Color.GRAY);
+        selectorBringToFront = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorBringToFront, false);
+        selectorAboveOfBottomLine = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorAboveOfBottomLine, false);
+        selectorSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorSize, 12);
+        selectorRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorRadius, 0);
 
-        animateSelector = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelector, 0);
-        animateSelectorDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelector_duration, 500);
-        animateSelectorDelay = ta.getInt(R.styleable.RadioRealButtonGroup_animateSelector_delay, 0);
+        animateSelector = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateSelector, 0);
+        animateSelectorDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateSelector_duration, 500);
+        animateSelectorDelay = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateSelector_delay, 0);
 
-        dividerSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_dividerSize, 0);
-        boolean hasDividerSize = ta.hasValue(R.styleable.RadioRealButtonGroup_dividerSize);
-        dividerRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_dividerRadius, 0);
-        dividerPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_dividerPadding, 30);
-        dividerColor = ta.getColor(R.styleable.RadioRealButtonGroup_dividerColor, Color.TRANSPARENT);
-        dividerBackgroundColor = ta.getColor(R.styleable.RadioRealButtonGroup_dividerBackgroundColor, Color.WHITE);
-        hasDividerBackgroundColor = ta.hasValue(R.styleable.RadioRealButtonGroup_dividerBackgroundColor);
+        dividerSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_dividerSize, 0);
+        boolean hasDividerSize = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_dividerSize);
+        dividerRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_dividerRadius, 0);
+        dividerPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_dividerPadding, 30);
+        dividerColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_dividerColor, Color.TRANSPARENT);
+        dividerBackgroundColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_dividerBackgroundColor, Color.WHITE);
+        hasDividerBackgroundColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_dividerBackgroundColor);
 
-        selectorDividerSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_selectorDividerSize, dividerSize);
+        selectorDividerSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorDividerSize, dividerSize);
         if (!hasDividerSize) {
             dividerSize = selectorDividerSize;
         }
-        selectorDividerRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_selectorDividerRadius, 0);
-        selectorDividerPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_selectorDividerPadding, 0);
-        selectorDividerColor = ta.getColor(R.styleable.RadioRealButtonGroup_selectorDividerColor, Color.TRANSPARENT);
+        selectorDividerRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorDividerRadius, 0);
+        selectorDividerPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorDividerPadding, 0);
+        selectorDividerColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_selectorDividerColor, Color.TRANSPARENT);
 
-        radius = ta.getDimension(R.styleable.RadioRealButtonGroup_radius, 0);
+        radius = ta.getDimension(R.styleable.RadioRealButtonGroup_rrbg_radius, 0);
 
-        animateImages = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_enter, 0);
-        hasAnimateImages = ta.hasValue(R.styleable.RadioRealButtonGroup_animateDrawables_enter);
-        animateImagesExit = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_exit, 0);
-        animateImagesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_enterDuration, 500);
-        animateImagesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateDrawables_exitDuration, 100);
-        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_animateDrawables_scale, 0.2f);
+        animateImages = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enter, 0);
+        hasAnimateImages = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enter);
+        animateImagesExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exit, 0);
+        animateImagesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enterDuration, 500);
+        animateImagesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exitDuration, 100);
+        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_scale, 0.2f);
 
-        animateTexts = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_enter, 0);
-        hasAnimateTexts = ta.hasValue(R.styleable.RadioRealButtonGroup_animateTexts_enter);
-        animateTextsExit = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_exit, 0);
-        animateTextsDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_enterDuration, 500);
-        animateTextsExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_animateTexts_exitDuration, 100);
-        animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_animateTexts_scale, 0.2f);
+        animateTexts = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter, 0);
+        hasAnimateTexts = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter);
+        animateTextsExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exit, 0);
+        animateTextsDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enterDuration, 500);
+        animateTextsExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exitDuration, 100);
+        animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_scale, 0.2f);
 
-        lastPosition = ta.getInt(R.styleable.RadioRealButtonGroup_checkedPosition, -1);
-        checkedButtonId = ta.getResourceId(R.styleable.RadioRealButtonGroup_checkedButton, NO_ID);
+        lastPosition = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_checkedPosition, -1);
+        checkedButtonId = ta.getResourceId(R.styleable.RadioRealButtonGroup_rrbg_checkedButton, NO_ID);
         initialPosition = lastPosition;
 
-        buttonPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_buttonsPadding, 0);
-        buttonPaddingLeft = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_buttonsPaddingLeft, 0);
-        buttonPaddingRight = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_buttonsPaddingRight, 0);
-        buttonPaddingTop = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_buttonsPaddingTop, 0);
-        buttonPaddingBottom = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_buttonsPaddingBottom, 0);
+        buttonPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPadding, 0);
+        buttonPaddingLeft = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingLeft, 0);
+        buttonPaddingRight = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingRight, 0);
+        buttonPaddingTop = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingTop, 0);
+        buttonPaddingBottom = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingBottom, 0);
 
-        hasPadding = ta.hasValue(R.styleable.RadioRealButtonGroup_buttonsPadding);
-        hasPaddingLeft = ta.hasValue(R.styleable.RadioRealButtonGroup_buttonsPaddingLeft);
-        hasPaddingRight = ta.hasValue(R.styleable.RadioRealButtonGroup_buttonsPaddingRight);
-        hasPaddingTop = ta.hasValue(R.styleable.RadioRealButtonGroup_buttonsPaddingTop);
-        hasPaddingBottom = ta.hasValue(R.styleable.RadioRealButtonGroup_buttonsPaddingBottom);
+        hasPadding = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPadding);
+        hasPaddingLeft = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingLeft);
+        hasPaddingRight = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingRight);
+        hasPaddingTop = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingTop);
+        hasPaddingBottom = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingBottom);
 
-        groupBackgroundColor = ta.getColor(R.styleable.RadioRealButtonGroup_backgroundColor, Color.WHITE);
+        groupBackgroundColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_backgroundColor, Color.WHITE);
 
-        selectorTop = ta.getBoolean(R.styleable.RadioRealButtonGroup_selectorTop, false);
-        selectorBottom = ta.getBoolean(R.styleable.RadioRealButtonGroup_selectorBottom, true);
+        selectorTop = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorTop, false);
+        selectorBottom = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorBottom, true);
 
-        borderSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_borderSize, ConversionHelper.dpToPx(getContext(), 1));
-        borderColor = ta.getColor(R.styleable.RadioRealButtonGroup_borderColor, Color.BLACK);
+        borderSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_borderSize, ConversionHelper.dpToPx(getContext(), 1));
+        borderColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_borderColor, Color.BLACK);
 
-        boolean hasBorderSize = ta.hasValue(R.styleable.RadioRealButtonGroup_borderSize);
-        boolean hasBorderColor = ta.hasValue(R.styleable.RadioRealButtonGroup_borderColor);
+        boolean hasBorderSize = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_borderSize);
+        boolean hasBorderColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_borderColor);
         hasBorder = hasBorderColor || hasBorderSize;
 
         clickable = ta.getBoolean(R.styleable.RadioRealButtonGroup_android_clickable, true);
@@ -324,10 +324,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         enabled = ta.getBoolean(R.styleable.RadioRealButtonGroup_android_enabled, true);
         hasEnabled = ta.hasValue(R.styleable.RadioRealButtonGroup_android_enabled);
 
-        animationType = ta.getInt(R.styleable.RadioRealButtonGroup_selectorAnimationType, 0);
-        enableDeselection = ta.getBoolean(R.styleable.RadioRealButtonGroup_enableDeselection, false);
+        animationType = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_selectorAnimationType, 0);
+        enableDeselection = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_enableDeselection, false);
 
-        hasAnimation = ta.getBoolean(R.styleable.RadioRealButtonGroup_animate, true);
+        hasAnimation = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_animate, true);
 
         ta.recycle();
     }
