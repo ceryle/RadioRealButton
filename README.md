@@ -8,7 +8,7 @@ Radio Real Button is a substitute of the Radio Button. Its purpose is to give mo
 ##Preview
 ![1](https://cloud.githubusercontent.com/assets/20969019/18049713/8c16bcee-6df2-11e6-90c1-e39571abb9fb.gif)
 <br />
-![2](https://cloud.githubusercontent.com/assets/20969019/18049723/9f86cfee-6df2-11e6-8ef4-9abf09d382d2.gif)
+![2](https://cloud.githubusercontent.com/assets/20969019/23513066/77a25146-ff6b-11e6-8af1-cbd68bf5aec4.gif)
 <br />
 ![3a](https://cloud.githubusercontent.com/assets/20969019/18049724/9f878100-6df2-11e6-9b3d-e3a01a59727d.gif)
 ![3b](https://cloud.githubusercontent.com/assets/20969019/18049725/9f887a42-6df2-11e6-8974-413950c61ed5.gif)
