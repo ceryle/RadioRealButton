@@ -36,7 +36,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v1.5.1'
+    compile 'com.github.ceryle:RadioRealButton:v2.0.0'
 }
 ```
 
@@ -95,37 +95,37 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
 | enableDeselection         | `color`     |   |
 | dividerSize			    | `dimension` | set divider size for the line between buttons |
 | dividerPadding		    | `dimension` |   |
-| dividerColor			    | `dimension` |   |
+| dividerColor			    | `color`     |   |
 | dividerRadius			    | `dimension` |   |
-| dividerBackgroundColor    | `dimension` |   |
+| dividerBackgroundColor    | `color`     |   |
 | selectorDividerSize	    | `dimension` |   |
 | selectorDividerPadding    | `dimension` |   |
-| selectorDividerColor	    | `dimension` |   |
+| selectorDividerColor	    | `color`     |   |
 | selectorDividerRadius	    | `dimension` |   |
 | bottomLineColor    	    | `color`     | set bottom line color  |
 | bottomLineSize		    | `dimension` | set bottom line height |
-| bottomLineBringToFront    | `dimension` |   |
+| bottomLineBringToFront    | `boolean`   |   |
 | bottomLineRadius		    | `dimension` |   |
 | selectorTop			    | `boolean`	  | align selector to top |
 | selectorBottom		    | `boolean`	  | align selector to bottom |
 | selectorColor			    | `color`	  | set color of selector |
 | selectorSize			    | `dimension` | set height of selector |
 | selectorRadius		    | `dimension` | set selector radius to make it rounder |
-| selectorBringToFront	    | `dimension` |   |
+| selectorBringToFront	    | `boolean`   |   |
 | selectorAboveOfBottomLine | `boolean`	  | set true if selector is desired above of bottom line |
 | selectorRadius		    | `boolean`	  |   |
 | checkedPosition		    | `integer`	  | check a button by a position number |
-| checkedButton			    | `integer`	  | check a button by button's unique id |
-| animate                   | `integer`   | set animation on bottom moving view    |
+| checkedButton			    | `reference` | check a button by button's unique id |
+| animate                   | `boolean`   | set animation on bottom moving view    |
 | animateSelector           | `integer`   |   |
 | animateSelector_delay     | `integer`   |   |
 | animateSelector_duration  | `integer`   |   |
-| animateDrawables_scale         | `integer`   |  |
+| animateDrawables_scale         | `float`     |  |
 | animateDrawables_enter         | `integer`   | enter animation on drawable when button is checked |
 | animateDrawables_enterDuration | `integer`   | enter animation duration of drawable in ms |
 | animateDrawables_exit 	     | `integer`   | exit animation on drawable when other button is checked  |
 | animateDrawables_exitDuration  | `integer`   | exit animation duration of drawable in ms  |
-| animateTexts_scale             | `integer`   |  |
+| animateTexts_scale             | `float`     |  |
 | animateTexts_enter             | `integer`   | enter animation on text when button is checked |
 | animateTexts_enterDuration     | `integer`   | enter animation duration of text in ms |
 | animateTexts_exit 	         | `integer`   | exit animation on text when other button is checked  |
