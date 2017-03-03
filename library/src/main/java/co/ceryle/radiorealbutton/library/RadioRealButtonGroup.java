@@ -156,13 +156,11 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
 
     private void setSelectorAttrs() {
-        View selectorView = selectorContainer;
-
-        FrameLayout.LayoutParams selectorParams = (FrameLayout.LayoutParams) selectorView.getLayoutParams();
+        FrameLayout.LayoutParams selectorParams = (FrameLayout.LayoutParams) selectorContainer.getLayoutParams();
         FrameLayout.LayoutParams bottomLineParams = (FrameLayout.LayoutParams) v_bottomLine.getLayoutParams();
 
         if (selectorBringToFront)
-            selectorView.bringToFront();
+            selectorContainer.bringToFront();
 
         selectorParams.height = selectorSize;
 
@@ -237,9 +235,9 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
     private float radius, animateImagesScale, animateTextsScale;
 
-    private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom,
-            hasPadding, hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDividerBackgroundColor, clickable,
-            enabled, enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation;
+    private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom, hasPadding,
+            hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDividerBackgroundColor, clickable, enabled,
+            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
@@ -359,8 +357,11 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
             if (lastPosition == position) {
                 button.setChecked(true);
-                button.bounceDrawable(animateImagesScale + 1);
-                button.bounceText(animateTextsScale + 1);
+
+                if (hasAnimateImages)
+                    button.bounceDrawable(animateImagesScale + 1);
+                if (hasAnimateTexts)
+                    button.bounceText(animateTextsScale + 1);
             } else
                 button.setChecked(false);
 
