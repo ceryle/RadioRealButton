@@ -99,9 +99,9 @@ public class RadioRealButton extends LinearLayout {
     private int textStyle, textSize, drawable, drawableTint, textColor, rippleColor, drawableWidth, drawableHeight,
             padding, paddingLeft, paddingRight, paddingTop, paddingBottom, drawablePadding, backgroundColor, textGravity;
 
-    private boolean hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDrawableTint, hasRipple, hasTextTypefacePath,
+    private boolean hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDrawableTint, hasTextTypefacePath,
             hasDrawable, hasText, hasDrawableWidth, hasDrawableHeight, checked, enabled, hasEnabled, clickable, hasClickable,
-            hasTextStyle, hasTextSize, hasTextColor, textFillSpace;
+            hasTextStyle, hasTextSize, hasTextColor, textFillSpace, hasRipple, hasRippleColor;
 
     /***
      * GET ATTRIBUTES FROM XML
@@ -148,6 +148,7 @@ public class RadioRealButton extends LinearLayout {
 
         hasRipple = ta.getBoolean(R.styleable.RadioRealButton_rrb_ripple, true);
         rippleColor = ta.getColor(R.styleable.RadioRealButton_rrb_rippleColor, Color.GRAY);
+        hasRippleColor = ta.hasValue(R.styleable.RadioRealButton_rrb_rippleColor);
 
         backgroundColor = ta.getColor(R.styleable.RadioRealButton_rrb_backgroundColor, Color.TRANSPARENT);
 
@@ -262,7 +263,7 @@ public class RadioRealButton extends LinearLayout {
             setTextSizePX(textSize);
         if (hasTextTypefacePath)
             setTypeface(textTypefacePath);
-        else if(null != textTypeface){
+        else if (null != textTypeface) {
             setTypeface(textTypeface);
         }
         if (hasTextStyle)
@@ -625,15 +626,27 @@ public class RadioRealButton extends LinearLayout {
 
     public void setRippleColor(int rippleColor) {
         this.rippleColor = rippleColor;
+        setRippleColor(true);
+    }
 
-        RippleHelper.setRipple(this, backgroundColor, rippleColor);
+    public void setRippleColor(boolean state) {
+        setRippleBackground(hasRippleColor = state);
     }
 
     public void setRipple(boolean state) {
-        if (state && hasRipple)
-            RippleHelper.setRipple(this, backgroundColor, rippleColor);
-        else
+        setRippleBackground(hasRipple = state);
+    }
+
+    private void setRippleBackground(boolean state) {
+        if (state) {
+            if (hasRippleColor) {
+                RippleHelper.setRipple(this, rippleColor, backgroundColor);
+            } else if (hasRipple) {
+                RippleHelper.setSelectableItemBackground(getContext(), this);
+            }
+        } else {
             setBackgroundColor(backgroundColor);
+        }
     }
 
     /**
@@ -651,14 +664,14 @@ public class RadioRealButton extends LinearLayout {
         super.setClickable(enabled);
         this.enabled = enabled;
         setEnabledAlpha(enabled);
-        setRipple(enabled);
+        setRippleBackground(enabled);
     }
 
     @Override
     public void setClickable(boolean clickable) {
         super.setClickable(clickable);
         this.clickable = clickable;
-        setRipple(clickable);
+        setRippleBackground(clickable);
     }
 
     private void setState() {

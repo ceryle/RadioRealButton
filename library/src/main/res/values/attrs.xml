@@ -77,7 +77,6 @@
         <attr name="rrbg_buttonsPaddingTop" format="dimension"/>
         <attr name="rrbg_buttonsPaddingBottom" format="dimension"/>
 
-
         <attr name="rrbg_radius" format="dimension"/>
         <attr name="rrbg_backgroundColor" format="color"/>
         <attr name="rrbg_enableDeselection" format="boolean"/>
@@ -95,6 +94,7 @@
         <attr name="rrbg_selectorDividerPadding" format="dimension"/>
         <attr name="rrbg_selectorDividerColor" format="color"/>
         <attr name="rrbg_selectorDividerRadius" format="dimension"/>
+        <attr name="rrbg_selectorFullSize" format="boolean"/>
 
         <attr name="rrbg_bottomLineColor" format="color"/>
         <attr name="rrbg_bottomLineSize" format="dimension"/>

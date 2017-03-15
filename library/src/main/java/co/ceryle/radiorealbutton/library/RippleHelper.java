@@ -16,7 +16,9 @@
 package co.ceryle.radiorealbutton.library;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -29,26 +31,48 @@ import android.view.View;
 
 class RippleHelper {
 
-    static void setRipple(View view, int normalColor, int pressedColor) {
+    static void setSelectableItemBackground(Context context, View view) {
+        int[] attrs = new int[]{android.R.attr.selectableItemBackground};
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        Drawable drawableFromTheme = ta.getDrawable(0 /* index */);
+        ta.recycle();
+        BackgroundHelper.setBackground(view, drawableFromTheme);
+    }
+
+    static void setRipple(View view, int pressedColor) {
+        setRipple(view, pressedColor, null);
+    }
+
+    static void setRipple(View view, int pressedColor, Integer normalColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.setBackground(getRippleDrawable(normalColor, pressedColor));
+            view.setBackground(getRippleDrawable(pressedColor, normalColor));
         } else {
-            view.setBackgroundDrawable(getStateListDrawable(normalColor, pressedColor));
+            view.setBackgroundDrawable(getStateListDrawable(pressedColor, normalColor));
         }
     }
 
-    private static StateListDrawable getStateListDrawable(int normalColor, int pressedColor) {
+    private static StateListDrawable getStateListDrawable(int pressedColor, Integer normalColor) {
         StateListDrawable states = new StateListDrawable();
         states.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressedColor));
         states.addState(new int[]{android.R.attr.state_focused}, new ColorDrawable(pressedColor));
         states.addState(new int[]{android.R.attr.state_activated}, new ColorDrawable(pressedColor));
-        states.addState(new int[]{}, new ColorDrawable(normalColor));
+        if (null != normalColor)
+            states.addState(new int[]{}, new ColorDrawable(normalColor));
         return states;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static Drawable getRippleDrawable(int normalColor, int pressedColor) {
-        return new RippleDrawable(getPressedColorSelector(pressedColor), new ColorDrawable(normalColor), getRippleMask(Color.WHITE));
+    private static Drawable getRippleDrawable(int pressedColor, Integer normalColor) {
+        ColorStateList colorStateList = getPressedColorSelector(pressedColor);
+        Drawable mask, content = null;
+
+        if (null == normalColor) {
+            mask = new ShapeDrawable();
+        } else {
+            content = new ColorDrawable(normalColor);
+            mask = getRippleMask(Color.WHITE);
+        }
+        return new RippleDrawable(colorStateList, content, mask);
     }
 
     private static ColorStateList getPressedColorSelector(int pressedColor) {

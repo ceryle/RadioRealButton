@@ -21,22 +21,23 @@ import android.widget.LinearLayout;
 
 class RoundHelper {
 
-    static void makeRound(View view, int dividerColor, int dividerRadius, int dividerSize) {
+    static void makeRound(View view, int dividerColor, int dividerRadius, Integer dividerSize) {
         GradientDrawable gradient = getGradientDrawable(dividerColor, dividerRadius, dividerSize);
         BackgroundHelper.setBackground(view, gradient);
     }
 
-    static void makeDividerRound(LinearLayout layout, int dividerColor, int dividerRadius, int dividerSize) {
+    static void makeDividerRound(LinearLayout layout, int dividerColor, int dividerRadius, Integer dividerSize) {
         GradientDrawable gradient = getGradientDrawable(dividerColor, dividerRadius, dividerSize);
         layout.setDividerDrawable(gradient);
     }
 
-    private static GradientDrawable getGradientDrawable(int dividerColor, int dividerRadius, int dividerSize) {
+    private static GradientDrawable getGradientDrawable(int dividerColor, int dividerRadius, Integer dividerSize) {
         GradientDrawable gradient =
                 new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{dividerColor, dividerColor});
         gradient.setShape(GradientDrawable.RECTANGLE);
         gradient.setCornerRadius(dividerRadius);
-        gradient.setSize(dividerSize, 0);
+        if (null != dividerSize)
+            gradient.setSize(dividerSize, 0);
         return gradient;
     }
 }

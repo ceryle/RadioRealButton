@@ -119,6 +119,21 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     private void initViews() {
         setCornerRadius(radius);
 
+        BackgroundView backgroundView = new BackgroundView(getContext());
+        backgroundView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        backgroundView.setBackgroundColor(groupBackgroundColor);
+        addView(backgroundView);
+
+        selectorContainer = new LinearLayout(getContext());
+        selectorContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        selectorContainer.setOrientation(LinearLayout.HORIZONTAL);
+        selectorContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        RoundHelper.makeDividerRound(selectorContainer, selectorDividerColor, selectorDividerRadius, selectorDividerSize);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            selectorContainer.setDividerPadding(selectorDividerPadding);
+        }
+        addView(selectorContainer);
+
         container = new LinearLayout(getContext());
         container.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         container.setOrientation(LinearLayout.HORIZONTAL);
@@ -132,16 +147,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         v_bottomLine = new View(getContext());
         v_bottomLine.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 3));
         addView(v_bottomLine);
-
-        selectorContainer = new LinearLayout(getContext());
-        selectorContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        selectorContainer.setOrientation(LinearLayout.HORIZONTAL);
-        selectorContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        RoundHelper.makeDividerRound(selectorContainer, selectorDividerColor, selectorDividerRadius, selectorDividerSize);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            selectorContainer.setDividerPadding(selectorDividerPadding);
-        }
-        addView(selectorContainer);
     }
 
     private void setBottomLineAttrs() {
@@ -162,7 +167,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         if (selectorBringToFront)
             selectorContainer.bringToFront();
 
-        selectorParams.height = selectorSize;
+        if (!selectorFullSize)
+            selectorParams.height = selectorSize;
 
         int topMargin = 0, bottomMargin = 0;
 
@@ -213,7 +219,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
 
     public void setGroupBackgroundColor() {
-        container.setBackgroundColor(groupBackgroundColor);
+        // setBackgroundColor(groupBackgroundColor);
+        // container.setBackgroundColor(groupBackgroundColor);
         // container.setBackgroundColor(hasDividerBackgroundColor ? dividerBackgroundColor : groupBackgroundColor);
     }
 
@@ -237,13 +244,13 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
     private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom, hasPadding,
             hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDividerBackgroundColor, clickable, enabled,
-            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation;
+            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation, selectorFullSize;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
 
         bottomLineColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_bottomLineColor, Color.GRAY);
-        bottomLineSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineSize, 6);
+        bottomLineSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineSize, 0);
         bottomLineBringToFront = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_bottomLineBringToFront, false);
         bottomLineRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineRadius, 0);
 
@@ -327,6 +334,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
         hasAnimation = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_animate, true);
 
+        selectorFullSize = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorFullSize, false);
+
         ta.recycle();
     }
 
@@ -377,8 +386,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
 
     private void createSelectorItem(int position) {
-        View view = new View(getContext());
-        view.setLayoutParams(new LinearLayout.LayoutParams(0, selectorSize, 1));
+        BackgroundView view = new BackgroundView(getContext());
+
+        int height = selectorSize;
+        if (selectorFullSize)
+            height = LayoutParams.MATCH_PARENT;
+        view.setLayoutParams(new LinearLayout.LayoutParams(0, height, 1));
         view.setBackgroundColor(selectorColor);
 
         int value = 0;
@@ -405,7 +418,11 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
                 break;
         }
 
-        RoundHelper.makeRound(view, selectorColor, selectorRadius, selectorSize);
+        if (!selectorFullSize)
+            RoundHelper.makeRound(view, selectorColor, selectorRadius, selectorSize);
+        else
+            RoundHelper.makeRound(view, selectorColor, selectorRadius, null);
+
         v_selectors.add(view);
         selectorContainer.addView(view);
     }
@@ -428,12 +445,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         } else if (button.hasEnabled()) {
             button.setEnabled(isEnabled);
         }
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        container.getLayoutParams().height = getLayoutParams().height;
     }
 
     public int getNumberOfButtons() {
@@ -690,33 +701,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
     /**
      * LISTENERS --- ENDS
-     */
-
-
-    /**
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
-     * *
      */
 
     public List<RadioRealButton> getButtons() {

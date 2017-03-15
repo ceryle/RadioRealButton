@@ -25,7 +25,6 @@
             app:rrbg_backgroundColor="@color/red_900"
             app:rrbg_borderColor="@color/white"
             app:rrbg_borderSize="1dp"
-            app:rrbg_bottomLineBringToFront="true"
             app:rrbg_bottomLineColor="@color/blue_300"
             app:rrbg_bottomLineRadius="2dp"
             app:rrbg_bottomLineSize="0dp"
@@ -38,7 +37,6 @@
             app:rrbg_radius="2dp"
             app:rrbg_selectorAboveOfBottomLine="false"
             app:rrbg_selectorAnimationType="translate_y"
-            app:rrbg_selectorBringToFront="true"
             app:rrbg_selectorColor="@color/white"
             app:rrbg_selectorRadius="0dp"
             app:rrbg_selectorSize="8dp">
@@ -128,7 +126,8 @@
                 app:rrbg_enableDeselection="true"
                 app:rrbg_radius="0dp"
                 app:rrbg_selectorAboveOfBottomLine="true"
-                app:rrbg_selectorColor="@color/grey_600"
+                app:rrbg_selectorColor="@color/grey_400"
+                app:rrbg_selectorFullSize="true"
                 app:rrbg_selectorSize="4dp">
 
                 <co.ceryle.radiorealbutton.library.RadioRealButton
@@ -160,7 +159,6 @@
             </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
         </LinearLayout>
 
-
         <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,7 +172,6 @@
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
             app:rrbg_backgroundColor="#FFF"
-            app:rrbg_bottomLineBringToFront="true"
             app:rrbg_bottomLineColor="@color/blue_300"
             app:rrbg_bottomLineRadius="2dp"
             app:rrbg_bottomLineSize="0dp"
@@ -188,7 +185,6 @@
             app:rrbg_radius="2dp"
             app:rrbg_selectorAboveOfBottomLine="false"
             app:rrbg_selectorAnimationType="scale_x"
-            app:rrbg_selectorBringToFront="true"
             app:rrbg_selectorColor="@color/grey_800"
             app:rrbg_selectorRadius="0dp"
             app:rrbg_selectorSize="6dp">
@@ -319,7 +315,6 @@
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
             app:rrbg_backgroundColor="@color/white"
-            app:rrbg_bottomLineBringToFront="true"
             app:rrbg_bottomLineColor="@color/red_400"
             app:rrbg_bottomLineRadius="2dp"
             app:rrbg_bottomLineSize="2dp"
@@ -329,7 +324,6 @@
             app:rrbg_radius="2dp"
             app:rrbg_selectorAboveOfBottomLine="true"
             app:rrbg_selectorAnimationType="alpha"
-            app:rrbg_selectorBringToFront="true"
             app:rrbg_selectorColor="@color/green_400"
             app:rrbg_selectorDividerColor="@color/red_400"
             app:rrbg_selectorDividerSize="2dp"
@@ -450,7 +444,6 @@
             app:rrbg_backgroundColor="#FFF"
             app:rrbg_borderColor="@color/black"
             app:rrbg_borderSize="2dp"
-            app:rrbg_bottomLineBringToFront="true"
             app:rrbg_bottomLineColor="@color/blue_300"
             app:rrbg_bottomLineRadius="2dp"
             app:rrbg_bottomLineSize="0dp"
@@ -461,7 +454,6 @@
             app:rrbg_dividerSize="2dp"
             app:rrbg_radius="4dp"
             app:rrbg_selectorAboveOfBottomLine="false"
-            app:rrbg_selectorBringToFront="true"
             app:rrbg_selectorColor="@color/black"
             app:rrbg_selectorRadius="1dp"
             app:rrbg_selectorSize="6dp"
