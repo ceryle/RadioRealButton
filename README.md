@@ -5,7 +5,7 @@
 
 Radio Real Button is a substitute of the Radio Button. Its purpose is to give more elegant view for Android users.
 
-##Preview
+## Preview
 ![1](https://cloud.githubusercontent.com/assets/20969019/24070628/e081f5f8-0bc9-11e7-9791-9db6d4e25ece.gif)
 <br />
 ![2](https://cloud.githubusercontent.com/assets/20969019/23513066/77a25146-ff6b-11e6-8af1-cbd68bf5aec4.gif)
