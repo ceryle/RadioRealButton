@@ -6,7 +6,7 @@
 Radio Real Button is a substitute of the Radio Button. Its purpose is to give more elegant view for Android users.
 
 ##Preview
-![1](https://cloud.githubusercontent.com/assets/20969019/18049713/8c16bcee-6df2-11e6-90c1-e39571abb9fb.gif)
+![1](https://cloud.githubusercontent.com/assets/20969019/24070628/e081f5f8-0bc9-11e7-9791-9db6d4e25ece.gif)
 <br />
 ![2](https://cloud.githubusercontent.com/assets/20969019/23513066/77a25146-ff6b-11e6-8af1-cbd68bf5aec4.gif)
 <br />
@@ -36,7 +36,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v2.0.2'
+    compile 'com.github.ceryle:RadioRealButton:v2.0.3'
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 - Border is now part of the round container layout.
 - android:padding and rest padding attributes were working not as expected. Now, they are fixed.
 - textTypeface attribute now works like button's typeface. You can give your typeface using textTypefacePath attribute.
-
+- Default scaling value is now 1 as it has to be.
 ##### What added?
 - New animations added. There was only a sliding view, but now 4 more added. You can use them with app:selectorAnimationType attribute.
 - enableDeselection attribute is added. With this attribute, you can deselect buttons if you re-click on them.
@@ -91,40 +91,39 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
 | borderSize			    | `dimension` | adds border to group with the given size |
 | borderColor			    | `dimension` | changes border color |
 | backgroundColor           | `color`     | give background color by giving a color code or reference |
-| enableDeselection         | `color`     |   |
+| enableDeselection         | `color`     | enable deselection to un-check a button  |
 | dividerSize			    | `dimension` | set divider size for the line between buttons |
-| dividerPadding		    | `dimension` |   |
-| dividerColor			    | `color`     |   |
-| dividerRadius			    | `dimension` |   |
-| dividerBackgroundColor    | `color`     |   |
-| selectorDividerSize	    | `dimension` |   |
-| selectorDividerPadding    | `dimension` |   |
-| selectorDividerColor	    | `color`     |   |
-| selectorDividerRadius	    | `dimension` |   |
+| dividerPadding		    | `dimension` | gives padding to divider's top and bottom  |
+| dividerColor			    | `color`     | give color code or reference  |
+| dividerRadius			    | `dimension` | give dimension to make divider's corners rounder  |
+| selectorDividerSize	    | `dimension` | set selector divider size for the line between buttons  |
+| selectorDividerPadding    | `dimension` | gives padding to selector divider's top and bottom  |
+| selectorDividerColor	    | `color`     | give color code or reference  |
+| selectorDividerRadius	    | `dimension` | give dimension to make selector divider's corners rounder  |
 | bottomLineColor    	    | `color`     | set bottom line color  |
 | bottomLineSize		    | `dimension` | set bottom line height |
-| bottomLineBringToFront    | `boolean`   |   |
-| bottomLineRadius		    | `dimension` |   |
+| bottomLineBringToFront    | `boolean`   | if it is true, it brings bottomLine on top of selector  |
+| bottomLineRadius		    | `dimension` | give dimension to make bottomLine's corners rounder  |
 | selectorTop			    | `boolean`	  | align selector to top |
 | selectorBottom		    | `boolean`	  | align selector to bottom |
 | selectorColor			    | `color`	  | set color of selector |
 | selectorSize			    | `dimension` | set height of selector |
-| selectorRadius		    | `dimension` | set selector radius to make it rounder |
-| selectorBringToFront	    | `boolean`   |   |
-| selectorAboveOfBottomLine | `boolean`	  | set true if selector is desired above of bottom line |
-| selectorRadius		    | `boolean`	  |   |
+| selectorRadius		    | `dimension` | give dimension to make selector's corners rounder |
+| selectorBringToFront	    | `boolean`   | if it is true, it brings selector on top of everything  |
+| selectorAboveOfBottomLine | `boolean`	  | if it is true, it brings selector above of bottom line |
+| selectorFullSize		    | `boolean`	  | selector fills space up to button's height  |
 | checkedPosition		    | `integer`	  | check a button by a position number |
 | checkedButton			    | `reference` | check a button by button's unique id |
 | animate                   | `boolean`   | set animation on bottom moving view    |
-| animateSelector           | `integer`   |   |
-| animateSelector_delay     | `integer`   |   |
-| animateSelector_duration  | `integer`   |   |
-| animateDrawables_scale         | `float`     |  |
+| animateSelector           | `integer`   | gives interpolator to selector  |
+| animateSelector_delay     | `integer`   | gives delay to selector's animation when it enters  |
+| animateSelector_duration  | `integer`   | animation duration of selector in ms  |
+| animateDrawables_scale         | `float`     | adjust drawable's size when it is checked |
 | animateDrawables_enter         | `integer`   | enter animation on drawable when button is checked |
 | animateDrawables_enterDuration | `integer`   | enter animation duration of drawable in ms |
 | animateDrawables_exit 	     | `integer`   | exit animation on drawable when other button is checked  |
 | animateDrawables_exitDuration  | `integer`   | exit animation duration of drawable in ms  |
-| animateTexts_scale             | `float`     |  |
+| animateTexts_scale             | `float`     | adjust text's size when it is checked |
 | animateTexts_enter             | `integer`   | enter animation on text when button is checked |
 | animateTexts_enterDuration     | `integer`   | enter animation duration of text in ms |
 | animateTexts_exit 	         | `integer`   | exit animation on text when other button is checked  |
@@ -141,7 +140,6 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
     android:layout_height="wrap_content"
     app:rrbg_animateDrawables_enter="overshoot"
     app:rrbg_animateTexts_enter="overshoot"
-    app:rrbg_bottomLineSize="0dp"
     app:rrbg_dividerColor="@color/black"
     app:rrbg_dividerSize="1dp"
     app:rrbg_radius="10dp"

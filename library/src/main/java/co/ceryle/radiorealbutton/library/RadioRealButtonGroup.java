@@ -73,8 +73,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         return bundle;
     }
 
-    private boolean isRedrawn = false;
-
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
@@ -82,12 +80,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             state = bundle.getParcelable("state");
             int position = bundle.getInt("position");
 
-            if (lastPosition != position && initialPosition != 0) {
+            if (lastPosition != position) {
                 if (animationType == ANIM_TRANSLATE_X) {
-                    isRedrawn = true;
-                    v_selectors.get(initialPosition).setVisibility(INVISIBLE);
-                    initialPosition = position;
-                    v_selectors.get(initialPosition).setVisibility(VISIBLE);
+                    if (initialPosition != -1)
+                        v_selectors.get(initialPosition).setVisibility(INVISIBLE);
+                    v_selectors.get(position).setVisibility(VISIBLE);
+                    lastPosition = initialPosition = position;
                 }
                 setPosition(position, false);
             }
@@ -287,18 +285,17 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         animateImagesExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exit, 0);
         animateImagesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enterDuration, 500);
         animateImagesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exitDuration, 100);
-        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_scale, 0.2f);
+        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_scale, 1.2f);
 
         animateTexts = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter, 0);
         hasAnimateTexts = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter);
         animateTextsExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exit, 0);
         animateTextsDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enterDuration, 500);
         animateTextsExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exitDuration, 100);
-        animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_scale, 0.2f);
+        animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_scale, 1.2f);
 
-        lastPosition = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_checkedPosition, -1);
+        lastPosition = initialPosition = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_checkedPosition, -1);
         checkedButtonId = ta.getResourceId(R.styleable.RadioRealButtonGroup_rrbg_checkedButton, NO_ID);
-        initialPosition = lastPosition;
 
         buttonPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPadding, 0);
         buttonPaddingLeft = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_buttonsPaddingLeft, 0);
@@ -359,18 +356,18 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
             if (lastPosition == -1) {
                 if (checkedButtonId != NO_ID && checkedButtonId == id)
-                    lastPosition = position;
+                    lastPosition = initialPosition = position;
                 else if (checkedButtonId == NO_ID && button.isChecked())
-                    lastPosition = position;
+                    lastPosition = initialPosition = position;
             }
 
             if (lastPosition == position) {
                 button.setChecked(true);
 
                 if (hasAnimateImages)
-                    button.bounceDrawable(animateImagesScale + 1);
+                    button.bounceDrawable(animateImagesScale);
                 if (hasAnimateTexts)
-                    button.bounceText(animateTextsScale + 1);
+                    button.bounceText(animateTextsScale);
             } else
                 button.setChecked(false);
 
@@ -531,9 +528,9 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
     private void animateEnter(RadioRealButton button, boolean hasAnimation) {
         if (hasAnimateTexts)
-            button.bounceText(1 + animateTextsScale, animateTextsDuration, interpolatorText, hasAnimation);
+            button.bounceText(animateTextsScale, animateTextsDuration, interpolatorText, hasAnimation);
         if (hasAnimateImages)
-            button.bounceDrawable(1 + animateImagesScale, animateImagesDuration, interpolatorImage, hasAnimation);
+            button.bounceDrawable( animateImagesScale, animateImagesDuration, interpolatorImage, hasAnimation);
     }
     /* DRAWABLE AND TEXT ANIMATION ENDS */
 
@@ -581,8 +578,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
 
     private void animateSelectorSliding(int toPosition, String property, boolean hasAnimation, boolean enableDeselection) {
-        if (isRedrawn) {
-            isRedrawn = false;
+        boolean isViewDrawn = buttons.size() > 0 && buttons.get(0).getWidth() > 0;
+        if (!isViewDrawn) {
+            if (initialPosition != -1)
+                v_selectors.get(initialPosition).setVisibility(INVISIBLE);
+            v_selectors.get(toPosition).setVisibility(VISIBLE);
+            initialPosition = toPosition;
             return;
         }
 
@@ -699,6 +700,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     public interface OnLongClickedButtonListener {
         boolean onLongClickedButton(RadioRealButton button, int position);
     }
+
     /**
      * LISTENERS --- ENDS
      */

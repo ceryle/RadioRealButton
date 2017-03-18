@@ -19,7 +19,7 @@
             app:rrbg_animateDrawables_enterDuration="500"
             app:rrbg_animateDrawables_exit="overshoot"
             app:rrbg_animateDrawables_exitDuration="500"
-            app:rrbg_animateDrawables_scale="0.2"
+            app:rrbg_animateDrawables_scale="1.2"
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
             app:rrbg_backgroundColor="@color/red_900"
@@ -168,7 +168,7 @@
             app:rrbg_animateDrawables_enterDuration="500"
             app:rrbg_animateDrawables_exit="overshoot"
             app:rrbg_animateDrawables_exitDuration="500"
-            app:rrbg_animateDrawables_scale="0.2"
+            app:rrbg_animateDrawables_scale="1.2"
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
             app:rrbg_backgroundColor="#FFF"
@@ -311,7 +311,7 @@
             android:elevation="1dp"
             app:rrbg_animateDrawables_enter="overshoot"
             app:rrbg_animateDrawables_enterDuration="500"
-            app:rrbg_animateDrawables_scale="0.2"
+            app:rrbg_animateDrawables_scale="1.2"
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
             app:rrbg_backgroundColor="@color/white"
@@ -376,7 +376,7 @@
             app:rrbg_animateDrawables_enterDuration="500"
             app:rrbg_animateDrawables_exit="overshoot"
             app:rrbg_animateDrawables_exitDuration="1500"
-            app:rrbg_animateDrawables_scale="0.3"
+            app:rrbg_animateDrawables_scale="1.3"
             app:rrbg_animateSelector="bounce"
             app:rrbg_backgroundColor="@color/black"
             app:rrbg_bottomLineColor="@color/white"
@@ -393,6 +393,7 @@
                 android:layout_height="wrap_content"
                 app:rrb_drawable="@drawable/b7"
                 app:rrb_drawableHeight="36dp"
+                app:rrb_rippleColor="@color/white"
                 app:rrb_drawableTint="@color/white"
                 app:rrb_drawableWidth="36dp"/>
 
@@ -401,6 +402,7 @@
                 android:layout_height="wrap_content"
                 app:rrb_drawable="@drawable/b7"
                 app:rrb_drawableHeight="36dp"
+                app:rrb_rippleColor="@color/white"
                 app:rrb_drawableTint="@color/white"
                 app:rrb_drawableWidth="36dp"/>
 
@@ -409,6 +411,7 @@
                 android:layout_height="wrap_content"
                 app:rrb_drawable="@drawable/b7"
                 app:rrb_drawableHeight="36dp"
+                app:rrb_rippleColor="@color/white"
                 app:rrb_drawableTint="@color/white"
                 app:rrb_drawableWidth="36dp"/>
 
@@ -417,6 +420,7 @@
                 android:layout_height="wrap_content"
                 app:rrb_drawable="@drawable/b7"
                 app:rrb_drawableHeight="36dp"
+                app:rrb_rippleColor="@color/white"
                 app:rrb_drawableTint="@color/white"
                 app:rrb_drawableWidth="36dp"/>
 
@@ -425,6 +429,7 @@
                 android:layout_height="wrap_content"
                 app:rrb_drawable="@drawable/b7"
                 app:rrb_drawableHeight="36dp"
+                app:rrb_rippleColor="@color/white"
                 app:rrb_drawableTint="@color/white"
                 app:rrb_drawableWidth="36dp"/>
         </co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
@@ -438,7 +443,7 @@
             app:rrbg_animateDrawables_enterDuration="500"
             app:rrbg_animateDrawables_exit="overshoot"
             app:rrbg_animateDrawables_exitDuration="500"
-            app:rrbg_animateDrawables_scale="0.2"
+            app:rrbg_animateDrawables_scale="1.2"
             app:rrbg_animateTexts_enter="overshoot"
             app:rrbg_animateTexts_enterDuration="500"
             app:rrbg_backgroundColor="#FFF"
