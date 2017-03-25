@@ -460,6 +460,9 @@ public class RadioRealButton extends LinearLayout {
     }
 
     private void updatePadding(View view, boolean hasOtherView) {
+        if (null == view)
+            return;
+
         int[] paddings = {paddingLeft, paddingTop, paddingRight, paddingBottom};
 
         if (hasOtherView) {
