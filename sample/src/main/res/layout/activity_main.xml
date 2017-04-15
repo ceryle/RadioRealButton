@@ -239,11 +239,11 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:elevation="2dp"
+                app:rrbg_backgroundColor="@android:color/transparent"
                 app:rrbg_borderColor="@color/teal_300"
                 app:rrbg_borderSize="1dp"
                 app:rrbg_checkedPosition="0"
                 app:rrbg_radius="28dp"
-                app:rrbg_backgroundColor="@android:color/transparent"
                 app:rrbg_selectorColor="@color/teal_300"
                 app:rrbg_selectorFullSize="true"
                 app:rrbg_selectorRadius="28dp">
@@ -303,6 +303,7 @@
 
 
         <co.ceryle.radiorealbutton.library.RadioRealButtonGroup
+            android:id="@+id/radioRealButtonGroup_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"

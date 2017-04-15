@@ -180,7 +180,7 @@ final RadioRealButton button2 = (RadioRealButton) findViewById(R.id.button2);
 
 RadioRealButtonGroup group = (RadioRealButtonGroup) findViewById(R.id.group);
 
-// onClickButton listener detects position changes only by touch
+// onClickButton listener detects any click performed on buttons by touch
 group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
     @Override
     public void onClickedButton(RadioRealButton button, int position) {
@@ -188,7 +188,7 @@ group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListene
     }
 });
 
-// onPositionChanged listener detects position change in every way by touch or calling setPosition method
+// onPositionChanged listener detects if there is any change in position
 group.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
     @Override
     public void onPositionChanged(RadioRealButton button, int position) {
@@ -196,9 +196,9 @@ group.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedLis
     }
 });
 
-// onLongClickedButton listener has a boolean return
-// true: use it if you only want to detect long click, nothing else
-// false: use it if you want to detect long click and change position when you release
+// onLongClickedButton detects long clicks which are made on any button in group.
+// return true if you only want to detect long click, nothing else
+// return false if you want to detect long click and change position when you release
 group.setOnLongClickedButtonListener(new RadioRealButtonGroup.OnLongClickedButtonListener() {
     @Override
     public boolean onLongClickedButton(RadioRealButton button, int position) {

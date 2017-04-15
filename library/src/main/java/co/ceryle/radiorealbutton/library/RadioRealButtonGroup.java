@@ -478,12 +478,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         if ((buttonIn == null || !buttonIn.isClickable() || !buttonIn.isEnabled()))
             return;
 
-        if (null != onClickedButtonListener && isToggledByTouch)
-            onClickedButtonListener.onClickedButton(buttonIn, position);
-        if (null != onPositionChangedListener) {
-            onPositionChangedListener.onPositionChanged(buttonIn, position);
-        }
-
         moveSelector(position, hasAnimation, enableDeselection);
         animateTextAndImage(position, hasAnimation, buttonIn, buttonOut, enableDeselection);
 
@@ -497,6 +491,13 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             else
                 buttonIn.setChecked(true);
         }
+
+        if (null != onClickedButtonListener && isToggledByTouch)
+            onClickedButtonListener.onClickedButton(buttonIn, position);
+        if (null != onPositionChangedListener && (lastPosition != position || enableDeselection)) {
+            onPositionChangedListener.onPositionChanged(buttonIn, position);
+        }
+
         this.lastPosition = position;
     }
 
@@ -530,7 +531,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         if (hasAnimateTexts)
             button.bounceText(animateTextsScale, animateTextsDuration, interpolatorText, hasAnimation);
         if (hasAnimateImages)
-            button.bounceDrawable( animateImagesScale, animateImagesDuration, interpolatorImage, hasAnimation);
+            button.bounceDrawable(animateImagesScale, animateImagesDuration, interpolatorImage, hasAnimation);
     }
     /* DRAWABLE AND TEXT ANIMATION ENDS */
 

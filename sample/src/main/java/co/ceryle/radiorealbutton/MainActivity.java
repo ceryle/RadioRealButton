@@ -27,7 +27,7 @@ import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
-    private RadioRealButtonGroup rrbg;
+    private RadioRealButtonGroup group1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +35,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         button = (Button) findViewById(R.id.button);
-        rrbg = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
+        group1 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_1);
 
         button.setTransformationMethod(null);
-        updateText(rrbg.getPosition());
+        updateText(group1.getPosition());
 
-        rrbg.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
+        group1.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
                 updateText(position);
             }
         });
 
-        rrbg.setOnLongClickedButtonListener(new RadioRealButtonGroup.OnLongClickedButtonListener() {
+        group1.setOnLongClickedButtonListener(new RadioRealButtonGroup.OnLongClickedButtonListener() {
             @Override
             public boolean onLongClickedButton(RadioRealButton button, int position) {
                 Toast.makeText(MainActivity.this, "Long Clicked! Position: " + position, Toast.LENGTH_SHORT).show();
@@ -58,11 +58,19 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = rrbg.getPosition();
-                position = ++position % rrbg.getNumberOfButtons();
-                rrbg.setPosition(position);
+                int position = group1.getPosition();
+                position = ++position % group1.getNumberOfButtons();
+                group1.setPosition(position);
 
                 updateText(position);
+            }
+        });
+
+        RadioRealButtonGroup group2 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_2);
+        group2.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
+            @Override
+            public void onPositionChanged(RadioRealButton button, int position) {
+                Toast.makeText(MainActivity.this, "Id: " + position, Toast.LENGTH_SHORT).show();
             }
         });
     }
