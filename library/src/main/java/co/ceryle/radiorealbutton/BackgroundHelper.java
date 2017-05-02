@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton;
 
-import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.view.View;
 
-class ConversionHelper {
+class BackgroundHelper {
 
-    static float pxToDp(final Context context, final float px) {
-        return px / context.getResources().getDisplayMetrics().density;
-    }
-
-    static int dpToPx(final Context context, final float dp) {
-        return (int) (dp * context.getResources().getDisplayMetrics().density);
+    static void setBackground(View view, Drawable drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.setBackground(drawable);
+        } else {
+            view.setBackgroundDrawable(drawable);
+        }
     }
 }

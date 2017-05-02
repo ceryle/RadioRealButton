@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -22,17 +22,15 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import co.ceryle.radiorealbutton.R;
 
 public class RadioRealButton extends LinearLayout {
     public RadioRealButton(Context context) {
@@ -69,22 +67,22 @@ public class RadioRealButton extends LinearLayout {
         setPaddingAttrs();
     }
 
-    private ImageView imageView;
-    private TextView textView;
+    private AppCompatImageView imageView;
+    private AppCompatTextView textView;
 
     private void initViews() {
         setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
 
-        imageView = new ImageView(getContext());
+        imageView = new AppCompatImageView(getContext());
         imageView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) {{
             gravity = Gravity.CENTER;
         }});
         setDrawableAttrs();
         addView(imageView);
 
-        textView = new TextView(getContext());
+        textView = new AppCompatTextView(getContext());
         textView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) {{
             gravity = Gravity.CENTER;
         }});
@@ -210,7 +208,7 @@ public class RadioRealButton extends LinearLayout {
             return;
 
         if (drawableGravity == DrawableGravity.LEFT || drawableGravity == DrawableGravity.TOP) {
-            if (getChildAt(0) instanceof TextView) {
+            if (getChildAt(0) instanceof AppCompatTextView) {
                 removeViewAt(0);
                 addView(textView, 1);
 
@@ -221,7 +219,7 @@ public class RadioRealButton extends LinearLayout {
                 }
             }
         } else {
-            if (getChildAt(0) instanceof ImageView) {
+            if (getChildAt(0) instanceof AppCompatImageView) {
                 removeViewAt(0);
                 addView(imageView, 1);
 
@@ -359,7 +357,7 @@ public class RadioRealButton extends LinearLayout {
     /**
      * TEXT VIEW
      */
-    public TextView getTextView() {
+    public AppCompatTextView getTextView() {
         return textView;
     }
 
@@ -467,7 +465,7 @@ public class RadioRealButton extends LinearLayout {
 
         if (hasOtherView) {
             int g = drawableGravity.getIntValue();
-            if (view instanceof ImageView) {
+            if (view instanceof AppCompatImageView) {
                 g = g > 1 ? g - 2 : g + 2;
             }
             paddings[g] = drawablePadding / 2;
@@ -516,7 +514,7 @@ public class RadioRealButton extends LinearLayout {
     /**
      * DRAWABLE
      */
-    public ImageView getImageView() {
+    public AppCompatImageView getImageView() {
         return imageView;
     }
 

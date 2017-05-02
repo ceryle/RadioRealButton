@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton;
 
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;

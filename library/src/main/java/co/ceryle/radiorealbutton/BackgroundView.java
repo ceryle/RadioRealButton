@@ -1,4 +1,4 @@
-package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton;
 
 import android.content.Context;
 import android.os.Build;

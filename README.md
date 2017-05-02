@@ -36,7 +36,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v2.0.5'
+    compile 'com.github.ceryle:RadioRealButton:v2.0.6'
 }
 ```
 
@@ -135,7 +135,7 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
 ##### In Xml Layout
 
 ```xml
-<co.ceryle.radiorealbutton.library.RadioRealButtonGroup
+<co.ceryle.radiorealbutton.RadioRealButtonGroup
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:rrbg_animateDrawables_enter="overshoot"
@@ -146,7 +146,7 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
     app:rrbg_selectorColor="@color/red_700"
     app:rrbg_selectorSize="6dp">
 
-    <co.ceryle.radiorealbutton.library.RadioRealButton
+    <co.ceryle.radiorealbutton.RadioRealButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:rrb_drawable="@mipmap/ic_launcher"
@@ -158,7 +158,7 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
         app:rrb_text="Button 1"
         app:rrb_textColor="@color/black"/>
 
-    <co.ceryle.radiorealbutton.library.RadioRealButton
+    <co.ceryle.radiorealbutton.RadioRealButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:rrb_drawable="@mipmap/ic_launcher"
@@ -170,7 +170,7 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
         app:rrb_rippleColor="@color/black"
         app:rrb_text="Button 2"
         app:rrb_textColor="@color/black"/>
-</co.ceryle.radiorealbutton.library.RadioRealButtonGroup>
+</co.ceryle.radiorealbutton.RadioRealButtonGroup>
 ```
 
 ##### Listener Example

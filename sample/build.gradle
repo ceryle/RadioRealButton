@@ -3,10 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-    enforceUniquePackageName = false
 
     defaultConfig {
-        applicationId "co.ceryle.radiorealbutton"
+        applicationId "co.ceryle.radiorealbutton.sample"
         minSdkVersion 11
         targetSdkVersion 25
         versionCode 1

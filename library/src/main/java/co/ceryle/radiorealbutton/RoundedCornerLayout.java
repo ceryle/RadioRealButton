@@ -9,7 +9,7 @@
  *
  * I extended this by adding border.
  */
-package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton;
 
 import android.annotation.TargetApi;
 import android.content.Context;

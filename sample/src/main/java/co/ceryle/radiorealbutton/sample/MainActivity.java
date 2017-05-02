@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton;
+package co.ceryle.radiorealbutton.sample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,8 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import co.ceryle.radiorealbutton.library.RadioRealButton;
-import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
+import co.ceryle.radiorealbutton.RadioRealButton;
+import co.ceryle.radiorealbutton.RadioRealButtonGroup;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         button.setTransformationMethod(null);
         updateText(group1.getPosition());
 
-        group1.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
+        group1.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
             @Override
-            public void onClickedButton(RadioRealButton button, int position) {
+            public void onPositionChanged(RadioRealButton button, int position) {
                 updateText(position);
             }
         });
@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 int position = group1.getPosition();
                 position = ++position % group1.getNumberOfButtons();
                 group1.setPosition(position);
-
-                updateText(position);
             }
         });
 
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         group2.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
             @Override
             public void onPositionChanged(RadioRealButton button, int position) {
-                Toast.makeText(MainActivity.this, "Id: " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
     }

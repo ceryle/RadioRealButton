@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.ceryle.radiorealbutton.library;
+package co.ceryle.radiorealbutton;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -45,8 +45,6 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import co.ceryle.radiorealbutton.R;
 
 public class RadioRealButtonGroup extends RoundedCornerLayout {
 
@@ -486,8 +484,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             if (null != buttonOut)
                 buttonOut.setChecked(false);
         } else {
-            if (lastPosition == position && buttonIn.isChecked())
+            if (lastPosition == position && buttonIn.isChecked()){
                 buttonIn.setChecked(false);
+                position = -1;
+            }
             else
                 buttonIn.setChecked(true);
         }
@@ -592,7 +592,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             initialPosition = 0;
 
             View view = v_selectors.get(initialPosition);
-            view.setTranslationX(-buttons.get(initialPosition).getWidth());
+            view.setTranslationX(-buttons.get(initialPosition).getMeasuredWidth());
             view.setVisibility(VISIBLE);
         }
 
@@ -602,21 +602,19 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
         float position = toPosition - initialPosition;
 
-        float value = buttons.get(initialPosition).getWidth() * position + dividerSize * position;
+        float value = buttons.get(initialPosition).getMeasuredWidth() * position + dividerSize * position;
         ObjectAnimator animator = createAnimator(v_selectors.get(initialPosition), property, value, false, hasAnimation);
         animator.start();
     }
 
     public void deselect() {
-        if(!buttons.get(lastPosition).isChecked())
+        if (lastPosition == -1 || !buttons.get(lastPosition).isChecked())
             return;
 
         if (animationType == ANIM_TRANSLATE_X) {
             deselect(lastPosition, true);
         } else {
-            if (lastPosition != -1) {
-                setPosition(lastPosition);
-            }
+            setPosition(lastPosition);
         }
     }
 
