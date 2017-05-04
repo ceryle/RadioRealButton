@@ -36,7 +36,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.ceryle:RadioRealButton:v2.0.6'
+    compile 'com.github.ceryle:RadioRealButton:v2.0.7'
 }
 ```
 
@@ -128,6 +128,12 @@ how I have used ImageView in RadioRealButton is no different than regular drawab
 | animateTexts_enterDuration     | `integer`   | enter animation duration of text in ms |
 | animateTexts_exit 	         | `integer`   | exit animation on text when other button is checked  |
 | animateTexts_exitDuration 	 | `integer`   | exit animation duration of text in ms  |
+| animateDrawables_tintColorFrom 	 | `integer`   | initial color for drawable's tint color transition animation |
+| animateDrawables_tintColorTo 	 | `integer`   | final color for drawable's tint color transition animation  |
+| animateDrawables_tintColorDuration 	 | `integer`   | total animation duration of drawable's tint transition in ms  |
+| animateTexts_textColorFrom 	     | `integer`   | initial color for text's text color transition animation |
+| animateTexts_textColorTo 	     | `integer`   | final color for text's text color transition animation  |
+| animateTexts_textColorDuration 	 | `integer`   | total animation duration of text's text color in ms  |
 
 
 #### Examples
