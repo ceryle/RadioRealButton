@@ -234,16 +234,29 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
             buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor, dividerBackgroundColor,
             dividerPadding, dividerSize, dividerRadius, bottomLineSize, bottomLineRadius, selectorSize, selectorRadius, initialPosition,
-            selectorDividerSize, selectorDividerRadius, selectorDividerColor, selectorDividerPadding, checkedButtonId;
+            selectorDividerSize, selectorDividerRadius, selectorDividerColor, selectorDividerPadding, checkedButtonId,
+            animateTextsTextColorFrom, animateTextsTextColorTo, animateTextsTextColorDuration,
+            animateDrawablesTintColorFrom, animateDrawablesTintColorTo, animateDrawablesTintColorDuration;
 
     private float radius, animateImagesScale, animateTextsScale;
 
     private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom, hasPadding,
             hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDividerBackgroundColor, clickable, enabled,
-            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation, selectorFullSize;
+            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation, selectorFullSize,
+            hasAnimateTextsColor, hasAnimateDrawablesColor;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
+
+        animateTextsTextColorFrom = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorFrom, Color.BLACK);
+        animateTextsTextColorTo = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorTo, Color.WHITE);
+        hasAnimateTextsColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorTo);
+        animateTextsTextColorDuration = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorDuration, 500);
+
+        animateDrawablesTintColorFrom = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorFrom, Color.BLACK);
+        animateDrawablesTintColorTo = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo, Color.WHITE);
+        hasAnimateDrawablesColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo);
+        animateDrawablesTintColorDuration = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorDuration, 500);
 
         bottomLineColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_bottomLineColor, Color.GRAY);
         bottomLineSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineSize, 0);
@@ -366,8 +379,19 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
                     button.bounceDrawable(animateImagesScale);
                 if (hasAnimateTexts)
                     button.bounceText(animateTextsScale);
-            } else
+                if (hasAnimateTextsColor)
+                    button.setTextColor(animateTextsTextColorTo);
+                if (hasAnimateDrawablesColor)
+                    button.setDrawableTint(animateDrawablesTintColorTo);
+
+            } else{
                 button.setChecked(false);
+
+                if (hasAnimateTextsColor)
+                    button.setTextColor(animateTextsTextColorFrom);
+                if (hasAnimateDrawablesColor)
+                    button.setDrawableTint(animateDrawablesTintColorFrom);
+            }
 
             initButtonListener(button, position);
             setButtonPadding(button);
@@ -484,11 +508,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             if (null != buttonOut)
                 buttonOut.setChecked(false);
         } else {
-            if (lastPosition == position && buttonIn.isChecked()){
+            if (lastPosition == position && buttonIn.isChecked()) {
                 buttonIn.setChecked(false);
                 position = -1;
-            }
-            else
+            } else
                 buttonIn.setChecked(true);
         }
 
@@ -525,6 +548,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             button.bounceText(1, animateTextsExitDuration, interpolatorTextExit, hasAnimation);
         if (hasAnimateImages)
             button.bounceDrawable(1, animateImagesExitDuration, interpolatorImageExit, hasAnimation);
+        if (hasAnimateTextsColor)
+            button.colorTransitionText(animateTextsTextColorTo, animateTextsTextColorFrom, animateTextsTextColorDuration, hasAnimation);
+        if (hasAnimateDrawablesColor)
+            button.colorTransitionDrawable(animateDrawablesTintColorTo, animateDrawablesTintColorFrom, animateDrawablesTintColorDuration, hasAnimation);
     }
 
     private void animateEnter(RadioRealButton button, boolean hasAnimation) {
@@ -532,6 +559,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             button.bounceText(animateTextsScale, animateTextsDuration, interpolatorText, hasAnimation);
         if (hasAnimateImages)
             button.bounceDrawable(animateImagesScale, animateImagesDuration, interpolatorImage, hasAnimation);
+        if (hasAnimateTextsColor)
+            button.colorTransitionText(animateTextsTextColorFrom, animateTextsTextColorTo, animateTextsTextColorDuration, hasAnimation);
+        if (hasAnimateDrawablesColor)
+            button.colorTransitionDrawable(animateDrawablesTintColorFrom, animateDrawablesTintColorTo, animateDrawablesTintColorDuration, hasAnimation);
     }
     /* DRAWABLE AND TEXT ANIMATION ENDS */
 
@@ -701,11 +732,62 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
     public interface OnLongClickedButtonListener {
         boolean onLongClickedButton(RadioRealButton button, int position);
+
     }
 
     /**
      * LISTENERS --- ENDS
      */
+
+
+    public int getAnimateTextsTextColorFrom() {
+        return animateTextsTextColorFrom;
+    }
+
+    public void setAnimateTextsTextColorFrom(int animateTextsTextColorFrom) {
+        this.animateTextsTextColorFrom = animateTextsTextColorFrom;
+    }
+
+    public int getAnimateTextsTextColorTo() {
+        return animateTextsTextColorTo;
+    }
+
+    public void setAnimateTextsTextColorTo(int animateTextsTextColorTo) {
+        this.animateTextsTextColorTo = animateTextsTextColorTo;
+    }
+
+    public int getAnimateTextsTextColorDuration() {
+        return animateTextsTextColorDuration;
+    }
+
+    public void setAnimateTextsTextColorDuration(int animateTextsTextColorDuration) {
+        this.animateTextsTextColorDuration = animateTextsTextColorDuration;
+    }
+
+    public int getAnimateDrawablesTintColorFrom() {
+        return animateDrawablesTintColorFrom;
+    }
+
+    public void setAnimateDrawablesTintColorFrom(int animateDrawablesTintColorFrom) {
+        this.animateDrawablesTintColorFrom = animateDrawablesTintColorFrom;
+    }
+
+    public int getAnimateDrawablesTintColorTo() {
+        return animateDrawablesTintColorTo;
+    }
+
+    public void setAnimateDrawablesTintColorTo(int animateDrawablesTintColorTo) {
+        this.animateDrawablesTintColorTo = animateDrawablesTintColorTo;
+    }
+
+    public int getAnimateDrawablesTintColorDuration() {
+        return animateDrawablesTintColorDuration;
+    }
+
+    public void setAnimateDrawablesTintColorDuration(int animateDrawablesTintColorDuration) {
+        this.animateDrawablesTintColorDuration = animateDrawablesTintColorDuration;
+    }
+
 
     public List<RadioRealButton> getButtons() {
         return buttons;

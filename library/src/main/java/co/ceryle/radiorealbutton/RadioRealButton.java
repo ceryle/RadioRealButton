@@ -15,6 +15,8 @@
  */
 package co.ceryle.radiorealbutton;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,12 +27,15 @@ import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class RadioRealButton extends LinearLayout {
     public RadioRealButton(Context context) {
@@ -275,14 +280,44 @@ public class RadioRealButton extends LinearLayout {
             setPadding(padding, padding, padding, padding);
     }
 
-    protected void bounceDrawable(float scale, int duration, Interpolator interpolator, boolean hasAnimation) {
+    void colorTransitionDrawable(int colorFrom, int colorTo, int duration, boolean hasAnimation) {
+        if (hasAnimation)
+            colorTransition(imageView, colorFrom, colorTo, duration);
+        else
+            setDrawableTint(colorTo);
+    }
+
+    void colorTransitionText(int colorFrom, int colorTo, int duration, boolean hasAnimation) {
+        if (hasAnimation)
+            colorTransition(textView, colorFrom, colorTo, duration);
+        else
+            setTextColor(colorTo);
+    }
+
+    private void colorTransition(final View v, int colorFrom, int colorTo, int duration) {
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(duration);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                if (v instanceof ImageView) {
+                    ((ImageView) v).setColorFilter((int) animator.getAnimatedValue());
+                } else {
+                    ((TextView) v).setTextColor((int) animator.getAnimatedValue());
+                }
+            }
+        });
+        colorAnimation.start();
+    }
+
+    void bounceDrawable(float scale, int duration, Interpolator interpolator, boolean hasAnimation) {
         if (hasAnimation)
             bounce(imageView, scale, duration, interpolator);
         else
             bounceDrawable(scale);
     }
 
-    protected void bounceText(float scale, int duration, Interpolator interpolator, boolean hasAnimation) {
+    void bounceText(float scale, int duration, Interpolator interpolator, boolean hasAnimation) {
         if (hasAnimation)
             bounce(textView, scale, duration, interpolator);
         else
@@ -307,11 +342,11 @@ public class RadioRealButton extends LinearLayout {
         set.start();
     }*/
 
-    protected void bounceDrawable(float scale) {
+    void bounceDrawable(float scale) {
         bounce(imageView, scale);
     }
 
-    protected void bounceText(float scale) {
+    void bounceText(float scale) {
         bounce(textView, scale);
     }
 

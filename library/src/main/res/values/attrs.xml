@@ -122,6 +122,14 @@
 
         <attr name="rrbg_animate" format="boolean"/>
 
+        <attr name="rrbg_animateDrawables_tintColorDuration" format="integer"/>
+        <attr name="rrbg_animateDrawables_tintColorFrom" format="color"/>
+        <attr name="rrbg_animateDrawables_tintColorTo" format="color"/>
+
+        <attr name="rrbg_animateTexts_textColorDuration" format="integer"/>
+        <attr name="rrbg_animateTexts_textColorFrom" format="color"/>
+        <attr name="rrbg_animateTexts_textColorTo" format="color"/>
+
         <attr name="rrbg_animateSelector_delay" format="integer"/>
         <attr name="rrbg_animateSelector_duration" format="integer"/>
         <attr name="rrbg_animateSelector" format="integer">
