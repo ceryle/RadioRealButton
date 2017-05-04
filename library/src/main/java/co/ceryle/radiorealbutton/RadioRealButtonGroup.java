@@ -183,8 +183,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         }
     }
 
-    private Interpolator interpolatorImage, interpolatorText, interpolatorSelector;
-    private Interpolator interpolatorImageExit, interpolatorTextExit;
+    private Interpolator interpolatorDrawablesEnter, interpolatorText, interpolatorSelector;
+    private Interpolator interpolatorDrawablesExit, interpolatorTextExit;
 
     private void initInterpolations() {
         Class[] interpolations = {
@@ -202,12 +202,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
                 OvershootInterpolator.class};
 
         try {
-            interpolatorText = (Interpolator) interpolations[animateTexts].newInstance();
-            interpolatorImage = (Interpolator) interpolations[animateImages].newInstance();
+            interpolatorText = (Interpolator) interpolations[animateTextsEnter].newInstance();
+            interpolatorDrawablesEnter = (Interpolator) interpolations[animateDrawablesEnter].newInstance();
             interpolatorSelector = (Interpolator) interpolations[animateSelector].newInstance();
 
             interpolatorTextExit = (Interpolator) interpolations[animateTextsExit].newInstance();
-            interpolatorImageExit = (Interpolator) interpolations[animateImagesExit].newInstance();
+            interpolatorDrawablesExit = (Interpolator) interpolations[animateDrawablesExit].newInstance();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,34 +229,39 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         setStrokeSize(borderSize);
     }
 
-    private int borderSize, borderColor, dividerColor, bottomLineColor, selectorColor, animateImages, animateTexts, animationType,
-            animateImagesDuration, animateTextsDuration, animateSelector, animateSelectorDuration, animateSelectorDelay, animateImagesExit,
-            animateImagesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
+    private int borderSize, borderColor, dividerColor, bottomLineColor, selectorColor, animateDrawablesEnter, animateTextsEnter, animationType,
+            animateDrawablesEnterDuration, animateTextsEnterDuration, animateSelector, animateSelectorDuration, animateSelectorDelay, animateDrawablesExit,
+            animateDrawablesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
             buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor, dividerBackgroundColor,
             dividerPadding, dividerSize, dividerRadius, bottomLineSize, bottomLineRadius, selectorSize, selectorRadius, initialPosition,
             selectorDividerSize, selectorDividerRadius, selectorDividerColor, selectorDividerPadding, checkedButtonId,
-            animateTextsTextColorFrom, animateTextsTextColorTo, animateTextsTextColorDuration,
-            animateDrawablesTintColorFrom, animateDrawablesTintColorTo, animateDrawablesTintColorDuration;
+            animateTextsColorExit, animateTextsColorEnter, animateTextsColorDuration, animateTextsColorDurationExit, animateTextsColorDurationEnter,
+            animateDrawablesTintExit, animateDrawablesTintEnter, animateDrawablesTintDuration, animateDrawablesTintDurationExit, animateDrawablesTintDurationEnter;
 
-    private float radius, animateImagesScale, animateTextsScale;
+    private float radius, animateDrawablesScale, animateTextsScale;
 
     private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom, hasPadding,
             hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDividerBackgroundColor, clickable, enabled,
-            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateImages, hasAnimateTexts, hasAnimation, selectorFullSize,
-            hasAnimateTextsColor, hasAnimateDrawablesColor;
+            enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateDrawables, hasAnimateTexts, hasAnimation, selectorFullSize,
+            hasAnimateTextsColor, hasAnimateDrawablesTint;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
 
-        animateTextsTextColorFrom = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorFrom, Color.BLACK);
-        animateTextsTextColorTo = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorTo, Color.WHITE);
         hasAnimateTextsColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorTo);
-        animateTextsTextColorDuration = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorDuration, 500);
+        animateTextsColorExit = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorFrom, Color.GRAY);
+        animateTextsColorEnter = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorTo, Color.BLACK);
+        int animateTextsColorDuration = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColor_duration, 500) / 2;
+        animateTextsColorDurationExit = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorFrom_duration, animateTextsColorDuration);
+        animateTextsColorDurationEnter = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_textColorTo_duration, animateTextsColorDuration);
 
-        animateDrawablesTintColorFrom = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorFrom, Color.BLACK);
-        animateDrawablesTintColorTo = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo, Color.WHITE);
-        hasAnimateDrawablesColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo);
-        animateDrawablesTintColorDuration = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorDuration, 500);
+        hasAnimateDrawablesTint = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo);
+        animateDrawablesTintExit = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorFrom, Color.GRAY);
+        animateDrawablesTintEnter = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo, Color.BLACK);
+        int animateDrawablesTintDuration = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColor_duration, 500) / 2;
+        animateDrawablesTintDurationExit = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorFrom_duration, animateDrawablesTintDuration);
+        animateDrawablesTintDurationEnter = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_tintColorTo_duration, animateDrawablesTintDuration);
+
 
         bottomLineColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_bottomLineColor, Color.GRAY);
         bottomLineSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_bottomLineSize, 0);
@@ -291,18 +296,20 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
         radius = ta.getDimension(R.styleable.RadioRealButtonGroup_rrbg_radius, 0);
 
-        animateImages = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enter, 0);
-        hasAnimateImages = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enter);
-        animateImagesExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exit, 0);
-        animateImagesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enterDuration, 500);
-        animateImagesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exitDuration, 100);
-        animateImagesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_scale, 1.2f);
+        animateDrawablesEnter = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enter, 0);
+        hasAnimateDrawables = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enter);
+        animateDrawablesExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exit, 0);
+        int animateDrawablesDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_duration, 500) / 2;
+        animateDrawablesEnterDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_enterDuration, animateDrawablesDuration);
+        animateDrawablesExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_exitDuration, animateDrawablesDuration);
+        animateDrawablesScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateDrawables_scale, 1.2f);
 
-        animateTexts = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter, 0);
+        animateTextsEnter = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter, 0);
         hasAnimateTexts = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enter);
         animateTextsExit = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exit, 0);
-        animateTextsDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enterDuration, 500);
-        animateTextsExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exitDuration, 100);
+        int animateTextsDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_duration, 500) / 2;
+        animateTextsEnterDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_enterDuration, animateTextsDuration);
+        animateTextsExitDuration = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_exitDuration, animateTextsDuration);
         animateTextsScale = ta.getFloat(R.styleable.RadioRealButtonGroup_rrbg_animateTexts_scale, 1.2f);
 
         lastPosition = initialPosition = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_checkedPosition, -1);
@@ -375,22 +382,22 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             if (lastPosition == position) {
                 button.setChecked(true);
 
-                if (hasAnimateImages)
-                    button.bounceDrawable(animateImagesScale);
+                if (hasAnimateDrawables)
+                    button.bounceDrawable(animateDrawablesScale);
                 if (hasAnimateTexts)
                     button.bounceText(animateTextsScale);
                 if (hasAnimateTextsColor)
-                    button.setTextColor(animateTextsTextColorTo);
-                if (hasAnimateDrawablesColor)
-                    button.setDrawableTint(animateDrawablesTintColorTo);
+                    button.setTextColor(animateTextsColorEnter);
+                if (hasAnimateDrawablesTint)
+                    button.setDrawableTint(animateDrawablesTintEnter);
 
-            } else{
+            } else {
                 button.setChecked(false);
 
                 if (hasAnimateTextsColor)
-                    button.setTextColor(animateTextsTextColorFrom);
-                if (hasAnimateDrawablesColor)
-                    button.setDrawableTint(animateDrawablesTintColorFrom);
+                    button.setTextColor(animateTextsColorExit);
+                if (hasAnimateDrawablesTint)
+                    button.setDrawableTint(animateDrawablesTintExit);
             }
 
             initButtonListener(button, position);
@@ -501,7 +508,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             return;
 
         moveSelector(position, hasAnimation, enableDeselection);
-        animateTextAndImage(position, hasAnimation, buttonIn, buttonOut, enableDeselection);
+        animateTextAndDrawable(position, hasAnimation, buttonIn, buttonOut, enableDeselection);
 
         if (!enableDeselection) {
             buttonIn.setChecked(true);
@@ -529,7 +536,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
 
     /* DRAWABLE AND TEXT ANIMATION BEGINS */
-    private void animateTextAndImage(int toPosition, boolean hasAnimation, RadioRealButton buttonIn, RadioRealButton buttonOut, boolean enableDeselection) {
+    private void animateTextAndDrawable(int toPosition, boolean hasAnimation, RadioRealButton buttonIn, RadioRealButton buttonOut, boolean enableDeselection) {
         if (lastPosition == toPosition && enableDeselection) {
             if (buttonIn.isChecked())
                 animateExit(buttonIn, hasAnimation);
@@ -546,23 +553,23 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     private void animateExit(RadioRealButton button, boolean hasAnimation) {
         if (hasAnimateTexts)
             button.bounceText(1, animateTextsExitDuration, interpolatorTextExit, hasAnimation);
-        if (hasAnimateImages)
-            button.bounceDrawable(1, animateImagesExitDuration, interpolatorImageExit, hasAnimation);
+        if (hasAnimateDrawables)
+            button.bounceDrawable(1, animateDrawablesExitDuration, interpolatorDrawablesExit, hasAnimation);
         if (hasAnimateTextsColor)
-            button.colorTransitionText(animateTextsTextColorTo, animateTextsTextColorFrom, animateTextsTextColorDuration, hasAnimation);
-        if (hasAnimateDrawablesColor)
-            button.colorTransitionDrawable(animateDrawablesTintColorTo, animateDrawablesTintColorFrom, animateDrawablesTintColorDuration, hasAnimation);
+            button.colorTransitionText(animateTextsColorEnter, animateTextsColorExit, animateTextsColorDurationExit, hasAnimation);
+        if (hasAnimateDrawablesTint)
+            button.colorTransitionDrawable(animateDrawablesTintEnter, animateDrawablesTintExit, animateDrawablesTintDurationExit, hasAnimation);
     }
 
     private void animateEnter(RadioRealButton button, boolean hasAnimation) {
         if (hasAnimateTexts)
-            button.bounceText(animateTextsScale, animateTextsDuration, interpolatorText, hasAnimation);
-        if (hasAnimateImages)
-            button.bounceDrawable(animateImagesScale, animateImagesDuration, interpolatorImage, hasAnimation);
+            button.bounceText(animateTextsScale, animateTextsEnterDuration, interpolatorText, hasAnimation);
+        if (hasAnimateDrawables)
+            button.bounceDrawable(animateDrawablesScale, animateDrawablesEnterDuration, interpolatorDrawablesEnter, hasAnimation);
         if (hasAnimateTextsColor)
-            button.colorTransitionText(animateTextsTextColorFrom, animateTextsTextColorTo, animateTextsTextColorDuration, hasAnimation);
-        if (hasAnimateDrawablesColor)
-            button.colorTransitionDrawable(animateDrawablesTintColorFrom, animateDrawablesTintColorTo, animateDrawablesTintColorDuration, hasAnimation);
+            button.colorTransitionText(animateTextsColorExit, animateTextsColorEnter, animateTextsColorDurationEnter, hasAnimation);
+        if (hasAnimateDrawablesTint)
+            button.colorTransitionDrawable(animateDrawablesTintExit, animateDrawablesTintEnter, animateDrawablesTintDurationEnter, hasAnimation);
     }
     /* DRAWABLE AND TEXT ANIMATION ENDS */
 
@@ -740,65 +747,64 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
      */
 
 
-    public int getAnimateTextsTextColorFrom() {
-        return animateTextsTextColorFrom;
+    public int getAnimateTextsColorExit() {
+        return animateTextsColorExit;
     }
 
-    public void setAnimateTextsTextColorFrom(int animateTextsTextColorFrom) {
-        this.animateTextsTextColorFrom = animateTextsTextColorFrom;
+    public void setAnimateTextsColorExit(int animateTextsColorExit) {
+        this.animateTextsColorExit = animateTextsColorExit;
     }
 
-    public int getAnimateTextsTextColorTo() {
-        return animateTextsTextColorTo;
+    public int getAnimateTextsColorEnter() {
+        return animateTextsColorEnter;
     }
 
-    public void setAnimateTextsTextColorTo(int animateTextsTextColorTo) {
-        this.animateTextsTextColorTo = animateTextsTextColorTo;
+    public void setAnimateTextsColorEnter(int animateTextsColorEnter) {
+        this.animateTextsColorEnter = animateTextsColorEnter;
     }
 
-    public int getAnimateTextsTextColorDuration() {
-        return animateTextsTextColorDuration;
+    public int getAnimateTextsColorDuration() {
+        return animateTextsColorDuration;
     }
 
-    public void setAnimateTextsTextColorDuration(int animateTextsTextColorDuration) {
-        this.animateTextsTextColorDuration = animateTextsTextColorDuration;
+    public void setAnimateTextsColorDuration(int animateTextsColorDuration) {
+        this.animateTextsColorDuration = animateTextsColorDuration;
     }
 
-    public int getAnimateDrawablesTintColorFrom() {
-        return animateDrawablesTintColorFrom;
+    public int getAnimateDrawablesTintExit() {
+        return animateDrawablesTintExit;
     }
 
-    public void setAnimateDrawablesTintColorFrom(int animateDrawablesTintColorFrom) {
-        this.animateDrawablesTintColorFrom = animateDrawablesTintColorFrom;
+    public void setAnimateDrawablesTintExit(int animateDrawablesTintExit) {
+        this.animateDrawablesTintExit = animateDrawablesTintExit;
     }
 
-    public int getAnimateDrawablesTintColorTo() {
-        return animateDrawablesTintColorTo;
+    public int getAnimateDrawablesTintEnter() {
+        return animateDrawablesTintEnter;
     }
 
-    public void setAnimateDrawablesTintColorTo(int animateDrawablesTintColorTo) {
-        this.animateDrawablesTintColorTo = animateDrawablesTintColorTo;
+    public void setAnimateDrawablesTintEnter(int animateDrawablesTintEnter) {
+        this.animateDrawablesTintEnter = animateDrawablesTintEnter;
     }
 
     public int getAnimateDrawablesTintColorDuration() {
-        return animateDrawablesTintColorDuration;
+        return animateDrawablesTintDuration;
     }
 
     public void setAnimateDrawablesTintColorDuration(int animateDrawablesTintColorDuration) {
-        this.animateDrawablesTintColorDuration = animateDrawablesTintColorDuration;
+        this.animateDrawablesTintDuration = animateDrawablesTintColorDuration;
     }
-
 
     public List<RadioRealButton> getButtons() {
         return buttons;
     }
 
-    public Interpolator getInterpolatorImage() {
-        return interpolatorImage;
+    public Interpolator getInterpolatorDrawablesEnter() {
+        return interpolatorDrawablesEnter;
     }
 
-    public void setInterpolatorImage(Interpolator interpolatorImage) {
-        this.interpolatorImage = interpolatorImage;
+    public void setInterpolatorDrawablesEnter(Interpolator interpolatorDrawablesEnter) {
+        this.interpolatorDrawablesEnter = interpolatorDrawablesEnter;
     }
 
     public Interpolator getInterpolatorText() {
@@ -817,12 +823,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         this.interpolatorSelector = interpolatorSelector;
     }
 
-    public Interpolator getInterpolatorImageExit() {
-        return interpolatorImageExit;
+    public Interpolator getInterpolatorDrawablesExit() {
+        return interpolatorDrawablesExit;
     }
 
-    public void setInterpolatorImageExit(Interpolator interpolatorImageExit) {
-        this.interpolatorImageExit = interpolatorImageExit;
+    public void setInterpolatorDrawablesExit(Interpolator interpolatorDrawablesExit) {
+        this.interpolatorDrawablesExit = interpolatorDrawablesExit;
     }
 
     public Interpolator getInterpolatorTextExit() {
@@ -873,20 +879,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         this.selectorColor = selectorColor;
     }
 
-    public int getAnimateImages() {
-        return animateImages;
+    public int getAnimateTextsEnter() {
+        return animateTextsEnter;
     }
 
-    public void setAnimateImages(int animateImages) {
-        this.animateImages = animateImages;
-    }
-
-    public int getAnimateTexts() {
-        return animateTexts;
-    }
-
-    public void setAnimateTexts(int animateTexts) {
-        this.animateTexts = animateTexts;
+    public void setAnimateTextsEnter(int animateTextsEnter) {
+        this.animateTextsEnter = animateTextsEnter;
     }
 
     public int getAnimationType() {
@@ -897,20 +895,20 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         this.animationType = animationType;
     }
 
-    public int getAnimateImagesDuration() {
-        return animateImagesDuration;
+    public int getAnimateDrawablesEnterDuration() {
+        return animateDrawablesEnterDuration;
     }
 
-    public void setAnimateImagesDuration(int animateImagesDuration) {
-        this.animateImagesDuration = animateImagesDuration;
+    public void setAnimateDrawablesEnterDuration(int animateDrawablesEnterDuration) {
+        this.animateDrawablesEnterDuration = animateDrawablesEnterDuration;
     }
 
-    public int getAnimateTextsDuration() {
-        return animateTextsDuration;
+    public int getAnimateTextsEnterDuration() {
+        return animateTextsEnterDuration;
     }
 
-    public void setAnimateTextsDuration(int animateTextsDuration) {
-        this.animateTextsDuration = animateTextsDuration;
+    public void setAnimateTextsEnterDuration(int animateTextsEnterDuration) {
+        this.animateTextsEnterDuration = animateTextsEnterDuration;
     }
 
     public int getAnimateSelector() {
@@ -937,20 +935,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         this.animateSelectorDelay = animateSelectorDelay;
     }
 
-    public int getAnimateImagesExit() {
-        return animateImagesExit;
+    public int getAnimateDrawablesExitDuration() {
+        return animateDrawablesExitDuration;
     }
 
-    public void setAnimateImagesExit(int animateImagesExit) {
-        this.animateImagesExit = animateImagesExit;
-    }
-
-    public int getAnimateImagesExitDuration() {
-        return animateImagesExitDuration;
-    }
-
-    public void setAnimateImagesExitDuration(int animateImagesExitDuration) {
-        this.animateImagesExitDuration = animateImagesExitDuration;
+    public void setAnimateDrawablesExitDuration(int animateDrawablesExitDuration) {
+        this.animateDrawablesExitDuration = animateDrawablesExitDuration;
     }
 
     public int getAnimateTextsExit() {
@@ -1081,12 +1071,12 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         this.radius = radius;
     }
 
-    public float getAnimateImagesScale() {
-        return animateImagesScale;
+    public float getAnimateDrawablesScale() {
+        return animateDrawablesScale;
     }
 
-    public void setAnimateImagesScale(float animateImagesScale) {
-        this.animateImagesScale = animateImagesScale;
+    public void setAnimateDrawablesScale(float animateDrawablesScale) {
+        this.animateDrawablesScale = animateDrawablesScale;
     }
 
     public float getAnimateTextsScale() {

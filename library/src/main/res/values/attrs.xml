@@ -122,13 +122,19 @@
 
         <attr name="rrbg_animate" format="boolean"/>
 
-        <attr name="rrbg_animateDrawables_tintColorDuration" format="integer"/>
+
+        <attr name="rrbg_animateDrawables_tintColor_duration" format="integer"/>
+        <attr name="rrbg_animateDrawables_tintColorFrom_duration" format="integer"/>
+        <attr name="rrbg_animateDrawables_tintColorTo_duration" format="integer"/>
         <attr name="rrbg_animateDrawables_tintColorFrom" format="color"/>
         <attr name="rrbg_animateDrawables_tintColorTo" format="color"/>
 
-        <attr name="rrbg_animateTexts_textColorDuration" format="integer"/>
+        <attr name="rrbg_animateTexts_textColor_duration" format="integer"/>
+        <attr name="rrbg_animateTexts_textColorFrom_duration" format="integer"/>
+        <attr name="rrbg_animateTexts_textColorTo_duration" format="integer"/>
         <attr name="rrbg_animateTexts_textColorFrom" format="color"/>
         <attr name="rrbg_animateTexts_textColorTo" format="color"/>
+
 
         <attr name="rrbg_animateSelector_delay" format="integer"/>
         <attr name="rrbg_animateSelector_duration" format="integer"/>
@@ -146,6 +152,9 @@
             <flag name="linearOutSlowIn" value="10"/>
             <flag name="overshoot" value="11"/>
         </attr>
+
+
+        <attr name="rrbg_animateDrawables_duration" format="float"/>
 
         <attr name="rrbg_animateDrawables_scale" format="float"/>
         <attr name="rrbg_animateDrawables_enterDuration" format="integer"/>
@@ -178,6 +187,9 @@
             <flag name="linearOutSlowIn" value="10"/>
             <flag name="overshoot" value="11"/>
         </attr>
+
+
+        <attr name="rrbg_animateTexts_duration" format="integer"/>
 
         <attr name="rrbg_animateTexts_scale" format="float"/>
         <attr name="rrbg_animateTexts_enterDuration" format="integer"/>
