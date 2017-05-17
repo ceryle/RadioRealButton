@@ -16,6 +16,7 @@
         <attr name="rrb_drawable" format="reference"/>
         <attr name="rrb_drawablePadding" format="dimension"/>
         <attr name="rrb_drawableTint" format="color"/>
+        <attr name="rrb_drawableTintTo" format="color"/>
         <attr name="rrb_drawableWidth" format="dimension"/>
         <attr name="rrb_drawableHeight" format="dimension"/>
         <attr name="rrb_drawableGravity" format="integer">
@@ -27,6 +28,7 @@
 
         <attr name="rrb_text" format="string"/>
         <attr name="rrb_textColor" format="color"/>
+        <attr name="rrb_textColorTo" format="color"/>
         <attr name="rrb_textSize" format="dimension"/>
         <attr name="rrb_textTypeface" format="integer">
             <flag name="monospace" value="0"/>
@@ -51,6 +53,10 @@
         <attr name="rrb_backgroundColor" format="color"/>
         <attr name="rrb_ripple" format="boolean"/>
         <attr name="rrb_rippleColor" format="color"/>
+
+
+
+        <attr name="rrb_selectorColor" format="color"/>
 
     </declare-styleable>
 

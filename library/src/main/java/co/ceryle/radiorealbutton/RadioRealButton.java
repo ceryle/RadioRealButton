@@ -98,12 +98,14 @@ public class RadioRealButton extends LinearLayout {
 
     private String text, textTypefacePath;
 
-    private int textStyle, textSize, drawable, drawableTint, textColor, rippleColor, drawableWidth, drawableHeight,
-            padding, paddingLeft, paddingRight, paddingTop, paddingBottom, drawablePadding, backgroundColor, textGravity;
+    private int textStyle, textSize, drawable, drawableTint, drawableTintTo, textColor, textColorTo, rippleColor, drawableWidth,
+            drawableHeight, selectorColor, padding, paddingLeft, paddingRight, paddingTop, paddingBottom, drawablePadding,
+            backgroundColor, textGravity;
 
     private boolean hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDrawableTint, hasTextTypefacePath,
             hasDrawable, hasText, hasDrawableWidth, hasDrawableHeight, checked, enabled, hasEnabled, clickable, hasClickable,
-            hasTextStyle, hasTextSize, hasTextColor, textFillSpace, hasRipple, hasRippleColor;
+            hasTextStyle, hasTextSize, hasTextColor, textFillSpace, hasRipple, hasRippleColor, hasSelectorColor,
+            hasDrawableTintTo, hasTextColorTo;
 
     /***
      * GET ATTRIBUTES FROM XML
@@ -113,18 +115,23 @@ public class RadioRealButton extends LinearLayout {
 
         drawable = ta.getResourceId(R.styleable.RadioRealButton_rrb_drawable, -1);
         drawableTint = ta.getColor(R.styleable.RadioRealButton_rrb_drawableTint, 0);
+        drawableTintTo = ta.getColor(R.styleable.RadioRealButton_rrb_drawableTintTo, 0);
         drawableWidth = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_drawableWidth, -1);
         drawableHeight = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_drawableHeight, -1);
 
         hasDrawable = ta.hasValue(R.styleable.RadioRealButton_rrb_drawable);
         hasDrawableTint = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableTint);
+        hasDrawableTintTo = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableTintTo);
         hasDrawableWidth = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableWidth);
         hasDrawableHeight = ta.hasValue(R.styleable.RadioRealButton_rrb_drawableHeight);
 
         text = ta.getString(R.styleable.RadioRealButton_rrb_text);
         hasText = ta.hasValue(R.styleable.RadioRealButton_rrb_text);
         textColor = ta.getColor(R.styleable.RadioRealButton_rrb_textColor, Color.BLACK);
+        textColorTo = ta.getColor(R.styleable.RadioRealButton_rrb_textColorTo, Color.BLACK);
+
         hasTextColor = ta.hasValue(R.styleable.RadioRealButton_rrb_textColor);
+        hasTextColorTo = ta.hasValue(R.styleable.RadioRealButton_rrb_textColorTo);
         textSize = ta.getDimensionPixelSize(R.styleable.RadioRealButton_rrb_textSize, -1);
         hasTextSize = ta.hasValue(R.styleable.RadioRealButton_rrb_textSize);
         textStyle = ta.getInt(R.styleable.RadioRealButton_rrb_textStyle, -1);
@@ -181,7 +188,75 @@ public class RadioRealButton extends LinearLayout {
 
         textFillSpace = ta.getBoolean(R.styleable.RadioRealButton_rrb_textFillSpace, false);
 
+        selectorColor = ta.getColor(R.styleable.RadioRealButton_rrb_selectorColor, Color.TRANSPARENT);
+        hasSelectorColor = ta.hasValue(R.styleable.RadioRealButton_rrb_selectorColor);
+
         ta.recycle();
+    }
+
+    public int getTextColorTo() {
+        return textColorTo;
+    }
+
+    public void setTextColorTo(int textColorTo) {
+        this.textColorTo = textColorTo;
+    }
+
+    public boolean hasTextColorTo() {
+        return hasTextColorTo;
+    }
+
+    public boolean hasTextColor() {
+        return hasTextColor;
+    }
+
+    public void setHasTextColor(boolean hasTextColor) {
+        this.hasTextColor = hasTextColor;
+    }
+
+    public void setHasTextColorTo(boolean hasTextColorTo) {
+        this.hasTextColorTo = hasTextColorTo;
+    }
+
+    public boolean hasDrawableTintTo() {
+        return hasDrawableTintTo;
+    }
+
+    public void setHasDrawableTintTo(boolean hasDrawableTintTo) {
+        this.hasDrawableTintTo = hasDrawableTintTo;
+    }
+
+    public int getDrawableTintTo() {
+        return drawableTintTo;
+    }
+
+    public void setDrawableTintTo(int drawableTintTo) {
+        this.drawableTintTo = drawableTintTo;
+    }
+
+    public int getSelectorColor() {
+        return selectorColor;
+    }
+
+    public void setSelectorColor(int selectorColor) {
+        this.selectorColor = selectorColor;
+        onSelectorColorChangedListener.onSelectorColorChanged(position, selectorColor);
+    }
+
+    public boolean hasSelectorColor() {
+        return hasSelectorColor;
+    }
+
+    private OnSelectorColorChangedListener onSelectorColorChangedListener;
+    private int position;
+
+    void setOnSelectorColorChangedListener(OnSelectorColorChangedListener onSelectorColorChangedListener, int position) {
+        this.onSelectorColorChangedListener = onSelectorColorChangedListener;
+        this.position = position;
+    }
+
+    interface OnSelectorColorChangedListener {
+        void onSelectorColorChanged(int position, int selectorColor);
     }
 
     public boolean hasEnabled() {
@@ -279,18 +354,52 @@ public class RadioRealButton extends LinearLayout {
             setPadding(padding, padding, padding, padding);
     }
 
-    void colorTransitionDrawable(int colorFrom, int colorTo, int duration, boolean hasAnimation) {
+    void colorTransitionDrawable(boolean hasAnimateDrawablesTint, int colorFrom, int colorTo, int duration, boolean hasAnimation, boolean onEnter) {
+        int c1, c2;
+
+        if (hasDrawableTintTo) {
+            c1 = drawableTint;
+            c2 = drawableTintTo;
+        } else if (hasAnimateDrawablesTint) {
+            c1 = colorFrom;
+            c2 = colorTo;
+        } else
+            return;
+
+        if (!onEnter) {
+            int c = c1;
+            c1 = c2;
+            c2 = c;
+        }
+
         if (hasAnimation)
-            colorTransition(imageView, colorFrom, colorTo, duration);
+            colorTransition(imageView, c1, c2, duration);
         else
-            setDrawableTint(colorTo);
+            setDrawableTint(c2);
     }
 
-    void colorTransitionText(int colorFrom, int colorTo, int duration, boolean hasAnimation) {
+    void colorTransitionText(boolean hasAnimateTextsColor, int colorFrom, int colorTo, int duration, boolean hasAnimation, boolean onEnter) {
+        int c1, c2;
+
+        if (hasTextColorTo) {
+            c1 = textColor;
+            c2 = textColorTo;
+        } else if (hasAnimateTextsColor) {
+            c1 = colorFrom;
+            c2 = colorTo;
+        } else
+            return;
+
+        if (!onEnter) {
+            int c = c1;
+            c1 = c2;
+            c2 = c;
+        }
+
         if (hasAnimation)
-            colorTransition(textView, colorFrom, colorTo, duration);
+            colorTransition(textView, c1, c2, duration);
         else
-            setTextColor(colorTo);
+            setTextColor(c2);
     }
 
     private void colorTransition(final View v, int colorFrom, int colorTo, int duration) {
@@ -330,6 +439,7 @@ public class RadioRealButton extends LinearLayout {
             bounce(view, scale);
         }
     }
+
     /*private void bounce(View view, float scale, int duration, Interpolator interpolator) {
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", scale);
         ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", scale);
@@ -403,6 +513,10 @@ public class RadioRealButton extends LinearLayout {
         this.textColor = textColor;
 
         textView.setTextColor(textColor);
+    }
+
+    void setCheckedTextColor(int color) {
+        textView.setTextColor(color);
     }
 
     public String getText() {
@@ -573,6 +687,10 @@ public class RadioRealButton extends LinearLayout {
     public void setDrawableTint(int color) {
         this.drawableTint = color;
 
+        imageView.setColorFilter(color);
+    }
+
+    void setCheckedDrawableTint(int color) {
         imageView.setColorFilter(color);
     }
 

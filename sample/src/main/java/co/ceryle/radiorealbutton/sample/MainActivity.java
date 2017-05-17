@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         group1.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
             @Override
-            public void onPositionChanged(RadioRealButton button, int position) {
-                updateText(position);
+            public void onPositionChanged(RadioRealButton button, int currentPosition, int lastPosition) {
+                updateText(currentPosition);
             }
         });
 
@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RadioRealButtonGroup group2 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_2);
-        group2.setOnPositionChangedListener(new RadioRealButtonGroup.OnPositionChangedListener() {
+        group2.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
-            public void onPositionChanged(RadioRealButton button, int position) {
+            public void onClickedButton(RadioRealButton button, int position) {
                 Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });

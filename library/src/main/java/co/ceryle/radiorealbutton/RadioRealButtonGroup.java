@@ -46,7 +46,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RadioRealButtonGroup extends RoundedCornerLayout {
+public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRealButton.OnSelectorColorChangedListener {
 
     public RadioRealButtonGroup(Context context) {
         super(context);
@@ -153,7 +153,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         if (bottomLineBringToFront)
             v_bottomLine.bringToFront();
 
-        RoundHelper.makeRound(v_bottomLine, bottomLineColor, bottomLineRadius, bottomLineRadius);
+        updateViewBottomLine();
     }
 
     private void setSelectorAttrs() {
@@ -386,24 +386,33 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
                     button.bounceDrawable(animateDrawablesScale);
                 if (hasAnimateTexts)
                     button.bounceText(animateTextsScale);
-                if (hasAnimateTextsColor)
-                    button.setTextColor(animateTextsColorEnter);
-                if (hasAnimateDrawablesTint)
-                    button.setDrawableTint(animateDrawablesTintEnter);
+
+                if (button.hasTextColorTo()) {
+                    button.setCheckedTextColor(button.getTextColorTo());
+                } else if (hasAnimateTextsColor) {
+                    button.setCheckedTextColor(animateTextsColorEnter);
+                }
+
+                if (button.hasDrawableTintTo()) {
+                    button.setCheckedDrawableTint(button.getDrawableTintTo());
+                } else if (hasAnimateDrawablesTint) {
+                    button.setCheckedDrawableTint(animateDrawablesTintEnter);
+                }
 
             } else {
                 button.setChecked(false);
 
-                if (hasAnimateTextsColor)
+                if (!button.hasTextColor() && hasAnimateTextsColor)
                     button.setTextColor(animateTextsColorExit);
-                if (hasAnimateDrawablesTint)
+
+                if (!button.hasDrawableTint() && hasAnimateDrawablesTint)
                     button.setDrawableTint(animateDrawablesTintExit);
             }
 
             initButtonListener(button, position);
             setButtonPadding(button);
             container.addView(button);
-            createSelectorItem(position);
+            createSelectorItem(position, button);
             buttons.add(button);
 
             numberOfButtons = buttons.size();
@@ -411,14 +420,13 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             super.addView(child, index, params);
     }
 
-    private void createSelectorItem(int position) {
+    private void createSelectorItem(int position, RadioRealButton button) {
         BackgroundView view = new BackgroundView(getContext());
 
         int height = selectorSize;
         if (selectorFullSize)
             height = LayoutParams.MATCH_PARENT;
         view.setLayoutParams(new LinearLayout.LayoutParams(0, height, 1));
-        view.setBackgroundColor(selectorColor);
 
         int value = 0;
         if (position == lastPosition) {
@@ -443,11 +451,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
                 view.setAlpha(value);
                 break;
         }
-
-        if (!selectorFullSize)
-            RoundHelper.makeRound(view, selectorColor, selectorRadius, selectorSize);
-        else
-            RoundHelper.makeRound(view, selectorColor, selectorRadius, null);
+        button.setOnSelectorColorChangedListener(this, position);
+        updateViewSelector(view, button.hasSelectorColor() ? button.getSelectorColor() : selectorColor);
 
         v_selectors.add(view);
         selectorContainer.addView(view);
@@ -485,8 +490,14 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         makeSelection(position, false, hasAnimation);
     }
 
-    private void deselect(int position, boolean enableDeselection) {
-        makeSelection(position, false, hasAnimation, enableDeselection);
+    public void deselect() {
+        deselect(hasAnimation);
+    }
+
+    public void deselect(boolean hasAnimation) {
+        if (lastPosition == -1 || !buttons.get(lastPosition).isChecked())
+            return;
+        makeSelection(lastPosition, false, hasAnimation, true);
     }
 
     private boolean isInRange(int value) {
@@ -525,7 +536,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         if (null != onClickedButtonListener && isToggledByTouch)
             onClickedButtonListener.onClickedButton(buttonIn, position);
         if (null != onPositionChangedListener && (lastPosition != position || enableDeselection)) {
-            onPositionChangedListener.onPositionChanged(buttonIn, position);
+            onPositionChangedListener.onPositionChanged(buttonIn, position, lastPosition);
         }
 
         this.lastPosition = position;
@@ -550,15 +561,20 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         }
     }
 
+    private void animateColorTransitions(RadioRealButton button, boolean hasAnimation, boolean onEnter) {
+        int textDuration = onEnter ? animateTextsColorDurationEnter : animateTextsColorDurationExit;
+        int drawableDuration = onEnter ? animateDrawablesTintDurationEnter : animateDrawablesTintDurationExit;
+
+        button.colorTransitionText(hasAnimateTextsColor, animateTextsColorExit, animateTextsColorEnter, textDuration, hasAnimation, onEnter);
+        button.colorTransitionDrawable(hasAnimateDrawablesTint, animateDrawablesTintExit, animateDrawablesTintEnter, drawableDuration, hasAnimation, onEnter);
+    }
+
     private void animateExit(RadioRealButton button, boolean hasAnimation) {
         if (hasAnimateTexts)
             button.bounceText(1, animateTextsExitDuration, interpolatorTextExit, hasAnimation);
         if (hasAnimateDrawables)
             button.bounceDrawable(1, animateDrawablesExitDuration, interpolatorDrawablesExit, hasAnimation);
-        if (hasAnimateTextsColor)
-            button.colorTransitionText(animateTextsColorEnter, animateTextsColorExit, animateTextsColorDurationExit, hasAnimation);
-        if (hasAnimateDrawablesTint)
-            button.colorTransitionDrawable(animateDrawablesTintEnter, animateDrawablesTintExit, animateDrawablesTintDurationExit, hasAnimation);
+        animateColorTransitions(button, hasAnimation, false);
     }
 
     private void animateEnter(RadioRealButton button, boolean hasAnimation) {
@@ -566,10 +582,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
             button.bounceText(animateTextsScale, animateTextsEnterDuration, interpolatorText, hasAnimation);
         if (hasAnimateDrawables)
             button.bounceDrawable(animateDrawablesScale, animateDrawablesEnterDuration, interpolatorDrawablesEnter, hasAnimation);
-        if (hasAnimateTextsColor)
-            button.colorTransitionText(animateTextsColorExit, animateTextsColorEnter, animateTextsColorDurationEnter, hasAnimation);
-        if (hasAnimateDrawablesTint)
-            button.colorTransitionDrawable(animateDrawablesTintExit, animateDrawablesTintEnter, animateDrawablesTintDurationEnter, hasAnimation);
+        animateColorTransitions(button, hasAnimation, true);
     }
     /* DRAWABLE AND TEXT ANIMATION ENDS */
 
@@ -645,17 +658,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
         animator.start();
     }
 
-    public void deselect() {
-        if (lastPosition == -1 || !buttons.get(lastPosition).isChecked())
-            return;
-
-        if (animationType == ANIM_TRANSLATE_X) {
-            deselect(lastPosition, true);
-        } else {
-            setPosition(lastPosition);
-        }
-    }
-
     private ObjectAnimator createAnimator(View view, String property, float value, boolean hasDelay, boolean hasDuration) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(view, property, value);
         animator.setInterpolator(interpolatorSelector);
@@ -722,7 +724,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
     }
 
     public interface OnPositionChangedListener {
-        void onPositionChanged(RadioRealButton button, int position);
+        void onPositionChanged(RadioRealButton button, int currentPosition, int lastPosition);
     }
 
     public void setOnLongClickedButtonListener(final OnLongClickedButtonListener onLongClickedButtonListener) {
@@ -869,6 +871,11 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
     public void setBottomLineColor(int bottomLineColor) {
         this.bottomLineColor = bottomLineColor;
+        updateViewBottomLine();
+    }
+
+    private void updateViewBottomLine() {
+        RoundHelper.makeRound(v_bottomLine, bottomLineColor, bottomLineRadius, bottomLineRadius);
     }
 
     public int getSelectorColor() {
@@ -877,6 +884,24 @@ public class RadioRealButtonGroup extends RoundedCornerLayout {
 
     public void setSelectorColor(int selectorColor) {
         this.selectorColor = selectorColor;
+
+        for (View selector : v_selectors) {
+            updateViewSelector(selector, selectorColor);
+        }
+    }
+
+    @Override
+    public void onSelectorColorChanged(int position, int selectorColor) {
+        updateViewSelector(v_selectors.get(position), selectorColor);
+    }
+
+    private void updateViewSelector(View view, int color) {
+        RoundHelper.makeRound(
+                view,
+                color,
+                selectorRadius,
+                selectorFullSize ? null : selectorSize
+        );
     }
 
     public int getAnimateTextsEnter() {

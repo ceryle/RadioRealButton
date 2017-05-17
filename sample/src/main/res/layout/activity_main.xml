@@ -31,7 +31,6 @@
             app:rrbg_bottomLineColor="@color/blue_300"
             app:rrbg_bottomLineRadius="2dp"
             app:rrbg_bottomLineSize="0dp"
-            app:rrbg_checkedButton="@+id/rrb_3"
             app:rrbg_dividerColor="@color/white"
             app:rrbg_dividerPadding="12dp"
             app:rrbg_dividerRadius="2dp"
@@ -53,6 +52,7 @@
                 app:rrb_drawablePadding="4dp"
                 app:rrb_drawableWidth="36dp"
                 app:rrb_rippleColor="@color/black"
+                app:rrb_selectorColor="@color/black"
                 app:rrb_text="Bruce is happy because he is batman"
                 app:rrb_textColor="@color/white"
                 app:rrb_textGravity="left"
@@ -68,6 +68,7 @@
                 app:rrb_drawablePadding="4dp"
                 app:rrb_drawableWidth="36dp"
                 app:rrb_rippleColor="@color/blue_500"
+                app:rrb_selectorColor="@color/blue_500"
                 app:rrb_text="Clark is super jealous of Batman"
                 app:rrb_textColor="@color/white"
                 app:rrb_textGravity="center"
@@ -83,6 +84,7 @@
                 app:rrb_drawablePadding="4dp"
                 app:rrb_drawableWidth="36dp"
                 app:rrb_rippleColor="@color/yellow_600"
+                app:rrb_selectorColor="@color/yellow_600"
                 app:rrb_text="Diana wonders why"
                 app:rrb_textColor="@color/white"
                 app:rrb_textFillSpace="true"
@@ -98,13 +100,14 @@
             android:layout_margin="4dp"
             android:orientation="horizontal">
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:layout_marginRight="4dp"
-                android:text="Position: 0"/>
+                android:text="Position: 0"
+                app:backgroundTint="@color/white"/>
 
             <co.ceryle.radiorealbutton.RadioRealButtonGroup
                 android:id="@+id/radioRealButtonGroup_1"
@@ -122,7 +125,7 @@
                 app:rrbg_dividerPadding="10dp"
                 app:rrbg_dividerRadius="0dp"
                 app:rrbg_dividerSize="1dp"
-                app:rrbg_enableDeselection="true"
+                app:rrbg_enableDeselection="false"
                 app:rrbg_radius="0dp"
                 app:rrbg_selectorAboveOfBottomLine="true"
                 app:rrbg_selectorColor="@color/grey_400"
@@ -191,39 +194,34 @@
             <co.ceryle.radiorealbutton.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:rrb_drawable="@drawable/b4"
+                app:rrb_drawable="@drawable/ic_android_black_24dp"
                 app:rrb_drawableHeight="36dp"
-                app:rrb_drawablePadding="4dp"
+                app:rrb_drawableTint="@color/black"
+                app:rrb_drawableTintTo="@color/red"
                 app:rrb_drawableWidth="36dp"
-                app:rrb_rippleColor="@color/black"
-                app:rrb_text="Bruce"
-                app:rrb_textColor="@color/black"
-                app:rrb_textTypefacePath="fonts/shaka_pow.ttf"/>
+                app:rrb_rippleColor="@color/red"
+                app:rrb_selectorColor="@color/red"/>
 
             <co.ceryle.radiorealbutton.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:rrb_checked="true"
-                app:rrb_drawable="@drawable/b3"
+                app:rrb_drawable="@drawable/ic_android_black_24dp"
                 app:rrb_drawableHeight="36dp"
-                app:rrb_drawablePadding="4dp"
+                app:rrb_drawableTintTo="@color/green"
                 app:rrb_drawableWidth="36dp"
-                app:rrb_rippleColor="@color/blue_500"
-                app:rrb_text="Clark"
-                app:rrb_textColor="@color/black"
-                app:rrb_textTypefacePath="fonts/shaka_pow.ttf"/>
+                app:rrb_rippleColor="@color/green"
+                app:rrb_selectorColor="@color/green"/>
 
             <co.ceryle.radiorealbutton.RadioRealButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:rrb_drawable="@drawable/b5"
+                app:rrb_drawable="@drawable/ic_android_black_24dp"
                 app:rrb_drawableHeight="36dp"
-                app:rrb_drawablePadding="4dp"
+                app:rrb_drawableTintTo="@color/blue"
                 app:rrb_drawableWidth="36dp"
-                app:rrb_rippleColor="@color/yellow_600"
-                app:rrb_text="Diana"
-                app:rrb_textColor="@color/black"
-                app:rrb_textTypefacePath="fonts/shaka_pow.ttf"/>
+                app:rrb_rippleColor="@color/blue"
+                app:rrb_selectorColor="@color/blue"/>
         </co.ceryle.radiorealbutton.RadioRealButtonGroup>
 
 
