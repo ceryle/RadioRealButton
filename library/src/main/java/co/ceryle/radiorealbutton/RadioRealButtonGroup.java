@@ -356,9 +356,9 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     private void setButtonPadding(RadioRealButton button) {
         if (hasPadding)
-            button.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+            button.setPaddings(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
         else if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
-            button.setPadding(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
+            button.setPaddings(buttonPaddingLeft, buttonPaddingTop, buttonPaddingRight, buttonPaddingBottom);
     }
 
     private int numberOfButtons = 0;

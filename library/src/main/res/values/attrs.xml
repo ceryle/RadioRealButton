@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <declare-styleable name="RadioRealButton">
 
         <attr name="android:enabled"/>
@@ -53,7 +52,6 @@
         <attr name="rrb_backgroundColor" format="color"/>
         <attr name="rrb_ripple" format="boolean"/>
         <attr name="rrb_rippleColor" format="color"/>
-
 
 
         <attr name="rrb_selectorColor" format="color"/>
@@ -160,7 +158,7 @@
         </attr>
 
 
-        <attr name="rrbg_animateDrawables_duration" format="float"/>
+        <attr name="rrbg_animateDrawables_duration" format="integer"/>
 
         <attr name="rrbg_animateDrawables_scale" format="float"/>
         <attr name="rrbg_animateDrawables_enterDuration" format="integer"/>

@@ -349,9 +349,9 @@ public class RadioRealButton extends LinearLayout {
 
     private void setPaddingAttrs() {
         if (hasPaddingBottom || hasPaddingTop || hasPaddingLeft || hasPaddingRight)
-            setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+            setPaddings(paddingLeft, paddingTop, paddingRight, paddingBottom);
         else
-            setPadding(padding, padding, padding, padding);
+            setPaddings(padding, padding, padding, padding);
     }
 
     void colorTransitionDrawable(boolean hasAnimateDrawablesTint, int colorFrom, int colorTo, int duration, boolean hasAnimation, boolean onEnter) {
@@ -587,8 +587,7 @@ public class RadioRealButton extends LinearLayout {
         return padding;
     }
 
-    @Override
-    public void setPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
+    public void setPaddings(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
         this.paddingLeft = paddingLeft;
         this.paddingTop = paddingTop;
         this.paddingRight = paddingRight;
@@ -619,7 +618,7 @@ public class RadioRealButton extends LinearLayout {
             paddings[g] = drawablePadding / 2;
         }
 
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
         params.setMargins(paddings[0], paddings[1], paddings[2], paddings[3]);
     }
 
