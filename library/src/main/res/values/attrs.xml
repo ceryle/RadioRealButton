@@ -92,7 +92,6 @@
         <attr name="rrbg_dividerPadding" format="dimension"/>
         <attr name="rrbg_dividerColor" format="color"/>
         <attr name="rrbg_dividerRadius" format="dimension"/>
-        <attr name="rrbg_dividerBackgroundColor" format="color"/>
 
         <attr name="rrbg_selectorDividerSize" format="dimension"/>
         <attr name="rrbg_selectorDividerPadding" format="dimension"/>

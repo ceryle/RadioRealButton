@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Ege Aker <egeaker@gmail.com>
+ * Copyright (C) 2016 ceryle
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,7 +105,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
         setBottomLineAttrs();
         setSelectorAttrs();
-        setGroupBackgroundColor();
 
         initInterpolations();
 
@@ -214,17 +213,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         }
     }
 
-    public void setGroupBackgroundColor() {
-        // setBackgroundColor(groupBackgroundColor);
-        // container.setBackgroundColor(groupBackgroundColor);
-        // container.setBackgroundColor(hasDividerBackgroundColor ? dividerBackgroundColor : groupBackgroundColor);
-    }
-
     private void setBorderAttrs() {
-        if (!hasBorder)
-            return;
-
-        setStroke(true);
+        setStroke(hasBorder);
         setStrokeColor(borderColor);
         setStrokeSize(borderSize);
     }
@@ -232,7 +222,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     private int borderSize, borderColor, dividerColor, bottomLineColor, selectorColor, animateDrawablesEnter, animateTextsEnter, animationType,
             animateDrawablesEnterDuration, animateTextsEnterDuration, animateSelector, animateSelectorDuration, animateSelectorDelay, animateDrawablesExit,
             animateDrawablesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
-            buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor, dividerBackgroundColor,
+            buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor,
             dividerPadding, dividerSize, dividerRadius, bottomLineSize, bottomLineRadius, selectorSize, selectorRadius, initialPosition,
             selectorDividerSize, selectorDividerRadius, selectorDividerColor, selectorDividerPadding, checkedButtonId,
             animateTextsColorExit, animateTextsColorEnter, animateTextsColorDuration, animateTextsColorDurationExit, animateTextsColorDurationEnter,
@@ -241,7 +231,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     private float radius, animateDrawablesScale, animateTextsScale;
 
     private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom, hasPadding,
-            hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, hasDividerBackgroundColor, clickable, enabled,
+            hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, clickable, enabled,
             enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateDrawables, hasAnimateTexts, hasAnimation, selectorFullSize,
             hasAnimateTextsColor, hasAnimateDrawablesTint;
 
@@ -283,8 +273,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         dividerRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_dividerRadius, 0);
         dividerPadding = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_dividerPadding, 30);
         dividerColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_dividerColor, Color.TRANSPARENT);
-        dividerBackgroundColor = ta.getColor(R.styleable.RadioRealButtonGroup_rrbg_dividerBackgroundColor, Color.WHITE);
-        hasDividerBackgroundColor = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_dividerBackgroundColor);
 
         selectorDividerSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorDividerSize, dividerSize);
         if (!hasDividerSize) {
@@ -452,7 +440,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
                 break;
         }
         button.setOnSelectorColorChangedListener(this, position);
-        updateViewSelector(view, button.hasSelectorColor() ? button.getSelectorColor() : selectorColor);
+        updateViewSelectorColor(view, button.hasSelectorColor() ? button.getSelectorColor() : selectorColor);
 
         v_selectors.add(view);
         selectorContainer.addView(view);
@@ -841,69 +829,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         this.interpolatorTextExit = interpolatorTextExit;
     }
 
-    public int getBorderSize() {
-        return borderSize;
-    }
-
-    public void setBorderSize(int borderSize) {
-        this.borderSize = borderSize;
-    }
-
-    public int getBorderColor() {
-        return borderColor;
-    }
-
-    public void setBorderColor(int borderColor) {
-        this.borderColor = borderColor;
-    }
-
-    public int getDividerColor() {
-        return dividerColor;
-    }
-
-    public void setDividerColor(int dividerColor) {
-        this.dividerColor = dividerColor;
-    }
-
-    public int getBottomLineColor() {
-        return bottomLineColor;
-    }
-
-    public void setBottomLineColor(int bottomLineColor) {
-        this.bottomLineColor = bottomLineColor;
-        updateViewBottomLine();
-    }
-
-    private void updateViewBottomLine() {
-        RoundHelper.makeRound(v_bottomLine, bottomLineColor, bottomLineRadius, bottomLineRadius);
-    }
-
-    public int getSelectorColor() {
-        return selectorColor;
-    }
-
-    public void setSelectorColor(int selectorColor) {
-        this.selectorColor = selectorColor;
-
-        for (View selector : v_selectors) {
-            updateViewSelector(selector, selectorColor);
-        }
-    }
-
-    @Override
-    public void onSelectorColorChanged(int position, int selectorColor) {
-        updateViewSelector(v_selectors.get(position), selectorColor);
-    }
-
-    private void updateViewSelector(View view, int color) {
-        RoundHelper.makeRound(
-                view,
-                color,
-                selectorRadius,
-                selectorFullSize ? null : selectorSize
-        );
-    }
-
     public int getAnimateTextsEnter() {
         return animateTextsEnter;
     }
@@ -984,52 +909,35 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         this.animateTextsExitDuration = animateTextsExitDuration;
     }
 
-    public int getButtonPadding() {
+    private void setButtonsPadding(int left, int top, int right, int bottom){
+        buttonPaddingLeft = left;
+        buttonPaddingTop = top;
+        buttonPaddingRight = right;
+        buttonPaddingBottom = bottom;
+
+        for (RadioRealButton button : buttons) {
+            setButtonPadding(button);
+        }
+    }
+
+    public int getButtonsPadding() {
         return buttonPadding;
     }
 
-    public void setButtonPadding(int buttonPadding) {
-        this.buttonPadding = buttonPadding;
-    }
-
-    public int getButtonPaddingLeft() {
+    public int getButtonsPaddingLeft() {
         return buttonPaddingLeft;
     }
 
-    public void setButtonPaddingLeft(int buttonPaddingLeft) {
-        this.buttonPaddingLeft = buttonPaddingLeft;
-    }
-
-    public int getButtonPaddingRight() {
+    public int getButtonsPaddingRight() {
         return buttonPaddingRight;
     }
 
-    public void setButtonPaddingRight(int buttonPaddingRight) {
-        this.buttonPaddingRight = buttonPaddingRight;
-    }
-
-    public int getButtonPaddingTop() {
+    public int getButtonsPaddingTop() {
         return buttonPaddingTop;
     }
 
-    public void setButtonPaddingTop(int buttonPaddingTop) {
-        this.buttonPaddingTop = buttonPaddingTop;
-    }
-
-    public int getButtonPaddingBottom() {
+    public int getButtonsPaddingBottom() {
         return buttonPaddingBottom;
-    }
-
-    public void setButtonPaddingBottom(int buttonPaddingBottom) {
-        this.buttonPaddingBottom = buttonPaddingBottom;
-    }
-
-    public int getDividerBackgroundColor() {
-        return dividerBackgroundColor;
-    }
-
-    public void setDividerBackgroundColor(int dividerBackgroundColor) {
-        this.dividerBackgroundColor = dividerBackgroundColor;
     }
 
     public int getDividerPadding() {
@@ -1038,6 +946,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setDividerPadding(int dividerPadding) {
         this.dividerPadding = dividerPadding;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            container.setDividerPadding(dividerPadding);
+        }
     }
 
     public int getDividerSize() {
@@ -1046,6 +958,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setDividerSize(int dividerSize) {
         this.dividerSize = dividerSize;
+        RoundHelper.makeDividerRound(container, dividerColor, dividerRadius, dividerSize);
     }
 
     public int getDividerRadius() {
@@ -1054,6 +967,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setDividerRadius(int dividerRadius) {
         this.dividerRadius = dividerRadius;
+        RoundHelper.makeDividerRound(container, dividerColor, dividerRadius, dividerSize);
     }
 
     public int getBottomLineSize() {
@@ -1062,6 +976,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setBottomLineSize(int bottomLineSize) {
         this.bottomLineSize = bottomLineSize;
+        setBottomLineAttrs();
     }
 
     public int getBottomLineRadius() {
@@ -1070,6 +985,81 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setBottomLineRadius(int bottomLineRadius) {
         this.bottomLineRadius = bottomLineRadius;
+        updateViewBottomLine();
+    }
+
+    public int getBorderSize() {
+        return borderSize;
+    }
+
+    public void setBorderSize(int borderSize) {
+        this.borderSize = borderSize;
+        setBorderAttrs();
+    }
+
+    public int getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(int borderColor) {
+        this.borderColor = borderColor;
+        setBorderAttrs();
+    }
+
+    public int getDividerColor() {
+        return dividerColor;
+    }
+
+    public void setDividerColor(int dividerColor) {
+        this.dividerColor = dividerColor;
+        RoundHelper.makeDividerRound(container, dividerColor, dividerRadius, dividerSize);
+    }
+
+    public int getBottomLineColor() {
+        return bottomLineColor;
+    }
+
+    public void setBottomLineColor(int bottomLineColor) {
+        this.bottomLineColor = bottomLineColor;
+        updateViewBottomLine();
+    }
+
+    private void updateViewBottomLine() {
+        RoundHelper.makeRound(v_bottomLine, bottomLineColor, bottomLineRadius, bottomLineRadius);
+    }
+
+    public int getSelectorColor() {
+        return selectorColor;
+    }
+
+    private void updateViewSelectorColor(View view, int color) {
+        updateViewSelector(view, color, selectorRadius, selectorSize);
+    }
+
+    public void setSelectorColor(int selectorColor) {
+        this.selectorColor = selectorColor;
+
+        for (View selector : v_selectors) {
+            updateViewSelectorColor(selector, selectorColor);
+        }
+    }
+
+    @Override
+    public void onSelectorColorChanged(int position, int selectorColor) {
+        updateViewSelectorColor(v_selectors.get(position), selectorColor);
+    }
+
+    private void updateViewSelector(View view, int color, int radius, int size) {
+        RoundHelper.makeRound(
+                view,
+                color,
+                radius,
+                selectorFullSize ? null : size
+        );
+    }
+
+    private void updateViewSelector(View view) {
+        updateViewSelector(view, selectorColor, selectorRadius, selectorSize);
     }
 
     public int getSelectorSize() {
@@ -1078,6 +1068,15 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setSelectorSize(int selectorSize) {
         this.selectorSize = selectorSize;
+
+        selectorContainer.getLayoutParams().height = selectorSize;
+
+        for (View selector : v_selectors) {
+            updateViewSelector(selector);
+
+            selector.getLayoutParams().height = selectorSize;
+            selector.requestLayout();
+        }
     }
 
     public int getSelectorRadius() {
@@ -1086,6 +1085,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setSelectorRadius(int selectorRadius) {
         this.selectorRadius = selectorRadius;
+
+        for (View selector : v_selectors) {
+            updateViewSelector(selector);
+        }
     }
 
     public float getRadius() {
@@ -1094,6 +1097,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setRadius(float radius) {
         this.radius = radius;
+        setCornerRadius(radius);
     }
 
     public float getAnimateDrawablesScale() {
@@ -1112,20 +1116,22 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         this.animateTextsScale = animateTextsScale;
     }
 
-    public boolean isBottomLineBringToFront() {
+    public boolean isBottomLineOnFront() {
         return bottomLineBringToFront;
     }
 
-    public void setBottomLineBringToFront(boolean bottomLineBringToFront) {
+    public void setBottomLineToFront(boolean bottomLineBringToFront) {
         this.bottomLineBringToFront = bottomLineBringToFront;
+        setBottomLineAttrs();
     }
 
-    public boolean isSelectorBringToFront() {
+    public boolean isSelectorOnFront() {
         return selectorBringToFront;
     }
 
-    public void setSelectorBringToFront(boolean selectorBringToFront) {
+    public void setSelectorToFront(boolean selectorBringToFront) {
         this.selectorBringToFront = selectorBringToFront;
+        setSelectorAttrs();
     }
 
     public boolean isSelectorAboveOfBottomLine() {
@@ -1134,6 +1140,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     public void setSelectorAboveOfBottomLine(boolean selectorAboveOfBottomLine) {
         this.selectorAboveOfBottomLine = selectorAboveOfBottomLine;
+        setSelectorAttrs();
     }
 
     public boolean isSelectorTop() {
@@ -1152,52 +1159,24 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         this.selectorBottom = selectorBottom;
     }
 
-    public boolean isHasPadding() {
+    public boolean hasPadding() {
         return hasPadding;
     }
 
-    public void setHasPadding(boolean hasPadding) {
-        this.hasPadding = hasPadding;
-    }
-
-    public boolean isHasPaddingLeft() {
+    public boolean hasPaddingLeft() {
         return hasPaddingLeft;
     }
 
-    public void setHasPaddingLeft(boolean hasPaddingLeft) {
-        this.hasPaddingLeft = hasPaddingLeft;
-    }
-
-    public boolean isHasPaddingRight() {
+    public boolean hasPaddingRight() {
         return hasPaddingRight;
     }
 
-    public void setHasPaddingRight(boolean hasPaddingRight) {
-        this.hasPaddingRight = hasPaddingRight;
-    }
-
-    public boolean isHasPaddingTop() {
+    public boolean hasPaddingTop() {
         return hasPaddingTop;
     }
 
-    public void setHasPaddingTop(boolean hasPaddingTop) {
-        this.hasPaddingTop = hasPaddingTop;
-    }
-
-    public boolean isHasPaddingBottom() {
+    public boolean hasPaddingBottom() {
         return hasPaddingBottom;
-    }
-
-    public void setHasPaddingBottom(boolean hasPaddingBottom) {
-        this.hasPaddingBottom = hasPaddingBottom;
-    }
-
-    public boolean isHasDividerBackgroundColor() {
-        return hasDividerBackgroundColor;
-    }
-
-    public void setHasDividerBackgroundColor(boolean hasDividerBackgroundColor) {
-        this.hasDividerBackgroundColor = hasDividerBackgroundColor;
     }
 
     @Override
@@ -1210,11 +1189,11 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         return enabled;
     }
 
-    public boolean isEnableDeselection() {
+    public boolean hasDeselection() {
         return enableDeselection;
     }
 
-    public void setEnableDeselection(boolean enableDeselection) {
-        this.enableDeselection = enableDeselection;
+    public void setDeselection(boolean deselection) {
+        this.enableDeselection = deselection;
     }
 }

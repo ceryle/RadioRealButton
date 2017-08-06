@@ -18,6 +18,8 @@ import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
@@ -58,10 +60,6 @@ public class RoundedCornerLayout extends FrameLayout {
         cornerRadius = ConversionHelper.dpToPx(context, 1);
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setOutlineProvider(new ButtonOutlineProvider());
-        }
     }
 
     //Fixes incorrect outline drawn by default
@@ -81,36 +79,53 @@ public class RoundedCornerLayout extends FrameLayout {
         path.addRoundRect(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), cornerRadius, cornerRadius, Path.Direction.CW);
         canvas.clipPath(path, Region.Op.REPLACE);
         canvas.clipPath(path);
+
         super.dispatchDraw(canvas);
+
         canvas.restoreToCount(count);
 
         if (hasStroke) {
+
+            Rect rect = canvas.getClipBounds();
+
+            RectF rectF = new RectF(strokeSize, strokeSize, rect.right - strokeSize, rect.bottom - strokeSize);
+
+            Path clipPath = new Path();
+            float corner = cornerRadius - strokeSize;
+            clipPath.addRoundRect(rectF, corner, corner, Path.Direction.CW);
+            canvas.clipPath(clipPath, Region.Op.DIFFERENCE);
+
             Paint p_stroke = new Paint();
             p_stroke.setAntiAlias(true);
             p_stroke.setColor(strokeColor);
-            p_stroke.setStyle(Paint.Style.STROKE);
-            p_stroke.setStrokeWidth(strokeSize);
-            Rect r = canvas.getClipBounds();
+            p_stroke.setStyle(Paint.Style.FILL);
 
-            int size = strokeSize / 2;
-            Rect outline = new Rect(size, size, r.right - size, r.bottom - size);
-            canvas.drawRoundRect(new RectF(outline), cornerRadius, cornerRadius, p_stroke);
+            canvas.drawRoundRect(new RectF(rect), cornerRadius, cornerRadius, p_stroke);
         }
     }
 
-    public void setCornerRadius(float radius) {
+    void setCornerRadius(float radius) {
         cornerRadius = radius;
+        requestLayout();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setOutlineProvider(new ButtonOutlineProvider());
+        }
     }
 
     public void setStroke(boolean hasStroke) {
         this.hasStroke = hasStroke;
+        invalidate();
     }
 
     public void setStrokeColor(int strokeColor) {
         this.strokeColor = strokeColor;
+        invalidate();
     }
 
     public void setStrokeSize(int strokeSize) {
         this.strokeSize = strokeSize;
+        invalidate();
     }
+
 }

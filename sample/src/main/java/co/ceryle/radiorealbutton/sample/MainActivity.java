@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Ege Aker <egeaker@gmail.com>
+ * Copyright (C) 2016 ceryle
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,4 +76,5 @@ public class MainActivity extends AppCompatActivity {
     private void updateText(int position) {
         button.setText("Position: " + position);
     }
+
 }
