@@ -399,7 +399,7 @@ public class RadioRealButton extends LinearLayout {
         if (hasAnimation)
             colorTransition(textView, c1, c2, duration);
         else
-            setTextColor(c2);
+            textView.setTextColor(c2);
     }
 
     private void colorTransition(final View v, int colorFrom, int colorTo, int duration) {
