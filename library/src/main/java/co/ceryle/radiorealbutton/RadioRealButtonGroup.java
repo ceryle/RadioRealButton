@@ -83,9 +83,10 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
                     if (initialPosition != -1)
                         v_selectors.get(initialPosition).setVisibility(INVISIBLE);
                     v_selectors.get(position).setVisibility(VISIBLE);
+                    setPosition(position, false);
                     lastPosition = initialPosition = position;
-                }
-                setPosition(position, false);
+                } else
+                    setPosition(position, false);
             }
         }
         super.onRestoreInstanceState(state);
