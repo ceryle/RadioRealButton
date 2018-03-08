@@ -108,6 +108,7 @@
         <attr name="rrbg_selectorBottom" format="boolean"/>
         <attr name="rrbg_selectorColor" format="color"/>
         <attr name="rrbg_selectorSize" format="dimension"/>
+        <attr name="rrbg_selectorWidth" format="dimension" />
         <attr name="rrbg_selectorBringToFront" format="boolean"/>
         <attr name="rrbg_selectorAboveOfBottomLine" format="boolean"/>
         <attr name="rrbg_selectorRadius" format="dimension"/>

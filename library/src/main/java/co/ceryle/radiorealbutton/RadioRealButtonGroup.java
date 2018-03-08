@@ -223,7 +223,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
             animateDrawablesEnterDuration, animateTextsEnterDuration, animateSelector, animateSelectorDuration, animateSelectorDelay, animateDrawablesExit,
             animateDrawablesExitDuration, animateTextsExit, animateTextsExitDuration, lastPosition, buttonPadding,
             buttonPaddingLeft, buttonPaddingRight, buttonPaddingTop, buttonPaddingBottom, groupBackgroundColor,
-            dividerPadding, dividerSize, dividerRadius, bottomLineSize, bottomLineRadius, selectorSize, selectorRadius, initialPosition,
+            dividerPadding, dividerSize, dividerRadius, bottomLineSize, bottomLineRadius, selectorSize, selectorWidth, selectorRadius, initialPosition,
             selectorDividerSize, selectorDividerRadius, selectorDividerColor, selectorDividerPadding, checkedButtonId,
             animateTextsColorExit, animateTextsColorEnter, animateTextsColorDuration, animateTextsColorDurationExit, animateTextsColorDurationEnter,
             animateDrawablesTintExit, animateDrawablesTintEnter, animateDrawablesTintDuration, animateDrawablesTintDurationExit, animateDrawablesTintDurationEnter;
@@ -233,7 +233,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     private boolean bottomLineBringToFront, selectorBringToFront, selectorAboveOfBottomLine, selectorTop, selectorBottom, hasPadding,
             hasPaddingLeft, hasPaddingRight, hasPaddingTop, hasPaddingBottom, clickable, enabled,
             enableDeselection, hasEnabled, hasClickable, hasBorder, hasAnimateDrawables, hasAnimateTexts, hasAnimation, selectorFullSize,
-            hasAnimateTextsColor, hasAnimateDrawablesTint;
+            hasAnimateTextsColor, hasAnimateDrawablesTint, hasSelectorWidth;
 
     private void getAttributes(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RadioRealButtonGroup);
@@ -262,6 +262,8 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         selectorBringToFront = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorBringToFront, false);
         selectorAboveOfBottomLine = ta.getBoolean(R.styleable.RadioRealButtonGroup_rrbg_selectorAboveOfBottomLine, false);
         selectorSize = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorSize, 12);
+        selectorWidth = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorWidth, 0);
+        hasSelectorWidth = ta.hasValue(R.styleable.RadioRealButtonGroup_rrbg_selectorSize);
         selectorRadius = ta.getDimensionPixelSize(R.styleable.RadioRealButtonGroup_rrbg_selectorRadius, 0);
 
         animateSelector = ta.getInt(R.styleable.RadioRealButtonGroup_rrbg_animateSelector, 0);
@@ -414,7 +416,18 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         int height = selectorSize;
         if (selectorFullSize)
             height = LayoutParams.MATCH_PARENT;
-        view.setLayoutParams(new LinearLayout.LayoutParams(0, height, 1));
+
+        if (hasSelectorWidth) {
+            view.setLayoutParams(new LinearLayout.LayoutParams(selectorWidth, height));
+        } else {
+            view.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+        }
+
+        LinearLayout wrapperView = new LinearLayout(getContext());
+        wrapperView.setLayoutParams(new LinearLayout.LayoutParams(0, height, 1));
+        wrapperView.setOrientation(LinearLayout.HORIZONTAL);
+        wrapperView.setGravity(Gravity.CENTER);
+        wrapperView.addView(view);
 
         int value = 0;
         if (position == lastPosition) {
@@ -423,27 +436,27 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
         switch (animationType) {
             case ANIM_SCALE_X:
-                view.setScaleX(value);
+                wrapperView.setScaleX(value);
                 break;
             case ANIM_SCALE_Y:
-                view.setScaleY(value);
+                wrapperView.setScaleY(value);
                 break;
             case ANIM_TRANSLATE_X:
                 if (value == 0)
-                    view.setVisibility(INVISIBLE);
+                    wrapperView.setVisibility(INVISIBLE);
                 break;
             case ANIM_TRANSLATE_Y:
-                view.setTranslationY(value == 1 ? value : selectorSize);
+                wrapperView.setTranslationY(value == 1 ? value : selectorSize);
                 break;
             case ANIM_ALPHA:
-                view.setAlpha(value);
+                wrapperView.setAlpha(value);
                 break;
         }
         button.setOnSelectorColorChangedListener(this, position);
-        updateViewSelectorColor(view, button.hasSelectorColor() ? button.getSelectorColor() : selectorColor);
+        updateViewSelectorColor(wrapperView, button.hasSelectorColor() ? button.getSelectorColor() : selectorColor);
 
-        v_selectors.add(view);
-        selectorContainer.addView(view);
+        v_selectors.add(wrapperView);
+        selectorContainer.addView(wrapperView);
     }
 
     private void initButtonListener(RadioRealButton button, final int position) {
@@ -1051,7 +1064,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
 
     private void updateViewSelector(View view, int color, int radius, int size) {
         RoundHelper.makeRound(
-                view,
+                ((LinearLayout) view).getChildAt(0),
                 color,
                 radius,
                 selectorFullSize ? null : size
