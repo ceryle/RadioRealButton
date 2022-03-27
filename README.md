@@ -1,7 +1,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RadioRealButton-green.svg?style=true)](https://android-arsenal.com/details/1/4258) [![](https://jitpack.io/v/ceryle/RadioRealButton.svg)](https://jitpack.io/#ceryle/RadioRealButton)
 
 ## Archived
-I stopped developing this library for a long time ago. I thought about revising it recently but I think there is no need for it anymore due to Jetpack Compose. Here is an example made with Jetpack Compose by Zack: https://gist.github.com/zach-klippenstein/7ae8874db304f957d6bb91263e292117
+I stopped developing this library for a long time ago. I thought about revising it recently but I think there is no need for it anymore due to Jetpack Compose. As an alternative to this, I recommend you to use this library made with Jetpack Compose by Zack Klippenstein: https://gist.github.com/zach-klippenstein/7ae8874db304f957d6bb91263e292117
 
 Thank you all for your support.
 
